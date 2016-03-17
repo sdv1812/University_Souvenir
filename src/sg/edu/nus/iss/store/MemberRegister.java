@@ -2,10 +2,7 @@ package sg.edu.nus.iss.store;
 import java.io.*;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 485d676e8e9f90b8a3190fc74b9fd398933e9c37
 public class MemberRegister {
 	private ArrayList<Member> members;
 	private Member member;

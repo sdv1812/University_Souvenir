@@ -22,17 +22,13 @@ public class Member extends Customer{
 	public int getLoyaltyPoints() {
 		return loyaltyPoints;
 	}
-<<<<<<< HEAD
+
 
 	public void setLoyaltyPoints(int loyaltyPoints) {
 		this.loyaltyPoints = loyaltyPoints;
-=======
-	public void updateLoyaltyPoints(int points){
-		if (isFirstTime())
-		loyaltyPoints = points;
-		else loyaltyPoints += points;
->>>>>>> 485d676e8e9f90b8a3190fc74b9fd398933e9c37
 	}
+
+
 	public boolean isFirstTime(){
 		if(loyaltyPoints < 0)
 		return true;
