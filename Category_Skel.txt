@@ -1,0 +1,15 @@
+package sg.edu.nus.iss.store;
+import java.io.*;
+public class Category {
+	private String categoryCode;
+	private String categoryName;
+	
+	public Category(String categoryName)
+	public Category(String categoryCode, String categoryName)
+	
+	public String getCategoryCode()
+	public String getCategoryName()
+	public void createVendorFile()
+	
+	
+	
