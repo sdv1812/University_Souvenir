@@ -13,8 +13,6 @@ import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import sg.edu.nus.iss.store.Member;
 
 public class MemberPanel extends JPanel {
@@ -28,13 +26,14 @@ public class MemberPanel extends JPanel {
 	private static final String[] COLUMN_NAMES = {"Name", "ID", "Loyalty Points"};
 	private AbstractTableModel productTableModel;
 	private ArrayList<Member> members ;
-	
+	private MemberPanel mp;
 
 	/**
 	 * Create the panel.
 	 */
 	public MemberPanel(StoreApplication manager) {
 		this.manager = manager;
+		mp = this;
 		setLayout (new BorderLayout());
 		members = manager.getMembers();
 		add(createButtonPanel(), BorderLayout.EAST);
@@ -54,9 +53,11 @@ public class MemberPanel extends JPanel {
         JButton b = new JButton ("Add");
         b.addActionListener (new ActionListener () {
             public void actionPerformed (ActionEvent e) {
-               //AddMemberDialog d = new AddMemberDialog (manager);
-                //d.pack();
-                //d.setVisible (true);
+               AddMemberDialog d = new AddMemberDialog (manager, mp);
+               int rowIndex = members.size()-1;
+       			productTableModel.fireTableRowsInserted(rowIndex, rowIndex);
+                d.pack();
+                d.setVisible (true);
             }
         });
         p.add (b);
@@ -95,6 +96,11 @@ public class MemberPanel extends JPanel {
 		else {
 		productTableModel = new AbstractTableModel() {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public String getColumnName(int column) {
 	        return COLUMN_NAMES[column];
@@ -121,8 +127,12 @@ public class MemberPanel extends JPanel {
 	            }
 	        }
 		};
-	 //productTableModel.fireTableCellUpdated(members.size(), COLUMN_NAMES.length);
+	 
 		return productTableModel;
 	}
+	}
+	public void refresh(){
+		int rowIndex = members.size()-1;
+		productTableModel.fireTableRowsInserted(rowIndex, rowIndex);
 	}
 }

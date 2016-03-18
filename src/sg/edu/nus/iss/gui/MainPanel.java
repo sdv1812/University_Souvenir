@@ -13,14 +13,14 @@ public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = -8820162333877980019L;
 	private StoreApplication manager;
-	private MainPanel mpr;
+	private MemberPanel memberPanel;
+	private ProductPanel productPanel;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
 		this.manager = manager;
-		mpr = this;
 		setLayout(new GridLayout(1, 0, 80, 0));
 		
 		JPanel panelLeft = new JPanel();
@@ -37,15 +37,13 @@ public class MainPanel extends JPanel {
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MemberPanel pp = new MemberPanel(manager);
-				//manager.removeMainPanel();
-				mpr.removeAll();
+				memberPanel = new MemberPanel(manager);
+				removeAll();
 				setLayout(new BorderLayout());
-				pp.setVisible(true);
-				add("Center", pp);
-				//manager.refreshMainPanel();
-				mpr.revalidate();
-				mpr.repaint();
+				memberPanel.setVisible(true);
+				add("Center", memberPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		panelLeft.add(btnMemberRegistration);
@@ -66,15 +64,13 @@ public class MainPanel extends JPanel {
 		productBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ProductPanel pp = new ProductPanel(manager);
-				//manager.removeMainPanel();
-				mpr.removeAll();
+				productPanel = new ProductPanel(manager);
+				removeAll();
 				setLayout(new BorderLayout());
-				pp.setVisible(true);
-				add("Center", pp);
-				//manager.refreshMainPanel();
-				mpr.revalidate();
-				mpr.repaint();
+				productPanel.setVisible(true);
+				add("Center", productPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		panelRight.add(productBtn);
@@ -108,6 +104,12 @@ public class MainPanel extends JPanel {
 		});
 		panelRight.add(btnExit);
 
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		memberPanel.refresh();
+		
 	}
 
 }

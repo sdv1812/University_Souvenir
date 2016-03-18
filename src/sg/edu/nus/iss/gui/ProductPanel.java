@@ -13,8 +13,6 @@ import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import sg.edu.nus.iss.store.Member;
 
 public class ProductPanel extends JPanel {
@@ -95,6 +93,11 @@ public class ProductPanel extends JPanel {
 		else {
 		productTableModel = new AbstractTableModel() {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public String getColumnName(int column) {
 	        return COLUMN_NAMES[column];

@@ -6,21 +6,30 @@ public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
 	public StoreApplication() {
-		storeWindow = new StoreWindow("Store Application", this);
-		storeWindow.pack ();
-		store = new Store();
-		store.initializeData();
+		
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		StoreApplication storeApplication = new StoreApplication();
-		//storeApplication.start();
+		storeApplication.start();
 
 	}
 	
+	private void start() {
+		// TODO Auto-generated method stub
+		storeWindow = new StoreWindow("Store Application", this);
+		storeWindow.pack ();
+		store = new Store();
+		store.initializeData();
+		//storeWindow.refresh ();
+	}
+	
+	public boolean validate(String storeKeeperName, String password){
+		return store.validate(storeKeeperName, password);
+	}
+
 	public ArrayList<Member> getMembers() {
-		store.printAllMembers();
 		return store.getMembers();
 	}
     public StoreWindow getMainWindow() {
@@ -28,5 +37,11 @@ public class StoreApplication {
     }
 	public MainPanel createMainPanel() {
 		return(storeWindow.createMainPanel());
+	}
+
+	public void addMember(String memberName, String memberID) {
+		// TODO Auto-generated method stub
+		store.addMember(memberName, memberID);
+		
 	}
 }

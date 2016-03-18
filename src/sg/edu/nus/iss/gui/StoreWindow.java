@@ -11,7 +11,7 @@ public class StoreWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 7460404160082932891L;
 	private LoginPanel loginPanel;
-	private StoreApplication manager;
+//	/private StoreApplication manager;
 
 
 	/**
@@ -19,7 +19,7 @@ public class StoreWindow extends JFrame {
 	 */
 	public StoreWindow(String s, StoreApplication manager) {
 		super(s);
-		this.manager = manager;
+		//this.manager = manager;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setVisible(true);
@@ -31,6 +31,11 @@ public class StoreWindow extends JFrame {
 	public MainPanel createMainPanel() {
 		// TODO Auto-generated method stub
 		return (loginPanel.createMainPanel());
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		loginPanel.refresh();
 	}
 
 

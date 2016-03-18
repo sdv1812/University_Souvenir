@@ -7,27 +7,25 @@ import java.util.ArrayList;
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
+	private StoreKeeperRegister storeKeepers;
 	
 	public Store() {
 		members = new MemberRegister();
 		categories = new CategoryRegister();
+		storeKeepers = new StoreKeeperRegister();
 	}
 	
-	/*public static void main (String args[]){
-		Store store = new Store();
-		
-		//store.addMember();
-		store.addCategory();
-		store.initializeData();
-		
-		store.printAllMembers();
-		store.printAllCategories();
-	}*/
+	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword){
+		storeKeepers.addStoreKeeper(storeKeeperName, storeKeeperPassword);
+		storeKeepers.writeToFile();
+	}
 	
-	public void addMember(){
-		members.addMember("Sanskar Deepak", "e0013519");
-		members.addMember("Srishti", "e0013313");
-		members.addMember("Mohan", "e0013313");
+	public boolean validate(String storeKeeperName, String password){
+		return storeKeepers.validate(storeKeeperName, password);
+	}
+	
+	public void addMember(String memberName, String memberID){
+		members.addMember(memberName, memberID);
 		members.writeToFile();
 	}
 	
@@ -76,6 +74,13 @@ public class Store {
 			while ((line = reader.readLine())!= null){
 				String result[] = line.split(",");
 				categories.addCategory(result[0], result[1]);
+			}
+			
+			reader = new BufferedReader(new FileReader("StoreAppData/StoreKeepers.dat"));
+			line = null;
+			while ((line = reader.readLine())!= null){
+				String result[] = line.split(",");
+				storeKeepers.addStoreKeeper(result[0], result[1]);
 			}
 			reader.close();
 		}catch (Exception ex) {
