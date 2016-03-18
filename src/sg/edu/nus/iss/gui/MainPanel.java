@@ -37,6 +37,15 @@ public class MainPanel extends JPanel {
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				MemberPanel pp = new MemberPanel(manager);
+				//manager.removeMainPanel();
+				mpr.removeAll();
+				setLayout(new BorderLayout());
+				pp.setVisible(true);
+				add("Center", pp);
+				//manager.refreshMainPanel();
+				mpr.revalidate();
+				mpr.repaint();
 			}
 		});
 		panelLeft.add(btnMemberRegistration);

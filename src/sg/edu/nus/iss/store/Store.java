@@ -13,16 +13,16 @@ public class Store {
 		categories = new CategoryRegister();
 	}
 	
-	public static void main (String args[]){
+	/*public static void main (String args[]){
 		Store store = new Store();
 		
 		//store.addMember();
 		store.addCategory();
 		store.initializeData();
 		
-		//store.printAllMembers();
+		store.printAllMembers();
 		store.printAllCategories();
-	}
+	}*/
 	
 	public void addMember(){
 		members.addMember("Sanskar Deepak", "e0013519");
@@ -55,6 +55,10 @@ public class Store {
 			System.out.println(m.getMemberID());
 			
 		}
+	}
+	
+	public ArrayList<Member> getMembers() {
+		return members.getMembers();
 	}
 	
 	@SuppressWarnings("resource")

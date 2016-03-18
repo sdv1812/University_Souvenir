@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import sg.edu.nus.iss.store.Member;
 
-public class ProductPanel extends JPanel {
+public class MemberPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -33,7 +33,7 @@ public class ProductPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ProductPanel(StoreApplication manager) {
+	public MemberPanel(StoreApplication manager) {
 		this.manager = manager;
 		setLayout (new BorderLayout());
 		members = manager.getMembers();
