@@ -1,4 +1,4 @@
-package sg.nus.iss.ft6.domain;
+package sg.edu.nus.iss.store;
 
 import java.util.ArrayList;
 import java.util.HashMap;

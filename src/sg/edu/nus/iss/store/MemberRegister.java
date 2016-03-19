@@ -10,9 +10,15 @@ public class MemberRegister {
 	public MemberRegister() {
 		members = new ArrayList<Member> ();
 	}
-	public void addMember(String customerName, String memberID){
+	public boolean addMember(String customerName, String memberID){
+		for(Member m: members){
+			if(m.getMemberID().equals(memberID)){
+				return false;
+			}
+		}
 		member = new Member(customerName, memberID);
 		members.add(member);
+		return true;
 	}
 	
 	public void addMember(String customerName, String memberID, int loyaltyPoints){
@@ -26,7 +32,6 @@ public class MemberRegister {
 				break;
 			}
 		}
-		writeToFile();
 	}
 	
 	public ArrayList<Member> getMembers() {

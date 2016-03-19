@@ -1,4 +1,5 @@
-package sg.edu.nus.iss.univerisity.discount;
+package sg.edu.nus.iss.store;
+
 
 import java.io.BufferedWriter;
 import java.io.File;

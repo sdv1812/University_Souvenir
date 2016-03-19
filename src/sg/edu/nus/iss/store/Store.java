@@ -24,9 +24,10 @@ public class Store {
 		return storeKeepers.validate(storeKeeperName, password);
 	}
 	
-	public void addMember(String memberName, String memberID){
-		members.addMember(memberName, memberID);
+	public boolean addMember(String memberName, String memberID){
+		boolean b = members.addMember(memberName, memberID);
 		members.writeToFile();
+		return b;
 	}
 	
 	public void addCategory() {
@@ -36,6 +37,10 @@ public class Store {
 		categories.writeToFile();
 	}
 	
+	public void removeMember(String memberID) {
+		members.removeMember(memberID);
+		members.writeToFile();
+	}
 	public void printAllCategories() {
 		ArrayList<Category> temp = categories.getCategories();
 		for(Category c : temp){

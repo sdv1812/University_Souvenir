@@ -2,6 +2,7 @@ package sg.edu.nus.iss.gui;
 import javax.swing.*;
 import sg.edu.nus.iss.utils.*;
 import java.awt.*;
+import sg.edu.nus.iss.utils.ConfirmDialog;
 
 public class  AddMemberDialog extends OkCancelDialog {
 
@@ -45,9 +46,23 @@ public class  AddMemberDialog extends OkCancelDialog {
 		if(nameT.getText().length()==0||cardNumberT.getText().length()==0){
 			return false;
 		}
-		manager.addMember(nameT.getText(), cardNumberT.getText());
+		boolean b = manager.addMember(nameT.getText(), cardNumberT.getText());
 		mp.refresh();
-		return true;
+		if(b==false){
+		 String title = "Duplicate Member";
+	        String msg = "Member already exists !";
+	        ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {
+
+				private static final long serialVersionUID = 1L;
+
+				protected boolean performOkAction () {
+	                return true;
+	            }
+	        };
+	        d.pack();
+	        d.setVisible (true);
+		}
+		return b;
 		
 		
 	}

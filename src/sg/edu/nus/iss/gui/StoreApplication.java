@@ -39,9 +39,12 @@ public class StoreApplication {
 		return(storeWindow.createMainPanel());
 	}
 
-	public void addMember(String memberName, String memberID) {
+	public boolean addMember(String memberName, String memberID) {
 		// TODO Auto-generated method stub
-		store.addMember(memberName, memberID);
-		
+		return store.addMember(memberName, memberID);
+	}
+	
+	public void removeMember(String memberID) {
+		store.removeMember(memberID);
 	}
 }

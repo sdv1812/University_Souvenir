@@ -1,4 +1,4 @@
-package sg.nus.iss.ft6.domain;
+package sg.edu.nus.iss.store;
 
 
 import javax.management.loading.PrivateClassLoader;
