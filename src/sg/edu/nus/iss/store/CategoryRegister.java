@@ -13,15 +13,21 @@ public class CategoryRegister {
 		categories = new ArrayList<Category> ();
 	}
 	
-	public void addCategory(String categoryCode, String categoryName) {
+	public boolean addCategory(String categoryCode, String categoryName) {
+		for(Category c : categories){
+			if(c.getCategoryCode().equalsIgnoreCase(categoryCode)){
+				return false;
+			}
+		}
 		category = new Category(categoryCode, categoryName);
 		categories.add(category);
+		return true;
 	}
 	
-	public void removeCategory(String categoryName) {   // Removing by selecting category name
+	public void removeCategory(String categoryCode) {   // Removing by selecting category code
 		if(categories!=null){
 			for(Category c : categories){
-				if(categoryName.compareTo(c.getCategoryName())==0){
+				if(categoryCode.compareTo(c.getCategoryCode())==0){
 					categories.remove(c);
 					break;
 				}

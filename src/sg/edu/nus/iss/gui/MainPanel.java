@@ -15,6 +15,7 @@ public class MainPanel extends JPanel {
 	private StoreApplication manager;
 	private MemberPanel memberPanel;
 	private ProductPanel productPanel;
+	private CategoryPanel categoryPanel;
 
 	/**
 	 * Create the panel.
@@ -56,6 +57,13 @@ public class MainPanel extends JPanel {
 		JButton btnCategory = new JButton("Category");
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				categoryPanel = new CategoryPanel(manager);
+				removeAll();
+				setLayout(new BorderLayout());
+				categoryPanel.setVisible(true);
+				add("Center", categoryPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		panelRight.add(btnCategory);

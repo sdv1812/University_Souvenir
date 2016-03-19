@@ -30,11 +30,14 @@ public class Store {
 		return b;
 	}
 	
-	public void addCategory() {
-		categories.addCategory("HUM", "Humans");
-		categories.addCategory("PER", "Persons");
-		categories.addCategory("CLO", "Clothes");
+	public boolean addCategory(String categoryCode, String categoryName) {
+		boolean b= categories.addCategory(categoryCode, categoryName);
 		categories.writeToFile();
+		return b;
+	}
+	
+	public ArrayList<Category> getCategories() {
+		return categories.getCategories();
 	}
 	
 	public void removeMember(String memberID) {
@@ -92,6 +95,11 @@ public class Store {
 			System.out.println("File not found");
 			ex.printStackTrace();		
 		}
+	}
+
+	public void removeCategory(String categoryCode) {
+		// TODO Auto-generated method stub
+		categories.removeCategory(categoryCode);
 	}
 
 }

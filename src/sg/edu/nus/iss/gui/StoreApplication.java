@@ -44,7 +44,20 @@ public class StoreApplication {
 		return store.addMember(memberName, memberID);
 	}
 	
+	public boolean addCategory(String categoryCode, String categoryName) {
+		return store.addCategory(categoryCode, categoryName);
+	}
+	
+	public ArrayList<Category> getCategories() {
+		return store.getCategories();
+	}
+	
 	public void removeMember(String memberID) {
 		store.removeMember(memberID);
+	}
+
+	public void removeCategory(String categoryCode) {
+		// TODO Auto-generated method stub
+		store.removeCategory(categoryCode);
 	}
 }
