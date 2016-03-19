@@ -3,6 +3,7 @@ package sg.edu.nus.iss.gui;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -69,10 +70,10 @@ public class LoginPanel extends JPanel {
 					revalidate();
 					repaint();		
 				} else {
-					LoginErrorPanel error = new LoginErrorPanel(manager);
-					error.pack();
-					error.setBounds(200, 200, 300, 100);
-		            error.setVisible (true);
+					JOptionPane.showMessageDialog(manager.getMainWindow(),
+                            "Username/Password Incorrect !",
+                            "Login Error",
+                            JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}

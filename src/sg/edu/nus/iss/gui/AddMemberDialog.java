@@ -2,7 +2,6 @@ package sg.edu.nus.iss.gui;
 import javax.swing.*;
 import sg.edu.nus.iss.utils.*;
 import java.awt.*;
-import sg.edu.nus.iss.utils.ConfirmDialog;
 
 public class  AddMemberDialog extends OkCancelDialog {
 
@@ -49,18 +48,10 @@ public class  AddMemberDialog extends OkCancelDialog {
 		boolean b = manager.addMember(nameT.getText(), cardNumberT.getText());
 		mp.refresh();
 		if(b==false){
-		 String title = "Duplicate Member";
-	        String msg = "Member already exists !";
-	        ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {
-
-				private static final long serialVersionUID = 1L;
-
-				protected boolean performOkAction () {
-	                return true;
-	            }
-	        };
-	        d.pack();
-	        d.setVisible (true);
+			JOptionPane.showMessageDialog(this,
+                    "Member already exists !",
+                    "Duplicate Member",
+                    JOptionPane.INFORMATION_MESSAGE);
 		}
 		return b;
 		

@@ -53,6 +53,8 @@ public class MemberPanel extends JPanel {
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
 				AddMemberDialog d = new AddMemberDialog (manager, mp);
+				d.setModal(true);
+				d.setLocationRelativeTo(manager.getMainWindow());
 				d.pack();
 				d.setVisible (true);
 			}
@@ -166,6 +168,8 @@ public class MemberPanel extends JPanel {
                 return true;
             }
         };
+        d.setModal(true);
+        d.setLocationRelativeTo(this);
         d.pack();
         d.setVisible (true);
 	}
