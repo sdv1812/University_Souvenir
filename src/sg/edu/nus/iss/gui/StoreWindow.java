@@ -33,10 +33,5 @@ public class StoreWindow extends JFrame {
 		return (loginPanel.createMainPanel());
 	}
 
-	public void refresh() {
-		// TODO Auto-generated method stub
-		loginPanel.refresh();
-	}
-
 
 }

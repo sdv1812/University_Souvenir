@@ -5,21 +5,17 @@ import javax.swing.*;
 
 public class ISSLogoPanel extends JPanel{
 
-	
 
-	/*public ISSLogoPanel() {
-		try {                
-			image = ImageIO.read(new File("StoreAppData/NUS_ISS-logo.jpg"));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}*/
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		//super.paintComponent(g);
 		Image image = new ImageIcon("StoreAppData/NUS_ISS-logo.jpg").getImage();
-		g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters            
+		g.drawImage(image, 0, 0, this);            
 	}
 
 }

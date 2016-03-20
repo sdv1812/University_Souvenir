@@ -21,7 +21,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-
 import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.store.Category;
 
@@ -52,13 +51,13 @@ public class CategoryPanel extends JPanel {
 		add(createAddCategoryPanel(), BorderLayout.SOUTH);
 
 	}
-	private JPanel createAddCategoryPanel () { //To add category = Panel
+	
+	//*****************To create add category Panel**********************
+	private JPanel createAddCategoryPanel () { 
 
 		JPanel panel = new JPanel(new GridLayout(1, 0, 10, 0));
 
-		//JPanel cp = new JPanel (new GridLayout (1, 0));
-
-		JLabel label = new JLabel("Add a new Category : ");
+		JLabel label = new JLabel("Add Category : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12 ));
 		JLabel cName = new JLabel("Category Name: ");
 		JTextField cNameT = new JTextField();
@@ -78,7 +77,7 @@ public class CategoryPanel extends JPanel {
 		addBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
-				if (cCodeT.getText()!=null && cNameT.getText()!=null && cCodeT.getText().length()>=3){
+				if (cCodeT.getText()!=null && cNameT.getText()!=null && cCodeT.getText().length()==3){
 					if (!(manager.addCategory(cCodeT.getText(), cNameT.getText()))){
 						JOptionPane.showMessageDialog(manager.getMainWindow(),
 								"Category Code Already Exists !",
@@ -89,7 +88,7 @@ public class CategoryPanel extends JPanel {
 					}
 				} else {
 					JOptionPane.showMessageDialog(manager.getMainWindow(),
-							"Category Code should have at least 3 characters",
+							"Category code should have 3 characters.",
 							"Invalid Category Code",
 							JOptionPane.ERROR_MESSAGE); 
 				}
@@ -109,13 +108,15 @@ public class CategoryPanel extends JPanel {
 		panel.add(addBtn);
 		panel.add(resetBtn);
 
-		panel.setBorder(BorderFactory.createCompoundBorder(
-				raisedetched, loweredetched)); 
+		panel.setBorder(BorderFactory.createTitledBorder(
+				loweredetched, "New Category Pane")); 
 
 		return panel;
 	}
 
-	private JPanel createButtonPanel(){  //To add Buttons
+	//*****************To create Button Panel**********************	
+	
+	private JPanel createButtonPanel(){ 
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
 		JButton backBtn = new JButton("Back");
@@ -156,7 +157,9 @@ public class CategoryPanel extends JPanel {
 
 	}
 
-	private JPanel showCategorListPanel() {  // To Show all Categories
+	//*****************To create Button Panel**********************	
+	
+	private JPanel showCategorListPanel() {  
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
@@ -177,7 +180,9 @@ public class CategoryPanel extends JPanel {
 		return panel;
 
 	}
-
+	
+	//**********************Set Table Mode********l**********************	
+	
 	public TableModel getTableModel() {
 		if (productTableModel != null) 
 			return productTableModel;
@@ -218,7 +223,11 @@ public class CategoryPanel extends JPanel {
 			return productTableModel;
 		}
 	}
-	public void refresh(){   //Reflect the changes done on the screen using buttons
+
+	
+	//******************Reflect the changes done on the screen using buttons******************
+	
+	public void refresh(){   
 		if(action_source.equalsIgnoreCase("Add")){
 			int rowIndex = categories.size()-1;
 			productTableModel.fireTableRowsInserted(rowIndex, rowIndex);
@@ -235,8 +244,11 @@ public class CategoryPanel extends JPanel {
 		} 
 
 	}
-
-	public void showConfirmDialog(String s) { // Show the confirm dialog on removing and performs the remove functionality
+	
+	
+	// ************Show the confirm dialog on removing and performs the remove functionality*********
+	
+	public void showConfirmDialog(String s) { 
 		String title = "Remove Member";
 		String msg = "Do you really want to remove member " + s + " ?";
 		ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {

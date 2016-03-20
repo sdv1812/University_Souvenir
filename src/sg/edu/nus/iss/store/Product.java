@@ -1,10 +1,5 @@
 package sg.edu.nus.iss.store;
 
-
-import javax.management.loading.PrivateClassLoader;
-
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
 public class Product {
 	private String productId;
 	private Category category;

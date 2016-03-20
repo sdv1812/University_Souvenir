@@ -8,41 +8,34 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class LoginPanel extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6316032716933825384L;
-	private JTextField textField;
 	private JPasswordField password;
 	private StoreApplication manager;
 	private MainPanel mainPanel;
 	private Border raisedetched;
 	private Border loweredetched; 
-	private BufferedImage image;
-
-
 	/**
 	 * Create the panel.
 	 */
 	public LoginPanel(StoreApplication manager) {
+		setBackground(SystemColor.inactiveCaption);
 		this.manager = manager;
 		
 		ISSLogoPanel logo = new ISSLogoPanel();
@@ -56,6 +49,7 @@ public class LoginPanel extends JPanel {
 
 		// Add Welcome Message
 		JLabel lblWelcomeToThe = new JLabel("Welcome To the Souvenir Store");
+		
 		lblWelcomeToThe.setFont(new Font("Times New Roman", Font.BOLD, 22));
 		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
 		//lblWelcomeToThe.setHorizontalAlignment(SwingConstants.BOTTOM);
