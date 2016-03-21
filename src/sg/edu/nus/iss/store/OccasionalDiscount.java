@@ -11,7 +11,7 @@ public class OccasionalDiscount extends Discount {
 		super(discountCode, description, percentage);
 		this.startDate = startDate;
 		this.discountPeriod = discountPeriod;
-		setApplicableToMember("A");
+		applicableToMember = "A";
 	}
 
 	public String getStartDate() {

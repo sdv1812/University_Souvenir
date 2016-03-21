@@ -39,7 +39,7 @@ public abstract class Discount {
 	
 	public abstract String getDiscountPeriod();
 	
-
+	public abstract String getApplicableToMember();
 
 	
 }

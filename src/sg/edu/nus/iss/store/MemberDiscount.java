@@ -20,4 +20,10 @@ public class MemberDiscount extends Discount {
 		return discountPeriod;
 	}
 
+	@Override
+	public String getApplicableToMember() {
+		// TODO Auto-generated method stub
+		return applicableToMember;
+	}
+
 }
