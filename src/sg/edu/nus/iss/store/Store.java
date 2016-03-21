@@ -18,7 +18,7 @@ public class Store {
 	
 	public Store(){
 			cart = new Cart();
-			product= new ArrayList<Product>();
+			//product= new ArrayList<Product>();
 			//addProductsToCart = new AddProductToCart();
 			transaction = new Transaction();
 	}
