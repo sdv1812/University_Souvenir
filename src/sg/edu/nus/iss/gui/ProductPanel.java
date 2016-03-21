@@ -18,14 +18,14 @@ import javax.swing.JTextField;
 
 public class ProductPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	storeApplication manager;
+	StoreApplication manager;
 	private java.util.List<Product> product;
 	private java.awt.List          productList;
 	private JTextField 				memberId;
 	private JTextField				quantity;
 	private JTextField				productId;
 
-	public ProductPanel(storeApplication manager){
+	public ProductPanel(StoreApplication manager){
 		this.manager = manager;
         /*setLayout (new BorderLayout());
         productList = new java.awt.List (5);

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import sg.edu.nus.iss.store.*;
 
 public class AddPaymentDialog extends OkCancelDialog {
-	private storeApplication manager ;
+	private StoreApplication manager ;
 	private java.util.ArrayList<Cart> cart;
 	private JLabel productDetails;
 	private JTextField total;
@@ -22,7 +22,7 @@ public class AddPaymentDialog extends OkCancelDialog {
 	
 	
 	
-	public AddPaymentDialog(storeApplication manager){
+	public AddPaymentDialog(StoreApplication manager){
 		super(manager.getTransactionWindow(),"Payment Details");
 		this.manager = manager;
 		TransactionWindow transactionWindow = manager.getTransactionWindow();

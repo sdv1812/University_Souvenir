@@ -1,19 +1,12 @@
 package sg.edu.nus.iss.store;
 
-
-import iss.tranasction.pos.Cart;
-import iss.tranasction.pos.Product;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class Transaction implements Comparable {
 	int tranasctionId = 1;

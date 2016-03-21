@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 
 public class TransactionWindow  extends JFrame{
 
-	storeApplication manager;
-	cartPanel cartPanel;
+	StoreApplication manager;
+	CartPanel cartPanel;
 	ProductPanel productPanel;
 	private WindowListener windowListener = new WindowAdapter () {
         public void windowClosing (WindowEvent e) {
@@ -20,11 +20,11 @@ public class TransactionWindow  extends JFrame{
         }
 	
 };
-public TransactionWindow(storeApplication manager){
+public TransactionWindow(StoreApplication manager){
 	super("Transaction");
 	this.manager=manager;
 	productPanel = new ProductPanel(manager);
-	cartPanel = new cartPanel(manager);
+	cartPanel = new CartPanel(manager);
 }
 public void refresh(){
 	productPanel.refresh();

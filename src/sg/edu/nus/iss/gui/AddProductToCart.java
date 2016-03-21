@@ -3,12 +3,12 @@ import sg.edu.nus.iss.store.*;
 
 public class AddProductToCart {
 	
-	storeApplication manager;
+	StoreApplication manager;
 	Cart cart = new Cart();
 	Product product;
 	public AddProductToCart() {
 	}
-	public AddProductToCart(storeApplication manager) {
+	public AddProductToCart(StoreApplication manager) {
 		super();
 		this.manager = manager;
 	}

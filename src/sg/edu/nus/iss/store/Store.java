@@ -1,14 +1,8 @@
 package sg.edu.nus.iss.store;
 
-import iss.tranasction.pos.AddProductToCart;
-import iss.tranasction.pos.Cart;
-import iss.tranasction.pos.Product;
-import iss.tranasction.pos.Transaction;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
+import sg.edu.nus.iss.gui.AddProductToCart;
 
 public class Store {
 	private Cart cart;

@@ -5,11 +5,11 @@ import sg.edu.nus.iss.gui.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class storeApplication {
+public class StoreApplication {
 	private Store store;
 	private TransactionWindow transActionWindow;
 	
-	public storeApplication(){
+	public StoreApplication(){
 		store = new Store();
 		transActionWindow = new TransactionWindow(this);
 	}
@@ -58,7 +58,7 @@ public class storeApplication {
 		
 	}
 	public static void main(String args[]){
-		storeApplication manager = new  storeApplication();
+		StoreApplication manager = new  StoreApplication();
 		/*Product p = new Product ("book", 128, "1");
 		ArrayList<Product> p1=s.addProduct("book", 128, "1");
 		//System.out.println(s.getProducts1());

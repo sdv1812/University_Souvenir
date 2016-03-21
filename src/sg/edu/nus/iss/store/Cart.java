@@ -1,6 +1,5 @@
 package sg.edu.nus.iss.store;
 
-import iss.tranasction.pos.Product;
 
 
 import java.util.ArrayList;

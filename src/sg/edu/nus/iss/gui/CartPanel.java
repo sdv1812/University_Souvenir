@@ -16,12 +16,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class cartPanel extends Panel {
-	storeApplication manager;
+public class CartPanel extends Panel {
+	StoreApplication manager;
 	private java.util.ArrayList<Cart> cart;
 	private java.awt.List         cartList;
 	private CartDisplay c = new CartDisplay() ;
-	public cartPanel(storeApplication manager){
+	public CartPanel(StoreApplication manager){
 		this.manager = manager;
 		setLayout(new BorderLayout());
 		cartList = new java.awt.List (6);
