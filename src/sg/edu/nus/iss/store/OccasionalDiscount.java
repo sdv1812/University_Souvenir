@@ -2,11 +2,11 @@ package sg.edu.nus.iss.store;
 
 public class OccasionalDiscount extends Discount {
 		private String startDate;
-		private int discountPeriod;
+		private String discountPeriod;
 		private String applicableToMember;
 		
 
-	public OccasionalDiscount(String discountCode, String description, String startDate, int discountPeriod,
+	public OccasionalDiscount(String discountCode, String description, String startDate, String discountPeriod,
 			float percentage) {
 		super(discountCode, description, percentage);
 		this.startDate = startDate;
@@ -22,11 +22,11 @@ public class OccasionalDiscount extends Discount {
 		this.startDate = startDate;
 	}
 
-	public int getDiscountPeriod() {
+	public String getDiscountPeriod() {
 		return discountPeriod;
 	}
 
-	public void setDiscountPeriod(int discountPeriod) {
+	public void setDiscountPeriod(String discountPeriod) {
 		this.discountPeriod = discountPeriod;
 	}
 

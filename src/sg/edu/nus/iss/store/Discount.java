@@ -1,6 +1,6 @@
 package sg.edu.nus.iss.store;
 
-public class Discount {
+public abstract class Discount {
 	public static final String DATE_FORMAT = "d-MMM-yyyy";
 	private String discountCode;
 	private String description;
@@ -35,6 +35,10 @@ public class Discount {
 	public String getDiscountCode() {
 		return discountCode;
 	}
+	public abstract String getStartDate();
+	
+	public abstract String getDiscountPeriod();
+	
 
 
 	

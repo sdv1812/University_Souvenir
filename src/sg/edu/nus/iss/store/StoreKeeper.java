@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.store;
 
+//**** Created by T. Surenthiran  *****
 public class StoreKeeper {
 	
 	private String storeKeeperName;
