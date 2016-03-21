@@ -1,5 +1,4 @@
-package sg.nus.iss.ft6.domain;
-
+package sg.edu.nus.iss.store;
 public class Vendor {
 	private String vendorName;
 	private String description;

@@ -1,4 +1,4 @@
-package iss.tranasction.pos;
+package sg.edu.nus.iss.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Panel;
