@@ -19,7 +19,7 @@ public class Store {
 	public Store(){
 			cart = new Cart();
 			product= new ArrayList<Product>();
-			addProductsToCart = new AddProductToCart();
+			//addProductsToCart = new AddProductToCart();
 			transaction = new Transaction();
 	}
 	public ArrayList<Product> getProducts(){
