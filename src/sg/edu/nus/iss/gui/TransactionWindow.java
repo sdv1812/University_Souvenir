@@ -13,7 +13,7 @@ public class TransactionWindow  extends JFrame{
 
 	StoreApplication manager;
 	CartPanel cartPanel;
-	ProductPanel productPanel;
+	TransactionProductPanel transactionProductPanel;
 	private WindowListener windowListener = new WindowAdapter () {
         public void windowClosing (WindowEvent e) {
             manager.shutdown ();
@@ -23,15 +23,15 @@ public class TransactionWindow  extends JFrame{
 public TransactionWindow(StoreApplication manager){
 	super("Transaction");
 	this.manager=manager;
-	productPanel = new ProductPanel(manager);
+	transactionProductPanel = new TransactionProductPanel(manager);
 	cartPanel = new CartPanel(manager);
 }
 public void refresh(){
-	productPanel.refresh();
+	transactionProductPanel.refresh();
 
 }
 public void refreshProducts(){
-	productPanel.refresh();
+	transactionProductPanel.refresh();
 }
 public void refreshCart(){
 	cartPanel.refresh();

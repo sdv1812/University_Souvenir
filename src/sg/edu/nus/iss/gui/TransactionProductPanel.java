@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 
 
-public class ProductPanel extends JPanel {
+public class TransactionProductPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	StoreApplication manager;
 	private java.util.List<Product> product;
@@ -25,7 +25,7 @@ public class ProductPanel extends JPanel {
 	private JTextField				quantity;
 	private JTextField				productId;
 
-	public ProductPanel(StoreApplication manager){
+	public TransactionProductPanel(StoreApplication manager){
 		this.manager = manager;
         /*setLayout (new BorderLayout());
         productList = new java.awt.List (5);
