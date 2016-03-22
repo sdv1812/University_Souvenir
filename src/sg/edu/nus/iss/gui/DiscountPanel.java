@@ -6,10 +6,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -89,7 +89,7 @@ public class DiscountPanel extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 12 ));
 		
 		JButton addDiscBtn = new JButton("Add Discount");
-		JButton modifyDiscBtn = new JButton("Modify Discount");
+		JButton modifyDiscBtn = new JButton("Modify Discount Percentage");
 
 		panel.add(label);
 		panel.add(addDiscBtn);
@@ -98,7 +98,7 @@ public class DiscountPanel extends JPanel {
 		addDiscBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
-				AddDiscountDialog d = new AddDiscountDialog (manager, dp, "Add Discount Dialog");
+				AddDiscountDialog d = new AddDiscountDialog (manager, dp);
 				d.setModal(true);
 				d.setLocationRelativeTo(manager.getMainWindow());
 				d.pack();
@@ -108,12 +108,17 @@ public class DiscountPanel extends JPanel {
 		
 		modifyDiscBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
+				String s =null;
 				action_source  =((JButton)e.getSource()).getText();
-				AddDiscountDialog d = new AddDiscountDialog (manager, dp, "Modify Discount Dialog");
-				d.setModal(true);
-				d.setLocationRelativeTo(manager.getMainWindow());
-				d.pack();
-				d.setVisible (true);
+				if(table.getSelectedRow()!=-1) {
+					for (int i=0; i<table.getColumnCount();i++) {
+						if(table.getColumnName(i).equalsIgnoreCase("Disc. Code")){
+							s= (String)table.getValueAt(table.getSelectedRow(), i);
+						}
+					}
+					String input = JOptionPane.showInputDialog("Input the new Percentage :");
+				    modifyDiscount(input, s);
+				}
 			}
 		});
 
@@ -151,6 +156,7 @@ public class DiscountPanel extends JPanel {
 							showConfirmDialog(s);
 						}
 					}
+
 				}
 			}
 		});
@@ -229,14 +235,16 @@ public class DiscountPanel extends JPanel {
 				add("Center",manager.createMainPanel());
 				revalidate();
 				repaint();
-			} 
+			} else if (action_source.equalsIgnoreCase("Modify Discount Percentage")) {
+				discountTableModel.fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());
+			}
 
 		}
 		
 //******************Show confirmation dialog on removing******************
 
 		public void showConfirmDialog(String s) { 
-			String title = "Remove Member";
+			String title = "Remove Discount";
 			String msg = "Do you really want to remove discount " + s + " ?";
 			ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {
 
@@ -254,8 +262,28 @@ public class DiscountPanel extends JPanel {
 			d.setVisible (true);
 		}
 		
-		public String getActionSource() {
-			return action_source;
+		public void modifyDiscount(String input , String discountCode){
+			if(!isFloat(input)) {
+				JOptionPane.showMessageDialog(this,
+	                    "Percentage should be a number with no string",
+	                    "Invalid percentage",
+	                    JOptionPane.ERROR_MESSAGE);
+			} else {
+				(manager.getDiscount(discountCode)).setPercentage(Float.parseFloat(input));
+				refresh();
+			}
+			
+			
+		}
+		
+		public boolean isFloat( String input ) {
+		    try {
+		        Float.parseFloat( input );
+		        return true;
+		    }
+		    catch( Exception e ) {
+		        return false;
+		    }
 		}
 
 }

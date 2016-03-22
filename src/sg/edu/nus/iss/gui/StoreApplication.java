@@ -72,5 +72,8 @@ public class StoreApplication {
 	public void removeDiscount(String discountCode) {
 		store.removeDiscount(discountCode);		
 	}
+	public Discount getDiscount(String discountCode) {
+		return store.getDiscount(discountCode);
+	}
 
 }

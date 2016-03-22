@@ -19,13 +19,13 @@ public class AddDiscountDialog extends OkCancelDialog{
 	private JTextField startDateText;
 	private JTextField periodText;
 	private JTextField percText;
-	JComboBox discountCategory;
+	JComboBox<String> discountCategory;
 	private static final String[] options = {"Member Discount", "Occasional Discount"};
 	private StoreApplication manager;
 	private DiscountPanel dp;
 
-	public AddDiscountDialog(StoreApplication manager, DiscountPanel dp, String title) {
-		super(manager.getMainWindow(), title);
+	public AddDiscountDialog(StoreApplication manager, DiscountPanel dp) {
+		super(manager.getMainWindow(), "Add Discount");
 		this.manager = manager;
 		this.dp = dp;
 	}
@@ -34,7 +34,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 		panel.setLayout(new GridLayout(0,2));
 		
 		JLabel selectDiscount = new JLabel("Select type of discount");
-		discountCategory = new JComboBox(options);
+		discountCategory = new JComboBox<String>(options);
 		JLabel dCode = new JLabel("Discount Code");
 		codeText = new JTextField();
 		JLabel dDescription = new JLabel("Description");
@@ -78,7 +78,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 					codeText.setEnabled(true);
 					descText.setEnabled(true);
 					percText.setEnabled(true);
-				}
+					}
 				if(dCategory.equals("Occasional Discount")){
 					startDateText.setText(null);
 					periodText.setText(null);

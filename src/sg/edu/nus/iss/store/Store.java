@@ -130,5 +130,9 @@ public class Store {
 		discounts.removeDiscount(discountCode);
 		
 	}
+	
+	public Discount getDiscount(String discountCode) {
+		return discounts.getDiscount(discountCode);
+	}
 
 }
