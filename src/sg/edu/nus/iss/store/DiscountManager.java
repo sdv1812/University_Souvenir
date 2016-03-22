@@ -56,9 +56,7 @@ public class DiscountManager {
 			return mDiscount;
 
 		return oDiscount;
-
 	}
-
 
 	public float calculateMemberDiscount(float totalPrice, Member member) {
 		Discount d;
@@ -74,6 +72,7 @@ public class DiscountManager {
 	}
 
 	public float calculateOccasionalDiscount(float totalPrice) {
+		float amt = 0;
 		for (Discount d : discounts){
 			String s= d.getStartDate();
 			if (d.getApplicableToMember().equalsIgnoreCase("A")){
@@ -85,7 +84,8 @@ public class DiscountManager {
 					String output = ft.format(c.getTime());
 					Date endDate = ft.parse(output);
 					if ((dNow.after(startDate)&&dNow.before(endDate))||dNow.equals(endDate)||dNow.equals(startDate)){
-						return totalPrice*(d.getPercentage());
+						if(totalPrice*(d.getPercentage())>amt)
+						amt = totalPrice*(d.getPercentage());
 					}
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
@@ -93,7 +93,7 @@ public class DiscountManager {
 				}
 			}
 		}
-		return 0;
+		return amt;
 
 	}
 
