@@ -31,7 +31,7 @@ public class CategoryPanel extends JPanel {
 	private JScrollPane scroller;
 	private JTable table;
 	private static final String[] COLUMN_NAMES = {"Code", "Category Name"};
-	private AbstractTableModel productTableModel;
+	private AbstractTableModel categoryTableModel;
 	private ArrayList<Category> categories ;
 	private String action_source;
 	private Border raisedetched;
@@ -47,7 +47,7 @@ public class CategoryPanel extends JPanel {
 		setLayout (new BorderLayout());
 		categories = manager.getCategories();
 		add(createButtonPanel(), BorderLayout.EAST);
-		add(showCategorListPanel(), BorderLayout.CENTER);
+		add(showCategoryListPanel(), BorderLayout.CENTER);
 		add(createAddCategoryPanel(), BorderLayout.SOUTH);
 
 	}
@@ -69,9 +69,6 @@ public class CategoryPanel extends JPanel {
 		panel.add(cNameT);
 		panel.add(cCode);
 		panel.add(cCodeT);
-
-		JPanel bp = new JPanel();
-		bp.setLayout(new GridLayout(1, 0));
 
 		JButton addBtn = new JButton ("Add");
 		addBtn.addActionListener (new ActionListener () { 
@@ -157,9 +154,9 @@ public class CategoryPanel extends JPanel {
 
 	}
 
-	//*****************To create Button Panel**********************	
+	//*****************To Show category List Panel**********************	
 	
-	private JPanel showCategorListPanel() {  
+	private JPanel showCategoryListPanel() {  
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
@@ -167,7 +164,7 @@ public class CategoryPanel extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
 		table.setModel(getTableModel());
-		productTableModel.fireTableDataChanged();
+		categoryTableModel.fireTableDataChanged();
 		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
 		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
 
@@ -184,10 +181,10 @@ public class CategoryPanel extends JPanel {
 	//**********************Set Table Mode********l**********************	
 	
 	public TableModel getTableModel() {
-		if (productTableModel != null) 
-			return productTableModel;
+		if (categoryTableModel != null) 
+			return categoryTableModel;
 		else {
-			productTableModel = new AbstractTableModel() {
+			categoryTableModel = new AbstractTableModel() {
 
 				/**
 				 * 
@@ -220,7 +217,7 @@ public class CategoryPanel extends JPanel {
 				}
 			};
 
-			return productTableModel;
+			return categoryTableModel;
 		}
 	}
 
@@ -230,10 +227,10 @@ public class CategoryPanel extends JPanel {
 	public void refresh(){   
 		if(action_source.equalsIgnoreCase("Add")){
 			int rowIndex = categories.size()-1;
-			productTableModel.fireTableRowsInserted(rowIndex, rowIndex);
+			categoryTableModel.fireTableRowsInserted(rowIndex, rowIndex);
 		}
 		else if(action_source.equalsIgnoreCase("Remove")){
-			productTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
+			categoryTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
 		}
 
 		else if(action_source.equalsIgnoreCase("Back")){

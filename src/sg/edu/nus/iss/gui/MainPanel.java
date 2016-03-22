@@ -16,6 +16,7 @@ public class MainPanel extends JPanel {
 	private MemberPanel memberPanel;
 	private ProductPanel productPanel;
 	private CategoryPanel categoryPanel;
+	private DiscountPanel discountPanel;
 
 	/**
 	 * Create the panel.
@@ -100,6 +101,13 @@ public class MainPanel extends JPanel {
 		JButton btnDiscount = new JButton("Discount");
 		btnDiscount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				discountPanel = new DiscountPanel(manager);
+				removeAll();
+				setLayout(new BorderLayout());
+				discountPanel.setVisible(true);
+				add("Center", discountPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		panelRight.add(btnDiscount);

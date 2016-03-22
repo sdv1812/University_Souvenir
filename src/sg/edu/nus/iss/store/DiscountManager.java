@@ -1,5 +1,8 @@
 package sg.edu.nus.iss.store;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DiscountManager {
-	ArrayList<Discount> discounts;
+	private ArrayList<Discount> discounts;
 	private Date dNow;
 	private SimpleDateFormat ft;
 
@@ -19,13 +22,13 @@ public class DiscountManager {
 	}
 
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
-
-		for(Discount d : discounts){
-			if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
-				return false;
-			}
-		} 
-		if (startDate != null)
+			for(Discount d : discounts){
+				if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
+					return false;
+				}
+			} 
+		
+		if (startDate == "")
 			discounts.add(new MemberDiscount(discountCode, description, percentage));
 		else
 			discounts.add(new OccasionalDiscount(discountCode, description, startDate, discountPeriod, percentage));
@@ -96,6 +99,41 @@ public class DiscountManager {
 
 	public void modifyMemberDiscount() {
 
+	}
+
+	public  ArrayList<Discount> getDiscounts() {
+		// TODO Auto-generated method stub
+		return discounts;
+	}
+	
+	public void writeToFile() {
+		try {
+			BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/Discounts.dat"));
+			for(Discount c : discounts){
+				writer.write(c.getDiscountCode()+",");
+				writer.write(c.getDescription()+",");
+				writer.write(c.getStartDate()+",");
+				writer.write(c.getDiscountPeriod()+",");
+				writer.write(c.getPercentage()+",");
+				writer.write(c.getApplicableToMember()+"\n");
+			}
+			writer.close();
+		}catch (IOException ex) {
+			System.out.println("Cannot Write to file !");
+			ex.printStackTrace();
+		}
+	}
+
+	public void removeDiscount(String discountCode) {
+		if(discounts!=null){
+			for(Discount d : discounts){
+				if(discountCode.compareTo(d.getDiscountCode())==0){
+					discounts.remove(d);
+					break;
+				}
+			}
+		writeToFile();
+		}
 	}
 
 }

@@ -8,11 +8,13 @@ public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
 	private StoreKeeperRegister storeKeepers;
+	private DiscountManager discounts;
 	
 	public Store() {
 		members = new MemberRegister();
 		categories = new CategoryRegister();
 		storeKeepers = new StoreKeeperRegister();
+		discounts = new DiscountManager();
 	}
 	
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword){
@@ -90,6 +92,16 @@ public class Store {
 				String result[] = line.split(",");
 				storeKeepers.addStoreKeeper(result[0], result[1]);
 			}
+			
+			reader = new BufferedReader(new FileReader("StoreAppData/Discounts.dat"));
+			line = null;
+			while ((line = reader.readLine())!= null){
+				String result[] = line.split(",");
+				if (result[5].equals("M"))
+				discounts.addDiscount(result[0], result[1], Float.parseFloat(result[4]), "", "");
+				else if(result[5].equals("A"))
+					discounts.addDiscount(result[0], result[1], Float.parseFloat(result[4]), result[2], result[3]);
+			}
 			reader.close();
 		}catch (Exception ex) {
 			System.out.println("File not found");
@@ -100,6 +112,23 @@ public class Store {
 	public void removeCategory(String categoryCode) {
 		// TODO Auto-generated method stub
 		categories.removeCategory(categoryCode);
+		categories.writeToFile();
+	}
+
+	public ArrayList<Discount> getDiscounts() {
+		// TODO Auto-generated method stub
+		return discounts.getDiscounts();
+	}
+	
+	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
+		boolean b = discounts.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
+		discounts.writeToFile();
+		return b;
+	}
+
+	public void removeDiscount(String discountCode) {
+		discounts.removeDiscount(discountCode);
+		
 	}
 
 }

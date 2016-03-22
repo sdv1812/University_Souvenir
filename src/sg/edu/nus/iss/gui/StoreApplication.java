@@ -60,4 +60,17 @@ public class StoreApplication {
 		// TODO Auto-generated method stub
 		store.removeCategory(categoryCode);
 	}
+	
+	public ArrayList<Discount> getDiscounts(){
+		return store.getDiscounts();
+	}
+	
+	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
+		return store.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
+	}
+
+	public void removeDiscount(String discountCode) {
+		store.removeDiscount(discountCode);		
+	}
+
 }
