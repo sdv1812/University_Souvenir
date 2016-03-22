@@ -46,6 +46,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 		JLabel dPercent = new JLabel("Percentage");
 		percText = new JTextField();
 		
+		discountCategory.setSelectedIndex(0);
 		panel.add(selectDiscount);
 		panel.add(discountCategory);
 		panel.add(dCode);
@@ -63,9 +64,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 		descText.setEnabled(false);
 		startDateText.setEnabled(false);
 		periodText.setEnabled(false);
-		percText.setEnabled(false);
-		startDateText.setText("ALWAYS");
-		periodText.setText("ALWAYS");		
+		percText.setEnabled(false);		
 		
 		discountCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

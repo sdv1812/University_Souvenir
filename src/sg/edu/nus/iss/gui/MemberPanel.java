@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import javax.swing.JTable;
@@ -75,6 +76,11 @@ public class MemberPanel extends JPanel {
 							showConfirmDialog(s);
 						}
 					}
+				} else {
+					JOptionPane.showMessageDialog(mp,
+		                    "Please select a row to remove!",
+		                    "Select a Row",
+		                    JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

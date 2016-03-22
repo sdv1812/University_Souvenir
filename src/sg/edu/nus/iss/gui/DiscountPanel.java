@@ -27,7 +27,7 @@ public class DiscountPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1722399005697599362L;
-	
+
 	private JScrollPane scroller;
 	private JTable table;
 	private static final String[] COLUMN_NAMES = {"Disc. Code", "Description", "Start Date", "Period", "Disc. %age","Member(M)/All(A)" };
@@ -49,15 +49,15 @@ public class DiscountPanel extends JPanel {
 		setLayout(new BorderLayout());
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
-		
+
 		add(createButtonPanel(), BorderLayout.EAST);
 		add(showDiscountListPanel(), BorderLayout.CENTER);
 		add(createAddDiscountPanel(), BorderLayout.SOUTH);
 
 	}
-	
-//**********************Display Discount List Panel********l**********************	
-	
+
+	//**********************Display Discount List Panel********l**********************	
+
 	private JPanel showDiscountListPanel() {  
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -79,15 +79,15 @@ public class DiscountPanel extends JPanel {
 		return panel;
 
 	}
-	
-//**********************Add/Modify Discount Panel *************************************	
+
+	//**********************Add/Modify Discount Panel *************************************	
 	private JPanel createAddDiscountPanel () { 
 
 		JPanel panel = new JPanel(new GridLayout(1, 0, 20, 0));
 
 		JLabel label = new JLabel("Add/Modify Discount:");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12 ));
-		
+
 		JButton addDiscBtn = new JButton("Add Discount");
 		JButton modifyDiscBtn = new JButton("Modify Discount Percentage");
 
@@ -105,7 +105,7 @@ public class DiscountPanel extends JPanel {
 				d.setVisible (true);
 			}
 		});
-		
+
 		modifyDiscBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				String s =null;
@@ -117,7 +117,23 @@ public class DiscountPanel extends JPanel {
 						}
 					}
 					String input = JOptionPane.showInputDialog("Input the new Percentage :");
-				    modifyDiscount(input, s);
+					if(input!=null){
+						if(!isFloat(input)) {
+							JOptionPane.showMessageDialog(dp,
+									"Percentage should be a number not a string!",
+									"Invalid percentage",
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							(manager.getDiscount(s)).setPercentage(Float.parseFloat(input));
+							refresh();
+						}
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(dp,
+							"Please select a row to modify!",
+							"Select a Row",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -127,9 +143,9 @@ public class DiscountPanel extends JPanel {
 
 		return panel;
 	}
-	
-//*****************To create Button Panel**********************	
-	
+
+	//*****************To create Button Panel**********************	
+
 	private JPanel createButtonPanel(){ 
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
@@ -157,6 +173,11 @@ public class DiscountPanel extends JPanel {
 						}
 					}
 
+				}  else {
+					JOptionPane.showMessageDialog(dp,
+							"Please select a row to remove!",
+							"Select a Row",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -171,119 +192,106 @@ public class DiscountPanel extends JPanel {
 		return panel;
 
 	}
-	
-//**********************Set Table Model********l********************************	
-	
-		public TableModel getTableModel() {
-			if (discountTableModel != null) 
-				return discountTableModel;
-			else {
-				discountTableModel = new AbstractTableModel() {
 
-					/**
-					 * 
-					 */
-					private static final long serialVersionUID = 1L;
+	//**********************Set Table Model********l********************************	
 
-					@Override
-					public String getColumnName(int column) {
-						return COLUMN_NAMES[column];
-					}
+	public TableModel getTableModel() {
+		if (discountTableModel != null) 
+			return discountTableModel;
+		else {
+			discountTableModel = new AbstractTableModel() {
 
-					@Override
-					public int getRowCount() {
-						return discounts.size();
-					}
-
-					@Override
-					public int getColumnCount() {
-						return COLUMN_NAMES.length;
-					}
-
-					@Override
-					public Object getValueAt(int rowIndex, int columnIndex) {
-						Discount discount = discounts.get(rowIndex);
-						switch (columnIndex) {
-						case 0: return discount.getDiscountCode();
-						case 1: return discount.getDescription();
-						case 2: return discount.getStartDate();
-						case 3: return discount.getDiscountPeriod();
-						case 4: return discount.getPercentage();
-						case 5: return discount.getApplicableToMember();
-						default: return null;
-						}
-					}
-				};
-
-				return discountTableModel;
-			}
-		}
-	
-//******************Reflect the changes done on the screen using buttons******************
-		
-		public void refresh(){   
-			if(action_source.equalsIgnoreCase("Add Discount")){
-				int rowIndex = discounts.size()-1;
-				discountTableModel.fireTableRowsInserted(rowIndex, rowIndex);
-			}
-			else if(action_source.equalsIgnoreCase("Remove")){
-				discountTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
-			}
-
-			else if(action_source.equalsIgnoreCase("Back")){
-				removeAll();
-				add("Center",manager.createMainPanel());
-				revalidate();
-				repaint();
-			} else if (action_source.equalsIgnoreCase("Modify Discount Percentage")) {
-				discountTableModel.fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());
-			}
-
-		}
-		
-//******************Show confirmation dialog on removing******************
-
-		public void showConfirmDialog(String s) { 
-			String title = "Remove Discount";
-			String msg = "Do you really want to remove discount " + s + " ?";
-			ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {
-
+				/**
+				 * 
+				 */
 				private static final long serialVersionUID = 1L;
 
-				protected boolean performOkAction () {
-					manager.removeDiscount(s);
-					refresh();
-					return true;
+				@Override
+				public String getColumnName(int column) {
+					return COLUMN_NAMES[column];
+				}
+
+				@Override
+				public int getRowCount() {
+					return discounts.size();
+				}
+
+				@Override
+				public int getColumnCount() {
+					return COLUMN_NAMES.length;
+				}
+
+				@Override
+				public Object getValueAt(int rowIndex, int columnIndex) {
+					Discount discount = discounts.get(rowIndex);
+					switch (columnIndex) {
+					case 0: return discount.getDiscountCode();
+					case 1: return discount.getDescription();
+					case 2: return discount.getStartDate();
+					case 3: return discount.getDiscountPeriod();
+					case 4: return discount.getPercentage();
+					case 5: return discount.getApplicableToMember();
+					default: return null;
+					}
 				}
 			};
-			d.setModal(true);
-			d.setLocationRelativeTo(this);
-			d.pack();
-			d.setVisible (true);
+
+			return discountTableModel;
 		}
-		
-		public void modifyDiscount(String input , String discountCode){
-			if(!isFloat(input)) {
-				JOptionPane.showMessageDialog(this,
-	                    "Percentage should be a number with no string",
-	                    "Invalid percentage",
-	                    JOptionPane.ERROR_MESSAGE);
-			} else {
-				(manager.getDiscount(discountCode)).setPercentage(Float.parseFloat(input));
+	}
+
+	//******************Reflect the changes done on the screen using buttons******************
+
+	public void refresh(){   
+		if(action_source.equalsIgnoreCase("Add Discount")){
+			int rowIndex = discounts.size()-1;
+			discountTableModel.fireTableRowsInserted(rowIndex, rowIndex);
+		}
+		else if(action_source.equalsIgnoreCase("Remove")){
+			discountTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
+		}
+
+		else if(action_source.equalsIgnoreCase("Back")){
+			removeAll();
+			add("Center",manager.createMainPanel());
+			revalidate();
+			repaint();
+		} else if (action_source.equalsIgnoreCase("Modify Discount Percentage")) {
+			discountTableModel.fireTableRowsUpdated(table.getSelectedRow(), table.getSelectedRow());
+		}
+
+	}
+
+	//******************Show confirmation dialog on removing******************
+
+	public void showConfirmDialog(String s) { 
+		String title = "Remove Discount";
+		String msg = "Do you really want to remove discount " + s + " ?";
+		ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {
+
+			private static final long serialVersionUID = 1L;
+
+			protected boolean performOkAction () {
+				manager.removeDiscount(s);
 				refresh();
+				return true;
 			}
-			
-			
+		};
+		d.setModal(true);
+		d.setLocationRelativeTo(this);
+		d.pack();
+		d.setVisible (true);
+	}
+
+
+	public boolean isFloat( String input ) {
+		try {
+			Float.parseFloat( input );
+			return true;
 		}
-		
-		public boolean isFloat( String input ) {
-		    try {
-		        Float.parseFloat( input );
-		        return true;
-		    }
-		    catch( Exception e ) {
-		        return false;
-		    }
+		catch( Exception e ) {
+			return false;
 		}
+	}
 
 }
