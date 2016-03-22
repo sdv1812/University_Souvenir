@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = -8820162333877980019L;
-	private StoreApplication manager;
 	private MemberPanel memberPanel;
 	private ProductPanel productPanel;
 	private CategoryPanel categoryPanel;
@@ -22,19 +21,14 @@ public class MainPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
-		this.manager = manager;
-		setLayout(new GridLayout(1, 0, 80, 0));
-		
-		JPanel panelLeft = new JPanel();
-		add(panelLeft);
-		panelLeft.setLayout(new GridLayout(0, 1, 0, 80));
+		setLayout(new GridLayout(0, 2, 80, 40));
 		
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panelLeft.add(btnMakeATransaction);
+		add(btnMakeATransaction);
 		
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
@@ -48,12 +42,7 @@ public class MainPanel extends JPanel {
 				repaint();
 			}
 		});
-		panelLeft.add(btnMemberRegistration);
-		
-		JPanel panelRight = new JPanel();
-		add(panelRight);
-		panelRight.setLayout(new GridLayout(0, 1, 0, 40));
-
+		add(btnMemberRegistration);
 		
 		JButton btnCategory = new JButton("Category");
 		btnCategory.addActionListener(new ActionListener() {
@@ -67,7 +56,7 @@ public class MainPanel extends JPanel {
 				repaint();
 			}
 		});
-		panelRight.add(btnCategory);
+		add(btnCategory);
 		
 		JButton productBtn = new JButton("Product");
 		productBtn.addActionListener(new ActionListener() {
@@ -82,21 +71,21 @@ public class MainPanel extends JPanel {
 				repaint();
 			}
 		});
-		panelRight.add(productBtn);
+		add(productBtn);
 		
 		JButton vendorBtn = new JButton("Vendor");
 		vendorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panelRight.add(vendorBtn);
+		add(vendorBtn);
 		
 		JButton reportBtn = new JButton("Report");
 		reportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panelRight.add(reportBtn);
+		add(reportBtn);
 		
 		JButton btnDiscount = new JButton("Discount");
 		btnDiscount.addActionListener(new ActionListener() {
@@ -110,7 +99,7 @@ public class MainPanel extends JPanel {
 				repaint();
 			}
 		});
-		panelRight.add(btnDiscount);
+		add(btnDiscount);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -118,14 +107,8 @@ public class MainPanel extends JPanel {
 				System.exit(1);
 			}
 		});
-		panelRight.add(btnExit);
+		add(btnExit);
 
-	}
-
-	public void refresh() {
-		// TODO Auto-generated method stub
-		memberPanel.refresh();
-		
 	}
 
 }

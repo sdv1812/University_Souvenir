@@ -36,11 +36,9 @@ public class CategoryPanel extends JPanel {
 	private String action_source;
 	private Border raisedetched;
 	private Border loweredetched; 
-
-
+	
 	public CategoryPanel(StoreApplication manager) {
 		this.manager = manager;
-
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 
@@ -52,7 +50,8 @@ public class CategoryPanel extends JPanel {
 
 	}
 	
-	//*****************To create add category Panel**********************
+//*****************To create add category Panel**********************
+
 	private JPanel createAddCategoryPanel () { 
 
 		JPanel panel = new JPanel(new GridLayout(1, 0, 10, 0));
@@ -111,7 +110,7 @@ public class CategoryPanel extends JPanel {
 		return panel;
 	}
 
-	//*****************To create Button Panel**********************	
+//*****************To Show all Buttons **********************	
 	
 	private JPanel createButtonPanel(){ 
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
@@ -139,6 +138,11 @@ public class CategoryPanel extends JPanel {
 							showConfirmDialog(s);
 						}
 					}
+				}  else {
+					JOptionPane.showMessageDialog( manager.getMainWindow(),
+							"Please select a row to remove!",
+							"Select a Row",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -154,7 +158,7 @@ public class CategoryPanel extends JPanel {
 
 	}
 
-	//*****************To Show category List Panel**********************	
+//*****************To Show category List Panel**********************	
 	
 	private JPanel showCategoryListPanel() {  
 		JPanel panel = new JPanel();
@@ -178,7 +182,7 @@ public class CategoryPanel extends JPanel {
 
 	}
 	
-	//**********************Set Table Mode********l**********************	
+//**********************Set Table Mode******************************	
 	
 	public TableModel getTableModel() {
 		if (categoryTableModel != null) 
@@ -222,7 +226,7 @@ public class CategoryPanel extends JPanel {
 	}
 
 	
-	//******************Reflect the changes done on the screen using buttons******************
+//******************Reflect the changes done on the screen by the buttons******************
 	
 	public void refresh(){   
 		if(action_source.equalsIgnoreCase("Add")){
@@ -243,7 +247,7 @@ public class CategoryPanel extends JPanel {
 	}
 	
 	
-	// ************Show the confirm dialog on removing and performs the remove functionality*********
+// ************Show the confirm dialog on removing and performs the remove functionality*********
 	
 	public void showConfirmDialog(String s) { 
 		String title = "Remove Member";

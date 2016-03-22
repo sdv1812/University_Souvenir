@@ -22,11 +22,23 @@ public class StoreWindow extends JFrame {
 		super(s);
 		//this.manager = manager;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
 		try {
-			// Set to cross-platform Nimbus Look and Feel
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); // JDK 1.7
+			// Check if Nimbus is supported and get its classname
+			for (UIManager.LookAndFeelInfo lafInfo : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(lafInfo.getName())) {
+					UIManager.setLookAndFeel(lafInfo.getClassName());
+					break;
+				}
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				// If Nimbus is not available, set to the default Java (metal) look and feel
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		setVisible(true);

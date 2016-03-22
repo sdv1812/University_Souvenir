@@ -23,9 +23,6 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 
 public class DiscountPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1722399005697599362L;
 
 	private JScrollPane scroller;
@@ -39,9 +36,7 @@ public class DiscountPanel extends JPanel {
 	private StoreApplication manager;
 	private DiscountPanel dp;
 
-	/**
-	 * Create the panel.
-	 */
+
 	public DiscountPanel(StoreApplication manager) {
 		this.manager = manager;
 		dp = this;
@@ -95,6 +90,7 @@ public class DiscountPanel extends JPanel {
 		panel.add(addDiscBtn);
 		panel.add(modifyDiscBtn);
 
+		//Add Discount
 		addDiscBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
@@ -106,6 +102,7 @@ public class DiscountPanel extends JPanel {
 			}
 		});
 
+		// Modify Percentage 
 		modifyDiscBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				String s =null;
@@ -119,7 +116,7 @@ public class DiscountPanel extends JPanel {
 					String input = JOptionPane.showInputDialog("Input the new Percentage :");
 					if(input!=null){
 						if(!isFloat(input)) {
-							JOptionPane.showMessageDialog(dp,
+							JOptionPane.showMessageDialog(manager.getMainWindow(),
 									"Percentage should be a number not a string!",
 									"Invalid percentage",
 									JOptionPane.ERROR_MESSAGE);
@@ -130,7 +127,7 @@ public class DiscountPanel extends JPanel {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(dp,
+					JOptionPane.showMessageDialog(manager.getMainWindow(),
 							"Please select a row to modify!",
 							"Select a Row",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -174,7 +171,7 @@ public class DiscountPanel extends JPanel {
 					}
 
 				}  else {
-					JOptionPane.showMessageDialog(dp,
+					JOptionPane.showMessageDialog(manager.getMainWindow(),
 							"Please select a row to remove!",
 							"Select a Row",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -262,7 +259,7 @@ public class DiscountPanel extends JPanel {
 
 	}
 
-	//******************Show confirmation dialog on removing******************
+//******************Show confirmation dialog on removing******************
 
 	public void showConfirmDialog(String s) { 
 		String title = "Remove Discount";
