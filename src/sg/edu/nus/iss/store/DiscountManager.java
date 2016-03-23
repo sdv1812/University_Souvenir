@@ -101,8 +101,9 @@ public class DiscountManager {
 
 	}
 
-	public void modifyMemberDiscount() {
-
+	public void modifyDiscount(String discountCode, float percentage) {
+		getDiscount(discountCode).setPercentage(percentage);
+		writeToFile();
 	}
 
 	public  ArrayList<Discount> getDiscounts() {

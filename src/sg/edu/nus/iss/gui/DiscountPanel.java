@@ -17,7 +17,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
@@ -126,7 +125,7 @@ public class DiscountPanel extends JPanel {
 									"Invalid percentage",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
-							(manager.getDiscount(s)).setPercentage(Float.parseFloat(input));
+							manager.modifyDiscount(s, Float.parseFloat(input));
 							refresh();
 						}
 					}

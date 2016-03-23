@@ -131,8 +131,13 @@ public class Store {
 		
 	}
 	
-	public Discount getDiscount(String discountCode) {
+	/*public Discount getDiscount(String discountCode) {
 		return discounts.getDiscount(discountCode);
+	}*/
+	
+	public void modifyDiscount(String discountCode, float percentage) {
+		discounts.modifyDiscount(discountCode, percentage);
+		
 	}
 
 }
