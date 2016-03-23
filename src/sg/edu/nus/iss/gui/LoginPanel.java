@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
-import java.awt.Component;
 
 public class LoginPanel extends JPanel {
 	/**
@@ -121,7 +120,7 @@ public class LoginPanel extends JPanel {
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(manager.validate(username.getText(), password.getText()/*(textField_1.getPassword()).toString()*/)){
+				if(manager.validate(username.getText(), String.valueOf(password.getPassword())/*(textField_1.getPassword()).toString()*/)){
 					mainPanel = createMainPanel();
 					removeAll();
 					setLayout(new BorderLayout());
