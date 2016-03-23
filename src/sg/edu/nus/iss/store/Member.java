@@ -1,5 +1,10 @@
 package sg.edu.nus.iss.store;
 
+/*
+ * Member class:Sub-class of Customer class.
+ * Author: Sanskar Deepak
+ */
+
 public class Member extends Customer{
 	private String memberID;
 	private int loyaltyPoints;

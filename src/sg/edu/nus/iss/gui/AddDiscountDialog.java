@@ -12,6 +12,10 @@ import javax.swing.JTextField;
 
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
+/*
+ * Author: Sanskar Deepak
+ */
+
 public class AddDiscountDialog extends OkCancelDialog{
 	private static final long serialVersionUID = 1L;
 	private JTextField codeText;

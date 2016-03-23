@@ -1,7 +1,7 @@
 package sg.edu.nus.iss.gui;
 import java.util.ArrayList;
-
 import sg.edu.nus.iss.store.*;
+
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;

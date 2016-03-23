@@ -21,6 +21,11 @@ import javax.swing.table.TableModel;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
+/*
+ * Author: Sanskar Deepak
+ */
+
+
 public class DiscountPanel extends JPanel {
 
 	private static final long serialVersionUID = 1722399005697599362L;

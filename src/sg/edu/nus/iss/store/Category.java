@@ -1,5 +1,11 @@
 package sg.edu.nus.iss.store;
 import java.io.*;
+
+/*
+ * Category class:to to create Category Object
+ * Author: Sanskar Deepak
+ */
+
 public class Category {
 	private String categoryCode;
 	private String categoryName;

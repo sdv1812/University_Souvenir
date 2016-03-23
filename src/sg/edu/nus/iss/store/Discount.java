@@ -1,5 +1,11 @@
 package sg.edu.nus.iss.store;
 
+/*
+ * Discount class: for all kinds of Discounts.
+ * Author: Sanskar Deepak
+ */
+
+
 public abstract class Discount {
 	public static final String DATE_FORMAT = "d-MMM-yyyy";
 	private String discountCode;

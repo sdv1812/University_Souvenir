@@ -25,6 +25,10 @@ import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.store.Member;
 
+/*
+ * Author: Sanskar Deepak
+ */
+
 public class MemberPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

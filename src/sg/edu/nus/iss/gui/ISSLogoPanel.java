@@ -3,6 +3,11 @@ package sg.edu.nus.iss.gui;
 import java.awt.*;
 import javax.swing.*;
 
+/*
+ * Author: Sanskar Deepak
+ */
+
+
 public class ISSLogoPanel extends JPanel{
 
 

@@ -5,6 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+ * CategoryRegister class:Manager class to manage Category Object
+ * Author: Sanskar Deepak
+ */
+
 public class CategoryRegister {
 	private ArrayList<Category> categories;
 	private Category category;

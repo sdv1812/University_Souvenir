@@ -3,14 +3,16 @@ package sg.edu.nus.iss.gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import sg.edu.nus.iss.utils.OkCancelDialog;
+
+/*
+ * Author: Sanskar Deepak
+ */
 
 public class AddProductDialog extends OkCancelDialog{
 	private static final long serialVersionUID = 1L;

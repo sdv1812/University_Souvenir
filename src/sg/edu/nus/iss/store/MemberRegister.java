@@ -2,6 +2,10 @@ package sg.edu.nus.iss.store;
 import java.io.*;
 import java.util.ArrayList;
 
+/*
+ * MemberRegister class: Manager class to manage Member objects.
+ * Author: Sanskar Deepak
+ */
 
 public class MemberRegister {
 	private ArrayList<Member> members;

@@ -1,5 +1,10 @@
 package sg.edu.nus.iss.store;
 
+/*
+ * MemberDiscount class: Sub-class of Discount Class.
+ * Author: Sanskar Deepak
+ */
+
 public class MemberDiscount extends Discount {
 	private String startDate;
 	private String discountPeriod;

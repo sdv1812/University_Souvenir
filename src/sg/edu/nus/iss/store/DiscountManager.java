@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/*
+ * DiscountManager class: Manager class to manage Discount Objects.
+ * Author: Sanskar Deepak
+ */
 public class DiscountManager {
 	private ArrayList<Discount> discounts;
 	private Date dNow;
