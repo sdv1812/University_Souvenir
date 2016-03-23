@@ -280,7 +280,7 @@ public class DiscountPanel extends JPanel {
 		d.setVisible (true);
 	}
 
-
+// To check if the number input is a float or not
 	public boolean isFloat( String input ) {
 		try {
 			Float.parseFloat( input );

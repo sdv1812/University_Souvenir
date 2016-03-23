@@ -120,7 +120,7 @@ public class LoginPanel extends JPanel {
 		loginBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(manager.validate(username.getText(), String.valueOf(password.getPassword())/*(textField_1.getPassword()).toString()*/)){
+				if(manager.validate(username.getText(), String.valueOf(password.getPassword()))){
 					mainPanel = createMainPanel();
 					removeAll();
 					setLayout(new BorderLayout());

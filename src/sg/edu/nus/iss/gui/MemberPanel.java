@@ -77,7 +77,7 @@ public class MemberPanel extends JPanel {
 		addBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
-				if (mNameT.getText()!=null && mIdT.getText()!=null){
+				if (mNameT.getText().length()!=0 && mIdT.getText().length()!=0){
 					if (!(manager.addMember(mNameT.getText(), mIdT.getText()))){
 						JOptionPane.showMessageDialog(manager.getMainWindow(),
 								"Member Already Exists !",
@@ -86,7 +86,8 @@ public class MemberPanel extends JPanel {
 					} else {
 						refresh();
 					}
-				} else {
+				}else {
+					
 					JOptionPane.showMessageDialog(manager.getMainWindow(),
 							"Fields cannot be empty !",
 							"Empty Fields",

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
-public class AddDiscountDialog extends OkCancelDialog{
+public class AddProductDialog extends OkCancelDialog{
 	private static final long serialVersionUID = 1L;
 	private JTextField codeText;
 	private JTextField descText;
@@ -22,12 +22,12 @@ public class AddDiscountDialog extends OkCancelDialog{
 	JComboBox<String> discountCategory;
 	private static final String[] options = {"Member Discount", "Occasional Discount"};
 	private StoreApplication manager;
-	private DiscountPanel dp;
+	private ProductPanel pp;
 
-	public AddDiscountDialog(StoreApplication manager, DiscountPanel dp) {
-		super(manager.getMainWindow(), "Add Discount");
+	public AddProductDialog(StoreApplication manager, ProductPanel pp) {
+		super(manager.getMainWindow(), "Add Product");
 		this.manager = manager;
-		this.dp = dp;
+		this.pp = pp;
 	}
 	protected JPanel createFormPanel() {
 		JPanel panel = new JPanel();
@@ -113,7 +113,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 		} else if ((((String)discountCategory.getSelectedItem()).equals("Occasional Discount"))) {
 			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), startDateText.getText(), periodText.getText());
 		}
-		dp.refresh();
+		pp.refresh();
 		if(b==false){
 			JOptionPane.showMessageDialog(this,
                     "Discount Code already exists !",
@@ -134,5 +134,4 @@ public class AddDiscountDialog extends OkCancelDialog{
 	        return false;
 	    }
 	}
-
 }

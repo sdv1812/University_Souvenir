@@ -21,7 +21,7 @@ public class MainPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
-		setLayout(new GridLayout(0, 2, 80, 80));
+		setLayout(new GridLayout(0, 2, 80, 60));
 		
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {

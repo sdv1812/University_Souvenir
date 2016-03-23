@@ -36,7 +36,7 @@ public class CategoryPanel extends JPanel {
 	private String action_source;
 	private Border raisedetched;
 	private Border loweredetched; 
-	
+
 	public CategoryPanel(StoreApplication manager) {
 		this.manager = manager;
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -49,8 +49,8 @@ public class CategoryPanel extends JPanel {
 		add(createAddCategoryPanel(), BorderLayout.SOUTH);
 
 	}
-	
-//*****************To create add category Panel**********************
+
+	//*****************To create add category Panel**********************
 
 	private JPanel createAddCategoryPanel () { 
 
@@ -73,20 +73,27 @@ public class CategoryPanel extends JPanel {
 		addBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
-				if (cCodeT.getText()!=null && cNameT.getText()!=null && cCodeT.getText().length()==3){
-					if (!(manager.addCategory(cCodeT.getText(), cNameT.getText()))){
-						JOptionPane.showMessageDialog(manager.getMainWindow(),
-								"Category Code Already Exists !",
-								"Duplicate Category Code",
-								JOptionPane.INFORMATION_MESSAGE); 
+				if (cCodeT.getText().length()!=0 && cNameT.getText().length()!=0){
+					if(cCodeT.getText().length()==3) {
+						if (!(manager.addCategory(cCodeT.getText(), cNameT.getText()))){
+							JOptionPane.showMessageDialog(manager.getMainWindow(),
+									"Category Code Already Exists !",
+									"Duplicate Category Code",
+									JOptionPane.ERROR_MESSAGE); 
+						} else {
+							refresh();
+						}
 					} else {
-						refresh();
+						JOptionPane.showMessageDialog(manager.getMainWindow(),
+								"Category code should have 3 characters.",
+								"Invalid Category Code",
+								JOptionPane.INFORMATION_MESSAGE);
 					}
 				} else {
 					JOptionPane.showMessageDialog(manager.getMainWindow(),
-							"Category code should have 3 characters.",
-							"Invalid Category Code",
-							JOptionPane.ERROR_MESSAGE); 
+							"Fields cannot be empty !",
+							"Empty Fields",
+							JOptionPane.INFORMATION_MESSAGE); 
 				}
 			}
 		});
@@ -110,8 +117,8 @@ public class CategoryPanel extends JPanel {
 		return panel;
 	}
 
-//*****************To Show all Buttons **********************	
-	
+	//*****************To Show all Buttons **********************	
+
 	private JPanel createButtonPanel(){ 
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
@@ -158,8 +165,8 @@ public class CategoryPanel extends JPanel {
 
 	}
 
-//*****************To Show category List Panel**********************	
-	
+	//*****************To Show category List Panel**********************	
+
 	private JPanel showCategoryListPanel() {  
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -181,9 +188,9 @@ public class CategoryPanel extends JPanel {
 		return panel;
 
 	}
-	
-//**********************Set Table Mode******************************	
-	
+
+	//**********************Set Table Mode******************************	
+
 	public TableModel getTableModel() {
 		if (categoryTableModel != null) 
 			return categoryTableModel;
@@ -225,9 +232,9 @@ public class CategoryPanel extends JPanel {
 		}
 	}
 
-	
-//******************Reflect the changes done on the screen by the buttons******************
-	
+
+	//******************Reflect the changes done on the screen by the buttons******************
+
 	public void refresh(){   
 		if(action_source.equalsIgnoreCase("Add")){
 			int rowIndex = categories.size()-1;
@@ -245,10 +252,10 @@ public class CategoryPanel extends JPanel {
 		} 
 
 	}
-	
-	
-// ************Show the confirm dialog on removing and performs the remove functionality*********
-	
+
+
+	// ************Show the confirm dialog on removing and performs the remove functionality*********
+
 	public void showConfirmDialog(String s) { 
 		String title = "Remove Member";
 		String msg = "Do you really want to remove member " + s + " ?";
