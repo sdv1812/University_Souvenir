@@ -1,12 +1,14 @@
 package sg.edu.nus.iss.gui;
 import java.util.ArrayList;
 import sg.edu.nus.iss.store.*;
+import sg.nus.iss.ft6.domain.Product;
+
 
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
 	public StoreApplication() {
-		
+		store = new Store();
 	}
 
 	public static void main(String[] args) {
@@ -15,12 +17,14 @@ public class StoreApplication {
 		storeApplication.start();
 
 	}
+	public Store getStore(){ //xuemin
+		return this.store;
+	}
 	
 	private void start() {
 		// TODO Auto-generated method stub
 		storeWindow = new StoreWindow("Store Application", this);
 		storeWindow.pack ();
-		store = new Store();
 		store.initializeData();
 		//storeWindow.refresh ();
 	}

@@ -2,19 +2,41 @@ package sg.edu.nus.iss.store;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
 	private StoreKeeperRegister storeKeepers;
 	private DiscountManager discounts;
+	private ProductReg pr; //xuemin
 	
 	public Store() {
 		members = new MemberRegister();
 		categories = new CategoryRegister();
 		storeKeepers = new StoreKeeperRegister();
 		discounts = new DiscountManager();
+		pr=new ProductReg(this); //xuemin
+	}
+	public ProductReg getProductReg(){ //xuemin
+		return pr;
+	}
+	
+	public CategoryRegister getCategoryReg(){ //xuemin
+		return categories;
+	}
+	public void readDataFromFile() throws IOException{ //xuemin
+		pr.createListFromFile();
+	}
+	
+	public void writeDataToFile() throws IOException{ //xuemin
+		pr.writeListToFile();
+	}
+	
+	public void removeProduct(Product p){  //xuemin
+		pr.removeProduct(p);
 	}
 	
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword){
