@@ -140,4 +140,12 @@ public class ProductRegister {
 		return products;
 	}
 	
+	//delete products of one category
+	public void deleteProductsOfCategory(Category category){
+		for(Product p:products){
+			if((p.getCategory().getCode()==category.getCode())&&(p.getCategory().getName()==category.getName())){
+				products.remove(p);
+			}
+		}
+	
 }
