@@ -46,7 +46,7 @@ public class Product {
 		this.orderQuantity=orderQuantity;
 	}
 	
-	public String getId(){
+	public String getProductId(){
 		return productId;
 	}
 	
@@ -61,7 +61,7 @@ public class Product {
 	public String getDescription(){
 		return description;
 	}
-	public int getQuantity(){
+	public int getQuantityAvailable(){
 		return quantity;
 	}
 	
@@ -81,7 +81,7 @@ public class Product {
 		return orderQuantity;
 	}
 	
-	public void setId(String id){
+	public void setProductId(String id){
 		this.productId=id;
 	}
 	
@@ -97,7 +97,7 @@ public class Product {
 		this.description=description;
 	}
 	
-	public void setQuantity(int quantity){
+	public void setQuantityAvailable(int quantity){
 		this.quantity=quantity;
 	}
 	
@@ -129,6 +129,10 @@ public class Product {
 		quantity+=addValue;
 	}
 	
+	public void minusQuantity(int purchasedQuantity){
+		quantity-=purchasedQuantity;
+	}
+	
 	/*
 	 * check if two product is same . Be used in ProductReg.
 	 */	
@@ -136,7 +140,7 @@ public class Product {
 		if(productName.equals(another.getName())&&category.equals(another.getCategory())&&
 				description.equals(another.getDescription())&&(price==another.getPrice())&&
 				barcodeNumber.equals(another.getBarcodeNumber())&&(threshold==another.getThreshold())&&
-				(orderQuantity==another.getQuantity())){
+				(orderQuantity==another.getQuantityAvailable())){
 			return true;
 		}else{
 			return false;

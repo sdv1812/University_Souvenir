@@ -43,7 +43,7 @@ public class CategoryRegister {
 	
 	public Category getCategory(String categoryCode) {
 		if(categories!=null){
-			
+			System.out.println();
 			for(Category c : categories){
 				if (categoryCode.compareTo(c.getCategoryCode())==0){
 					return c;

@@ -11,25 +11,35 @@ public class Store {
 	private CategoryRegister categories;
 	private StoreKeeperRegister storeKeepers;
 	private DiscountManager discounts;
-	private ProductReg pr; //xuemin
+	private ProductRegister pr; //xuemin
+	private Cart cart;
+	private ArrayList<Product> product;
+	private AddProductToCart addProductsToCart;
+	private Transaction transaction ;
+	private ArrayList<Cart> cartList ;
 	
 	public Store() {
 		members = new MemberRegister();
 		categories = new CategoryRegister();
 		storeKeepers = new StoreKeeperRegister();
 		discounts = new DiscountManager();
-		pr=new ProductReg(this); //xuemin
+		pr=new ProductRegister(this); //xuemin
 	}
-	public ProductReg getProductReg(){ //xuemin
+	public ProductRegister getProductReg(){ //xuemin
 		return pr;
+	}
+	
+	public ArrayList<Product> getProducts()
+	{
+		return pr.getProducts();
 	}
 	
 	public CategoryRegister getCategoryReg(){ //xuemin
 		return categories;
 	}
-	public void readDataFromFile() throws IOException{ //xuemin
+	/*public void readDataFromFile() throws IOException{ //xuemin
 		pr.createListFromFile();
-	}
+	}*/
 	
 	public void writeDataToFile() throws IOException{ //xuemin
 		pr.writeListToFile();
@@ -37,6 +47,10 @@ public class Store {
 	
 	public void removeProduct(Product p){  //xuemin
 		pr.removeProduct(p);
+	}
+	
+	public void removeProduct(String id){  //xuemin
+		pr.removeProduct(id);
 	}
 	
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword){
@@ -94,6 +108,8 @@ public class Store {
 	@SuppressWarnings("resource")
 	public void initializeData(){
 		try {
+			
+			
 			BufferedReader reader = new BufferedReader(new FileReader("StoreAppData/Members.dat"));
 			String line = null;
 			while ((line = reader.readLine())!= null){
@@ -124,6 +140,12 @@ public class Store {
 				else if(result[5].equals("A"))
 					discounts.addDiscount(result[0], result[1], Float.parseFloat(result[4]), result[2], result[3]);
 			}
+			try {
+				pr.createListFromFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			reader.close();
 		}catch (Exception ex) {
 			System.out.println("File not found");
@@ -153,13 +175,51 @@ public class Store {
 		
 	}
 	
-	/*public Discount getDiscount(String discountCode) {
-		return discounts.getDiscount(discountCode);
-	}*/
+	public String getDiscount() {
+		double discountValue = transaction.getDiscountPercentage();
+		String discount = Double.toString(discountValue);
+		return discount;
+	}
 	
 	public void modifyDiscount(String discountCode, float percentage) {
 		discounts.modifyDiscount(discountCode, percentage);
+	}
+	
+	public ArrayList<Cart> getProductsAddedInCart() {
+		// TODO Auto-generated method stub
+		return cartList;
+	}
+	public void beginCheckout(ArrayList<Cart> cartProducts) {
+				transaction.addProductsToCart(cartProducts);
 		
 	}
+	public String getTransactionTotal() {
+		// TODO Auto-generated method stub
+		double transactionTotal = transaction.calculateTransactionTotal();
+		String total = Double.toString(transactionTotal);
+		return total;
+	}
+	
+	public void makePayment(double amountreceived, double transactiontotal,
+			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
+			transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
+	}
+	
+	public void removeCartItem(Cart lineItem) {
+		cartList.remove(lineItem);
+	}
+	
+	public boolean  addProductsToCart(String productId,int quantity ,String memberId){
+		boolean addProductStatus = false;
+		System.out.println("Product id is"+productId+"Quantity is "+quantity+"Member id is"+memberId);
+		Cart c1 =addProductsToCart.addProductsToCart(productId, quantity, memberId);
+		//System.out.println("Product addition is "+c1.toString());
+		if(c1!=null){
+			cartList.add(c1);
+			addProductStatus = true;
+		}
+		return addProductStatus;
+	}
+
 
 }

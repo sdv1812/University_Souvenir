@@ -1,14 +1,17 @@
 package sg.edu.nus.iss.gui;
 import java.util.ArrayList;
 import sg.edu.nus.iss.store.*;
-import sg.nus.iss.ft6.domain.Product;
+import sg.edu.nus.iss.utils.ConfirmDialog;
+
 
 
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
+	//private TransactionWindow transActionWindow;
 	public StoreApplication() {
 		store = new Store();
+		//transActionWindow = new TransactionWindow(this);
 	}
 
 	public static void main(String[] args) {
@@ -17,7 +20,7 @@ public class StoreApplication {
 		storeApplication.start();
 
 	}
-	public Store getStore(){ //xuemin
+	public Store getStore(){ 
 		return this.store;
 	}
 	
@@ -28,6 +31,10 @@ public class StoreApplication {
 		store.initializeData();
 		//storeWindow.refresh ();
 	}
+	
+	public void shutdown () {
+		System.exit(0);
+		}
 	
 	public boolean validate(String storeKeeperName, String password){
 		return store.validate(storeKeeperName, password);
@@ -83,5 +90,69 @@ public class StoreApplication {
 	public void modifyDiscount(String discountCode, float percentage) {
 		store.modifyDiscount(discountCode, percentage);
 	}
+	
+	public boolean  addProductsToCart(String productId,int quantity,String memberId){
+		boolean addProductStatus =store.addProductsToCart( productId, quantity, memberId);
+		storeWindow.refreshCart();
+		return addProductStatus;
+		//refresh cart panel
+		}
+	
+	public ArrayList<Cart> getProductsAddedInCart() {
+		// TODO Auto-generated method stub
+		return store.getProductsAddedInCart();
+		}
+	
+	public ArrayList<Product> getProducts(){
+		return store.getProducts();
+	}
+
+	 
+	public void removeProduct(String id){
+		store.removeProduct(id);
+	}
+	
+	public String getTransactionTotal() {
+		// TODO Auto-generated method stub
+		return store.getTransactionTotal();
+		}
+	public void beginCheckout(ArrayList<Cart> cart){
+		store.beginCheckout(cart);
+		}
+	
+
+	
+	public void removeSelectedItem() {
+		final Cart lineItem = storeWindow.getSelectedCartItem();
+		if(lineItem==null){
+			return;
+		}
+		String title = "Remove Product";
+	    String msg = "Do you really want to remove Product from Cart " + lineItem.toString() + " ?";
+	    ConfirmDialog confirm = new ConfirmDialog(storeWindow,title,msg){
+	    	private static final long serialVersionUID = 1L;
+			@Override
+			protected boolean performOkAction() {
+				store.removeCartItem(lineItem);
+				storeWindow.refreshCart();
+				return true;
+			}
+	    	
+	    };
+	    confirm.pack();
+	    confirm.setVisible(true);	
+	}
+	
+	public void makePayment(double amountreceived, double transactiontotal,
+			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
+				store.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
+		// TODO Auto-generated method stub
+
+		}
+	public String getDiscount() {
+		return store.getDiscount();
+		}
+
+
 
 }

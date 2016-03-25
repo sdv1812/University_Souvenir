@@ -2,16 +2,16 @@ package sg.edu.nus.iss.gui;
 
 import javax.swing.JPanel;
 
+import sg.edu.nus.iss.store.Cart;
+
 import javax.swing.JButton;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-/*
- * Author: Sanskar Deepak
- */
 
 public class MainPanel extends JPanel {
 
@@ -20,6 +20,8 @@ public class MainPanel extends JPanel {
 	private ProductPanel productPanel;
 	private CategoryPanel categoryPanel;
 	private DiscountPanel discountPanel;
+	private CartPanel cartPanel;
+	private TransactionProductPanel transactionProductPanel;
 
 	/**
 	 * Create the panel.
@@ -30,6 +32,16 @@ public class MainPanel extends JPanel {
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				transactionProductPanel = new TransactionProductPanel(manager);
+				cartPanel = new CartPanel(manager);
+				removeAll();
+				Panel p = new Panel();				//New change 
+				p.setLayout(new GridLayout(0, 1));
+				p.add(transactionProductPanel);
+				p.add(cartPanel);
+				add("Center",p);
+				revalidate();
+				repaint();
 			}
 		});
 		add(btnMakeATransaction);
@@ -113,6 +125,17 @@ public class MainPanel extends JPanel {
 		});
 		add(btnExit);
 
+	}
+
+	public void refreshCart() {
+		// TODO Auto-generated method stub
+		cartPanel.refresh();
+		
+	}
+	
+	public Cart getSelectedCartItem() {
+		Cart selectedLineItem = cartPanel.getRemoveSelectedCartItem();
+		return selectedLineItem;
 	}
 
 }

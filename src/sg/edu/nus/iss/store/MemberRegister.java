@@ -74,5 +74,9 @@ public class MemberRegister {
 			ex.printStackTrace();
 		}
 	}
+	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

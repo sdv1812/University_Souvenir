@@ -48,13 +48,13 @@ public class DiscountManager {
 		return null;
 	}
 
-	public float getMaxDiscount(float totalPrice) {
+	public double getMaxDiscount(double totalPrice) {
 		return 0 ;
 	}
 
-	public float getMaxDiscount(float totalPrice, Member member) {
-		float mDiscount = calculateMemberDiscount(totalPrice, member);
-		float oDiscount = calculateOccasionalDiscount(totalPrice);
+	public double getMaxDiscount(double totalPrice, Member member) {
+		double mDiscount = calculateMemberDiscount(totalPrice, member);
+		double oDiscount = calculateOccasionalDiscount(totalPrice);
 
 		if (mDiscount>oDiscount)
 			return mDiscount;
@@ -62,9 +62,9 @@ public class DiscountManager {
 		return oDiscount;
 	}
 
-	public float calculateMemberDiscount(float totalPrice, Member member) {
+	public double calculateMemberDiscount(double totalPrice, Member member) {
 		Discount d;
-		float discount;
+		double discount;
 		if(member.getLoyaltyPoints()==-1){
 			d= getDiscount("MEMBER_FIRST");
 			discount = totalPrice*(d.getPercentage());
@@ -75,8 +75,8 @@ public class DiscountManager {
 		return discount;
 	}
 
-	public float calculateOccasionalDiscount(float totalPrice) {
-		float amt = 0;
+	public double calculateOccasionalDiscount(double totalPrice) {
+		double amt = 0;
 		for (Discount d : discounts){
 			String s= d.getStartDate();
 			if (d.getApplicableToMember().equalsIgnoreCase("A")){

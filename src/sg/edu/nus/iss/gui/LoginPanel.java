@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+
+import sg.edu.nus.iss.store.Cart;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -154,6 +157,15 @@ public class LoginPanel extends JPanel {
 
 	public MainPanel createMainPanel() {
 		return (new MainPanel(manager));
+	}
+
+	public void refreshCart() {
+		mainPanel.refreshCart();
+		
+	}
+	
+	public Cart getSelectedCartItem() {
+		return mainPanel.getSelectedCartItem();
 	}
 
 }

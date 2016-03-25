@@ -12,7 +12,7 @@ import java.util.Iterator;
  * Author:Wang Xuemin
  */
 
-public class ProductReg {
+public class ProductRegister {
 	//list of product
 	private ArrayList<Product> products;
 	//file operation class,used to read productList from file and write productList to file
@@ -21,10 +21,15 @@ public class ProductReg {
 	private Store store;
 	
 	//constructor
-	public ProductReg(Store store){
+	public ProductRegister(Store store){
 		pDao=new ProductDao(store);
+	
 	}
 	
+	public ProductRegister() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//read product list from file
 	public void createListFromFile() throws IOException{
 		products=pDao.readProductsFromFile();
@@ -79,7 +84,7 @@ public class ProductReg {
 	//get a product by product id
 	public Product getProductById(String pId){
 		for(Product p:products){
-			if(p.getId().equals(pId)){
+			if(p.getProductId().equals(pId)){
 				return p;
 			}
 		}
@@ -92,27 +97,47 @@ public class ProductReg {
 	}
 	
 	//remove a product by id
-	public void removeProductById(String pId){
+	public void removeProduct(String pId){
 		removeProduct(getProductById(pId));
 	}
 	
-	//genetate a new product id automatically
+	//generate a new product id automatically
 	public String generateProductId(Category category){
 		/*
 		 * Usually,the id is formed by the first three characters of category and the number of product under this categoty plus 1
 		 * But if you remove one product,it deletes one productId,for example,there are "CLO/1" "CLO/2" "CLO/3" "CLO/4"
 		 * after you remove "CLO/3",there are "CLO/1" "CLO/2" "CLO/4",and the next productId should be "CLO/5"
-		*/
-		String catcode=category.getCategoryCode();
-		int num=-1;
+		*/	
+		
+	String catcode=category.getCategoryCode();
+		int id = 0;
+		String pId= null;
 		for(Product p:products){
 			if(p.getCategory().getCategoryCode().equals(category.getCategoryCode())){
-				num++;
+				id = Integer.parseInt(p.getProductId().split("/")[1]);	
+				pId=catcode+'/'+(id+1);
 			}
 		}
-		int id = Integer.parseInt(products.get(num).getId().split("/")[1]);
-		String pId=catcode+'/'+(id+1);
+		if(pId == null){
+			pId=catcode+'/'+(1);
+		}
 		return pId;
+	}
+
+	//updateQuantity(id,qtypurchased)
+	public void updateQuantity(String productId,int qutPurchased){
+		getProductById(productId).minusQuantity(qutPurchased);
+	}
+	
+	//checkProductsBelowThreshold
+	public ArrayList<Product> checkProductsBelowThreshold(){
+		ArrayList<Product> productsBelow=new ArrayList<>();
+		for(Product p:products){
+			if(p.checkBelowThrethold()){
+				productsBelow.add(p);
+			}
+		}
+		return products;
 	}
 	
 }

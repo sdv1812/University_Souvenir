@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import sg.edu.nus.iss.store.Cart;
+
 public class StoreWindow extends JFrame {
 
 	/**
@@ -50,6 +52,15 @@ public class StoreWindow extends JFrame {
 	public MainPanel createMainPanel() {
 		// TODO Auto-generated method stub
 		return (loginPanel.createMainPanel());
+	}
+
+	public void refreshCart() {
+		// TODO Auto-generated method stub
+		loginPanel.refreshCart();
+	}
+	
+	public Cart getSelectedCartItem() {
+		return loginPanel.getSelectedCartItem();
 	}
 
 

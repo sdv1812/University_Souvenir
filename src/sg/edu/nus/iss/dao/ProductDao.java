@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public class ProductDao extends BaseDao{
-	private static final String Product_File="Products.dat";
+	private static final String Product_File="StoreAppData/Products.dat";
 	private Store store;
 	
 	public ProductDao(Store store){
@@ -16,7 +16,7 @@ public class ProductDao extends BaseDao{
 	}
 	
 	public ArrayList<Product> readProductsFromFile() throws IOException{
-		ArrayList<String> readString=super.readFromFile(super.getFolderName()+Product_File);
+		ArrayList<String> readString=super.readFromFile(Product_File);
 		
 		ArrayList<Product> productList=new ArrayList<>();
 		
@@ -28,10 +28,10 @@ public class ProductDao extends BaseDao{
 			
 			String[] categoryFiled=filed[0].split("/");
 			String categoryCode=categoryFiled[0];
+			System.out.println(categoryCode);
 			
 			//will be modified future
 			Category category=store.getCategoryReg().getCategory(categoryCode); //modified sanskar
-			
 			String productName=filed[1];
 			String description=filed[2];
 			int quantity=Integer.parseInt(filed[3]);
@@ -51,10 +51,10 @@ public class ProductDao extends BaseDao{
 		ArrayList<String> writeList=new ArrayList<>();
 		for(Product p:products){
 
-			String productId=p.getId();
+			String productId=p.getProductId();
 			String productName=p.getName();
 			String description=p.getDescription();
-			String quantity=""+p.getQuantity();
+			String quantity=""+p.getQuantityAvailable();
 			String price=""+p.getPrice();
 			String barcodeNumber=p.getBarcodeNumber();
 			String threshold=""+p.getThreshold();
@@ -72,6 +72,6 @@ public class ProductDao extends BaseDao{
 			
 			writeList.add(line.toString());
 		}
-		super.writeToFile(writeList, super.getFolderName()+Product_File);
+		super.writeToFile(writeList, Product_File);
 	}
 }
