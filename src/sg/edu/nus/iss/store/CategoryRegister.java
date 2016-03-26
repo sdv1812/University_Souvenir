@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.dao.CategoryDao;
+
 /*
  * CategoryRegister class:Manager class to manage Category Object
  * Author: Sanskar Deepak
@@ -13,9 +15,11 @@ import java.util.ArrayList;
 public class CategoryRegister {
 	private ArrayList<Category> categories;
 	private Category category;
+	private CategoryDao catDao;
 	
 	public CategoryRegister() {
 		categories = new ArrayList<Category> ();
+		catDao = new CategoryDao();
 	}
 	
 	public boolean addCategory(String categoryCode, String categoryName) {
@@ -79,14 +83,14 @@ public class CategoryRegister {
 		return false;
 	}
 	
+	public void createListFromFile() throws IOException
+	{
+		categories = catDao.createListFromFile();
+	}
+	
 	public void writeToFile() {
 		try {
-			BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/Categories.dat"));
-			for(Category c : categories){
-				writer.write(c.getCategoryCode()+",");
-				writer.write(c.getCategoryName()+"\n");
-			}
-			writer.close();
+			catDao.writeToFile(categories);
 		}catch (IOException ex) {
 			System.out.println("Cannot Write to file !");
 			ex.printStackTrace();

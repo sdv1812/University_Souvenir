@@ -28,6 +28,7 @@ public class ProductDao extends BaseDao{
 			
 			String[] categoryFiled=filed[0].split("/");
 			String categoryCode=categoryFiled[0];
+			System.out.println(categoryCode);
 			
 			//will be modified future
 			Category category=store.getCategoryReg().getCategory(categoryCode); //modified sanskar
@@ -47,7 +48,7 @@ public class ProductDao extends BaseDao{
 	}
 	
 	public void writeProductsToFile(ArrayList<Product> products) throws IOException{
-		ArrayList<String> writeList=new ArrayList<>();
+		ArrayList<StringBuffer> writeList=new ArrayList<>();
 		for(Product p:products){
 
 			String productId=p.getProductId();
@@ -69,7 +70,7 @@ public class ProductDao extends BaseDao{
 			line.append(threshold+",");
 			line.append(orderQuantity);
 			
-			writeList.add(line.toString());
+			writeList.add(line);
 		}
 		super.writeToFile(writeList, Product_File);
 	}

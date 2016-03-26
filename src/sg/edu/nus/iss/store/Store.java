@@ -111,37 +111,22 @@ public class Store {
 	public void initializeData(){
 		try {
 
+			try {
+				members.createListFromFile();
+				categories.createListFromFile();
+				storeKeepers.createListFromFile();
+				discounts.createListFromFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
 
-			BufferedReader reader = new BufferedReader(new FileReader("StoreAppData/Members.dat"));
+			BufferedReader reader =null; 
 			String line = null;
-			while ((line = reader.readLine())!= null){
-				String result[] = line.split(",");
-				members.addMember(result[0], result[1], Integer.parseInt(result[2]));
-			}
 
-			reader = new BufferedReader(new FileReader("StoreAppData/Categories.dat"));
-			line = null;
-			while ((line = reader.readLine())!= null){
-				String result[] = line.split(",");
-				categories.addCategory(result[0], result[1]);
-			}
-
-			reader = new BufferedReader(new FileReader("StoreAppData/StoreKeepers.dat"));
-			line = null;
-			while ((line = reader.readLine())!= null){
-				String result[] = line.split(",");
-				storeKeepers.addStoreKeeper(result[0], result[1]);
-			}
-
-			reader = new BufferedReader(new FileReader("StoreAppData/Discounts.dat"));
-			line = null;
-			while ((line = reader.readLine())!= null){
-				String result[] = line.split(",");
-				if (result[5].equals("M"))
-					discounts.addDiscount(result[0], result[1], Float.parseFloat(result[4]), "", "");
-				else if(result[5].equals("A"))
-					discounts.addDiscount(result[0], result[1], Float.parseFloat(result[4]), result[2], result[3]);
-			}
 
 			for(Category c: categories.getCategories()) {
 				String fileName = "Vendors"+c.getCategoryCode()+".dat";

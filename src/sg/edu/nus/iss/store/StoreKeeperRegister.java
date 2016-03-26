@@ -5,11 +5,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.dao.StoreKeeperDao;
+
 //**** Created by T. Surenthiran  *****
 
 public class StoreKeeperRegister
 {
-	private ArrayList<StoreKeeper> storeKeepers =new ArrayList<StoreKeeper>();
+	private ArrayList<StoreKeeper> storeKeepers;
+	private StoreKeeperDao storeDao; 
+	
+	public StoreKeeperRegister()
+	{
+		 storeKeepers =new ArrayList<StoreKeeper>();
+		storeDao = new StoreKeeperDao();
+	}
 	
 	public void addStoreKeeper(String storeKeeperName, String password)
 	{
@@ -39,14 +48,13 @@ public class StoreKeeperRegister
 		return false;
 	}
 	
+	public void createListFromFile() throws IOException{
+		storeKeepers = storeDao.createListFromFile();
+	}
+	
 	public void writeToFile() {
 		try {
-			BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/StoreKeepers.dat"));
-			for(StoreKeeper sk : storeKeepers){
-				writer.write(sk.getStoreKeeperName()+",");
-				writer.write(sk.getPassword()+"\n");
-			}
-			writer.close();
+			storeDao.writeToFile(storeKeepers);
 		}catch (IOException ex) {
 			System.out.println("Cannot Write to file !");
 			ex.printStackTrace();

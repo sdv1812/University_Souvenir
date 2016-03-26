@@ -36,14 +36,14 @@ public class BaseDao {
 		return readList;		
 	}
 	
-	public void writeToFile(ArrayList<String> writeList,String fullPath) throws IOException{
+	public void writeToFile(ArrayList<StringBuffer> writeList,String fullPath) throws IOException{
 		File file=new File(fullPath);
 		FileWriter fw=new FileWriter(file);
 		BufferedWriter bw=new BufferedWriter(fw);
 		PrintWriter pw=new PrintWriter(bw);
-		Iterator<String> i=writeList.iterator();
+		Iterator<StringBuffer> i=writeList.iterator();
 		while (i.hasNext()) {
-			String lineWrite = (String) i.next();
+			StringBuffer lineWrite = (StringBuffer) i.next();
 			pw.println(lineWrite);
 		}
 		pw.close();

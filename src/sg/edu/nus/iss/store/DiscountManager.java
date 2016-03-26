@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import sg.edu.nus.iss.dao.DiscountDao;
+
 /*
  * DiscountManager class: Manager class to manage Discount Objects.
  * Author: Sanskar Deepak
@@ -17,9 +19,11 @@ public class DiscountManager {
 	private ArrayList<Discount> discounts;
 	private Date dNow;
 	private SimpleDateFormat ft;
+	private DiscountDao discountDao;
 
 	public DiscountManager() {
-		discounts = new ArrayList<Discount> ();		
+		discounts = new ArrayList<Discount> ();	
+		discountDao = new DiscountDao();
 		dNow = new Date();
 		ft = new SimpleDateFormat("yyyy-mm-dd");
 		ft.format(dNow);
@@ -113,20 +117,15 @@ public class DiscountManager {
 	
 	public void writeToFile() {
 		try {
-			BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/Discounts.dat"));
-			for(Discount c : discounts){
-				writer.write(c.getDiscountCode()+",");
-				writer.write(c.getDescription()+",");
-				writer.write(c.getStartDate()+",");
-				writer.write(c.getDiscountPeriod()+",");
-				writer.write(c.getPercentage()+",");
-				writer.write(c.getApplicableToMember()+"\n");
-			}
-			writer.close();
+			discountDao.writeToFile(discounts);
 		}catch (IOException ex) {
 			System.out.println("Cannot Write to file !");
 			ex.printStackTrace();
 		}
+	}
+	
+	public void createListFromFile() throws IOException{
+		discounts = discountDao.createListFromFile();
 	}
 
 	public void removeDiscount(String discountCode) {

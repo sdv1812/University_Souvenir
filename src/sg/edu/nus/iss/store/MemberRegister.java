@@ -2,6 +2,8 @@ package sg.edu.nus.iss.store;
 import java.io.*;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.dao.CustomerDao;
+
 /*
  * MemberRegister class: Manager class to manage Member objects.
  * Author: Sanskar Deepak
@@ -10,9 +12,11 @@ import java.util.ArrayList;
 public class MemberRegister {
 	private ArrayList<Member> members;
 	private Member member;
+	private CustomerDao custDao;
 	
 	public MemberRegister() {
 		members = new ArrayList<Member> ();
+		custDao = new CustomerDao();
 	}
 	public boolean addMember(String customerName, String memberID){
 		for(Member m: members){
@@ -60,19 +64,20 @@ public class MemberRegister {
 		return false;
 	}
 	
+	
+	public void createListFromFile() throws IOException
+	{
+		members = custDao.readFromFile();
+	}
+	
 	public void writeToFile() {
 		try {
-			BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/Members.dat"));
-			for(Member m : members){
-				writer.write(m.getCustomerName()+",");
-				writer.write(m.getMemberID()+",");
-				writer.write(m.getLoyaltyPoints()+"\n");
-			}
-			writer.close();
-		}catch (IOException ex) {
-			System.out.println("Cannot Write to file !");
-			ex.printStackTrace();
+			 custDao.writeToFile(members);
+		}catch(IOException exception)
+		{
+			System.out.println("Cannot write to file");
 		}
+			
 	}
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
 		// TODO Auto-generated method stub
