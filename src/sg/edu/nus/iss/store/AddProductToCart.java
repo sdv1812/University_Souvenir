@@ -21,7 +21,6 @@ public class AddProductToCart {
 	
 	public Cart addProductsToCart(String productId,int quantity,String memberId){
 		boolean addProductsStatus = false;
-		System.out.println("Before Product addition  is ");
 		Product product=null;
 		try{
 			product = productregister.getProductById(productId);
@@ -33,8 +32,6 @@ public class AddProductToCart {
 			return null;
 		}
 		
-		
-		System.out.println("Product is "+p1);
 		Cart c1 =cart.addCart(p1, quantity, memberId);
 		if(c1!=null)
 			addProductsStatus = true;

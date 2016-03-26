@@ -28,7 +28,6 @@ public class ProductDao extends BaseDao{
 			
 			String[] categoryFiled=filed[0].split("/");
 			String categoryCode=categoryFiled[0];
-			System.out.println(categoryCode);
 			
 			//will be modified future
 			Category category=store.getCategoryReg().getCategory(categoryCode); //modified sanskar

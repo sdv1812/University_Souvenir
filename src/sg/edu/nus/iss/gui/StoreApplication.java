@@ -23,7 +23,7 @@ public class StoreApplication {
 	public Store getStore(){ 
 		return this.store;
 	}
-	
+
 	private void start() {
 		// TODO Auto-generated method stub
 		storeWindow = new StoreWindow("Store Application", this);
@@ -31,11 +31,11 @@ public class StoreApplication {
 		store.initializeData();
 		//storeWindow.refresh ();
 	}
-	
+
 	public void shutdown () {
 		System.exit(0);
-		}
-	
+	}
+
 	public boolean validate(String storeKeeperName, String password){
 		return store.validate(storeKeeperName, password);
 	}
@@ -43,9 +43,9 @@ public class StoreApplication {
 	public ArrayList<Member> getMembers() {
 		return store.getMembers();
 	}
-    public StoreWindow getMainWindow() {
-        return storeWindow;
-    }
+	public StoreWindow getMainWindow() {
+		return storeWindow;
+	}
 	public MainPanel createMainPanel() {
 		return(storeWindow.createMainPanel());
 	}
@@ -54,15 +54,15 @@ public class StoreApplication {
 		// TODO Auto-generated method stub
 		return store.addMember(memberName, memberID);
 	}
-	
+
 	public boolean addCategory(String categoryCode, String categoryName) {
 		return store.addCategory(categoryCode, categoryName);
 	}
-	
+
 	public ArrayList<Category> getCategories() {
 		return store.getCategories();
 	}
-	
+
 	public void removeMember(String memberID) {
 		store.removeMember(memberID);
 	}
@@ -71,11 +71,11 @@ public class StoreApplication {
 		// TODO Auto-generated method stub
 		store.removeCategory(categoryCode);
 	}
-	
+
 	public ArrayList<Discount> getDiscounts(){
 		return store.getDiscounts();
 	}
-	
+
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
 		return store.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
 	}
@@ -86,73 +86,91 @@ public class StoreApplication {
 	//public Discount getDiscount(String discountCode) {
 	//	return store.getDiscount(discountCode);
 	//}
-	
+
 	public void modifyDiscount(String discountCode, float percentage) {
 		store.modifyDiscount(discountCode, percentage);
 	}
-	
+
 	public boolean  addProductsToCart(String productId,int quantity,String memberId){
 		boolean addProductStatus =store.addProductsToCart( productId, quantity, memberId);
 		storeWindow.refreshCart();
 		return addProductStatus;
 		//refresh cart panel
-		}
-	
+	}
+
 	public ArrayList<Cart> getProductsAddedInCart() {
 		// TODO Auto-generated method stub
 		return store.getProductsAddedInCart();
-		}
-	
+	}
+
 	public ArrayList<Product> getProducts(){
 		return store.getProducts();
 	}
 
-	 
+
 	public void removeProduct(String id){
 		store.removeProduct(id);
 	}
-	
+
 	public String getTransactionTotal() {
 		// TODO Auto-generated method stub
 		return store.getTransactionTotal();
-		}
+	}
 	public void beginCheckout(ArrayList<Cart> cart){
 		store.beginCheckout(cart);
-		}
-	
+	}
 
-	
+
+
 	public void removeSelectedItem() {
 		final Cart lineItem = storeWindow.getSelectedCartItem();
 		if(lineItem==null){
 			return;
 		}
 		String title = "Remove Product";
-	    String msg = "Do you really want to remove Product from Cart " + lineItem.toString() + " ?";
-	    ConfirmDialog confirm = new ConfirmDialog(storeWindow,title,msg){
-	    	private static final long serialVersionUID = 1L;
+		String msg = "Do you really want to remove Product from Cart " + lineItem.toString() + " ?";
+		ConfirmDialog confirm = new ConfirmDialog(storeWindow,title,msg){
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected boolean performOkAction() {
 				store.removeCartItem(lineItem);
 				storeWindow.refreshCart();
 				return true;
 			}
-	    	
-	    };
-	    confirm.pack();
-	    confirm.setVisible(true);	
+
+		};
+		confirm.pack();
+		confirm.setVisible(true);	
 	}
-	
+
 	public void makePayment(double amountreceived, double transactiontotal,
 			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-				store.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
-		// TODO Auto-generated method stub
+		store.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
 
-		}
+	}
 	public String getDiscount() {
 		return store.getDiscount();
-		}
+	}
 
+	public ArrayList<Vendor> getVendors() {
+		return store.getVendors();
+	}
+
+	public boolean addVendor(String vendorName, String vendorDescription) {
+		return store.addVendor(vendorName, vendorDescription);
+	}
+	
+	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
+		return store.addVendor(vendorName, vendorDescription, category);
+	}
+
+	public ArrayList<Vendor> getVendorsPerCategory(Category category) {
+		return store.getVendorsPerCategory(category);
+	}
+
+	public void removeVendor(String vendorName) {
+		store.removeVendor(vendorName);
+	}
 
 
 }

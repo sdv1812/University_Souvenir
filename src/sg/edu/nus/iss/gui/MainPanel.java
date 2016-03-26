@@ -22,6 +22,7 @@ public class MainPanel extends JPanel {
 	private DiscountPanel discountPanel;
 	private CartPanel cartPanel;
 	private TransactionProductPanel transactionProductPanel;
+	private VendorPanel vendorPanel;
 
 	/**
 	 * Create the panel.
@@ -92,6 +93,13 @@ public class MainPanel extends JPanel {
 		JButton vendorBtn = new JButton("Vendor");
 		vendorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				vendorPanel = new VendorPanel(manager);
+				removeAll();
+				setLayout(new BorderLayout());
+				vendorPanel.setVisible(true);
+				add("Center", vendorPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		add(vendorBtn);

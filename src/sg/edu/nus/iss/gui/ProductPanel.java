@@ -289,7 +289,6 @@ public class ProductPanel extends JPanel {
 	//******************Reflect the changes done on the screen by the buttons******************
 
 	public void refresh(){   
-		System.out.println(action_source);
 		if(action_source.equalsIgnoreCase("Add")){
 			int rowIndex = product_list.size()-1;
 			productTableModel.fireTableRowsInserted(rowIndex, rowIndex);
