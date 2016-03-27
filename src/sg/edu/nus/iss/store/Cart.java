@@ -6,15 +6,15 @@ import java.util.ArrayList;
 
 public class Cart {
 				private Product product;
-				private String memberId;
+				private Member member;
 				private int quantity;
 				private ArrayList<Cart> cart;
 	
-				public String getMemberId() {
-					return memberId;
+				public Member getMember() {
+					return member;
 				}
-				public void setMemberId(String memberId) {
-					this.memberId = memberId;
+				public void setMember(String memberId) {
+					this.member = member;
 				}
 				public int getQuantity() {
 					return quantity;
@@ -29,10 +29,10 @@ public class Cart {
 					cart = new ArrayList<Cart>();
 				}
 				
-				public Cart(Product product ,String memberID,int quantity){
+				public Cart(Product product ,Member member,int quantity){
 							
 						this.product=product;
-						this.memberId=memberID;
+						this.member=member;
 						this.quantity=quantity;
 				}	
 				
@@ -45,9 +45,9 @@ public class Cart {
 				public void setCart(ArrayList<Cart> cart) {
 					this.cart = cart;
 				}
-				public Cart addCart(Product product,int quantity,String memberId){
+				public Cart addCart(Product product,int quantity,Member member){
 						
-						Cart c = new Cart(product,memberId,quantity);
+						Cart c = new Cart(product,member,quantity);
 						cart.add(c);
 						return c;
 				}

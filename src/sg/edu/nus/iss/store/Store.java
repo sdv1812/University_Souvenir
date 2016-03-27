@@ -12,12 +12,13 @@ public class Store {
 	private StoreKeeperRegister storeKeepers;
 	private DiscountManager discounts;
 	private VendorRegister vendors;
-	private ProductRegister pr; //xuemin
+	private ProductRegister products; //xuemin
 	private Cart cart;
 	private ArrayList<Product> product;
 	private AddProductToCart addProductsToCart;
 	private Transaction transaction ;
 	private ArrayList<Cart> cartList ;
+	private ArrayList<Transaction> transactionList;
 
 	public Store() {
 		members = new MemberRegister();
@@ -25,34 +26,38 @@ public class Store {
 		storeKeepers = new StoreKeeperRegister();
 		discounts = new DiscountManager();
 		vendors = new VendorRegister();
-		pr=new ProductRegister(this); //xuemin
+		cartList = new ArrayList<Cart>();
+		transaction = new Transaction();
+		transactionList = new ArrayList<Transaction>();
+		addProductsToCart = new AddProductToCart();
+		products=new ProductRegister(this); //xuemin
 	}
 	public ProductRegister getProductReg(){ //xuemin
-		return pr;
+		return products;
 	}
 
 	public ArrayList<Product> getProducts()
 	{
-		return pr.getProducts();
+		return products.getProducts();
 	}
 
 	public CategoryRegister getCategoryReg(){ //xuemin
 		return categories;
 	}
 	/*public void readDataFromFile() throws IOException{ //xuemin
-		pr.createListFromFile();
+		products.createListFromFile();
 	}*/
 
 	public void writeDataToFile() throws IOException{ //xuemin
-		pr.writeListToFile();
+		products.writeListToFile();
 	}
 
 	public void removeProduct(Product p){  //xuemin
-		pr.removeProduct(p);
+		products.removeProduct(p);
 	}
 
 	public void removeProduct(String id){  //xuemin
-		pr.removeProduct(id);
+		products.removeProduct(id);
 	}
 
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword){
@@ -138,7 +143,7 @@ public class Store {
 			}
 
 			try {
-				pr.createListFromFile();
+				products.createListFromFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -187,7 +192,8 @@ public class Store {
 		return cartList;
 	}
 	public void beginCheckout(ArrayList<Cart> cartProducts) {
-		transaction.addProductsToCart(cartProducts);
+		double discountPerc = discounts.getMaxDiscount(cartProducts.get(0).getMember());
+		transaction.addProductsToCart(cartProducts,discountPerc);
 
 	}
 	public String getTransactionTotal() {
@@ -199,17 +205,20 @@ public class Store {
 
 	public void makePayment(double amountreceived, double transactiontotal,
 			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
-	}
+			transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
+			ArrayList<Transaction> tempList =getTransaction();
+			transaction.writeToFile(tempList);
+			}
+
 
 	public void removeCartItem(Cart lineItem) {
 		cartList.remove(lineItem);
 	}
 
-	public boolean  addProductsToCart(String productId,int quantity ,String memberId){
+	public boolean  addProductsToCart(Product product,int quantity ,Member member){
 		boolean addProductStatus = false;
-		System.out.println("Product id is"+productId+"Quantity is "+quantity+"Member id is"+memberId);
-		Cart c1 =addProductsToCart.addProductsToCart(productId, quantity, memberId);
+		//System.out.println("Product id is"+product.getProductId()+"Quantity is "+quantity+"Member id is"+member.getMemberID());
+		Cart c1 =addProductsToCart.addProductsToCart(product, quantity, member);
 		//System.out.println("Product addition is "+c1.toString());
 		if(c1!=null){
 			cartList.add(c1);
@@ -234,5 +243,19 @@ public class Store {
 	public void removeVendor(String vendorName) {
 		vendors.removeVendor(vendorName);
 	}
+	
+	public ArrayList<Transaction> getTransaction(){
+		ArrayList<Transaction> t1 = transaction.getAllTransactions();
+		transactionList.addAll(t1);
+		return transactionList;
+		}
+	public Member getMember(String memberIdentity) {
+		// TODO Auto-generated method stub
+		return members.getMember(memberIdentity);
+	}
+	public Product getProductByID(String productIdentity) {
+		return products.getProductById(productIdentity);
+	}
+
 
 }

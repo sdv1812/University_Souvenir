@@ -61,7 +61,7 @@ public class VendorPanel extends JPanel {
 
 	}
 
-	//*****************To create add category Panel**********************
+	//*****************To create add Vendor Panel**********************
 
 	private JPanel createAddVendorPanel () { 
 
@@ -203,13 +203,13 @@ public class VendorPanel extends JPanel {
 
 	}
 
-	//*****************To Show category List Panel**********************	
+	//*****************To Show Vendor List Panel**********************	
 
 	private JPanel showVendorListPanel() {  
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
-		JLabel label = new JLabel("Categories : ");
+		JLabel label = new JLabel("Vendors : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
 		table.setModel(getTableModel());

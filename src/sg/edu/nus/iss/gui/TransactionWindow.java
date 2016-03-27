@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.gui;
+/*package sg.edu.nus.iss.gui;
 
 import java.awt.GridLayout;
 import java.awt.Panel;
@@ -50,5 +50,5 @@ public Cart getSelectedCartItem() {
 	Cart selectedLineItem = cartPanel.getRemoveSelectedCartItem();
 	return selectedLineItem;
 }
-}
+}*/
 

@@ -17,6 +17,7 @@ public class MemberRegister {
 	public MemberRegister() {
 		members = new ArrayList<Member> ();
 		custDao = new CustomerDao();
+		//members.add(new Member("", "PUBLIC"));
 	}
 	public boolean addMember(String customerName, String memberID){
 		for(Member m: members){
@@ -46,9 +47,9 @@ public class MemberRegister {
 		return members;
 	}
 	
-	public Member getMember(String memberID) {   
+	public Member getMember(String memberID) {  
 		for(Member m : members){
-			if (memberID.compareTo(m.getMemberID())==0){
+			if (memberID.equalsIgnoreCase(m.getMemberID())){
 				return m;
 			}
 		}

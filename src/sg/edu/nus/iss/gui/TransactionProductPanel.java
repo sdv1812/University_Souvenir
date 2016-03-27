@@ -33,7 +33,7 @@ public class TransactionProductPanel extends JPanel {
 		quantity = new JTextField(10);
 		memberId =  new JTextField(10);
 		JPanel p = new JPanel();
-		p.setLayout(new FlowLayout(FlowLayout.LEFT));
+		p.setLayout(new GridLayout(1,0));
 		p.add(new JLabel("ProductId"));
 		p.add(productId);
 		p.add(new JLabel("QTY"));
@@ -67,11 +67,11 @@ public class TransactionProductPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "InvalidDetails", "Enter valid format", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if(productIdentity.length()==0||Quantity<=0||memberIdentity.length()==0){
+				if(productIdentity.length()==0||Quantity<=0){
 					JOptionPane.showMessageDialog(null, "InvalidDetails", "InvalidDetails", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				boolean addProductStatus = manager.addProductsToCart(productIdentity, Quantity, memberIdentity);
+				boolean addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity, manager.getMember(memberIdentity));
 				if(!addProductStatus){
 					JOptionPane.showMessageDialog(null, "Invalid Product detail", "No Product found", JOptionPane.ERROR_MESSAGE);
 				}

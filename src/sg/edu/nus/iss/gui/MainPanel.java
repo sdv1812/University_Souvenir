@@ -36,10 +36,12 @@ public class MainPanel extends JPanel {
 				transactionProductPanel = new TransactionProductPanel(manager);
 				cartPanel = new CartPanel(manager);
 				removeAll();
-				Panel p = new Panel();				//New change 
-				p.setLayout(new GridLayout(0, 1));
-				p.add(transactionProductPanel);
-				p.add(cartPanel);
+				JPanel p = new JPanel();				
+				p.setLayout(new BorderLayout());
+				JPanel centerPanel = new JPanel(new GridLayout(0,1));	
+				centerPanel.add(transactionProductPanel);
+				centerPanel.add(cartPanel);
+				p.add(centerPanel, BorderLayout.CENTER);
 				add("Center",p);
 				revalidate();
 				repaint();

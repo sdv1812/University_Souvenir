@@ -17,12 +17,12 @@ public class AddProductToCart {
 	public AddProductToCart(Store store) {
 		super();
 		this.store = store;
+		productregister = new ProductRegister();
 	}
 	
-	public Cart addProductsToCart(String productId,int quantity,String memberId){
+	public Cart addProductsToCart(Product product,int quantity,Member member){
 		boolean addProductsStatus = false;
-		Product product=null;
-		try{
+		/*try{
 			product = productregister.getProductById(productId);
 			if(product==null){
 				addProductsStatus = false;
@@ -31,8 +31,8 @@ public class AddProductToCart {
 			//n.printStackTrace();
 			return null;
 		}
-		
-		Cart c1 =cart.addCart(p1, quantity, memberId);
+		*/
+		Cart c1 =cart.addCart(product, quantity, member);
 		if(c1!=null)
 			addProductsStatus = true;
 		return c1;

@@ -3,6 +3,10 @@ package sg.edu.nus.iss.gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.zip.DataFormatException;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -27,11 +31,14 @@ public class AddDiscountDialog extends OkCancelDialog{
 	private static final String[] options = {"Member Discount", "Occasional Discount"};
 	private StoreApplication manager;
 	private DiscountPanel dp;
+	private SimpleDateFormat ft;
 
 	public AddDiscountDialog(StoreApplication manager, DiscountPanel dp) {
 		super(manager.getMainWindow(), "Add Discount");
 		this.manager = manager;
 		this.dp = dp;
+		ft = new SimpleDateFormat("yyyy-MM-dd");
+		ft.setLenient(false);
 	}
 	protected JPanel createFormPanel() {
 		JPanel panel = new JPanel();
@@ -104,16 +111,14 @@ public class AddDiscountDialog extends OkCancelDialog{
 				descText.getText().length()==0||percText.getText().length()==0){
 			return false;
 		}
-		if(!isFloat(percText.getText())){
-			JOptionPane.showMessageDialog(this,
-                    "Percentage should be a number with no string",
-                    "Invalid percentage",
-                    JOptionPane.ERROR_MESSAGE);
-			return false;
-		} else {
+		
+		try {
+			ft.parse(startDateText.getText()); //to check for parsing error
+			Integer.parseInt(periodText.getText());
+			Float.parseFloat(percText.getText());
 		
 		if (((String)discountCategory.getSelectedItem()).equals("Member Discount")) {
-			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), "", "");
+			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), null, null);
 		} else if ((((String)discountCategory.getSelectedItem()).equals("Occasional Discount"))) {
 			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), startDateText.getText(), periodText.getText());
 		}
@@ -124,19 +129,19 @@ public class AddDiscountDialog extends OkCancelDialog{
                     "Duplicate Discount",
                     JOptionPane.ERROR_MESSAGE);
 		}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this,
+                    "Please enter valid value!",
+                    "Number Format Exception",
+                    JOptionPane.ERROR_MESSAGE);
+		} catch (ParseException e){
+			JOptionPane.showMessageDialog(this,
+                    "Please enter valid date in given date format!",
+                    "Date Format Exception",
+                    JOptionPane.ERROR_MESSAGE);
 		}
+		
 		return b;
-	}
-
-	// To check if the number input is a float or not
-	public boolean isFloat( String input ) {
-	    try {
-	        Float.parseFloat( input );
-	        return true;
-	    }
-	    catch( Exception e ) {
-	        return false;
-	    }
 	}
 
 }
