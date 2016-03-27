@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -42,9 +41,9 @@ public class VendorPanel extends JPanel {
 	private ArrayList<Vendor> vendors ;
 	private String action_source;
 	private JComboBox<String> categoryBox;
+	private JComboBox<String> vendorBox;
 	private Border raisedetched;
 	private Border loweredetched; 
-	private VendorPanel vp;
 	private JTextField vNameT;
 	private JTextField vDescT ;
 
@@ -52,7 +51,6 @@ public class VendorPanel extends JPanel {
 		this.manager = manager;
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
-		vp = this;
 		setLayout (new BorderLayout());
 		vendors = manager.getVendors();
 		add(createButtonPanel(), BorderLayout.EAST);
@@ -67,90 +65,86 @@ public class VendorPanel extends JPanel {
 
 		JPanel panel = new JPanel(new GridLayout(1, 0, 10, 0));
 
-		JLabel label = new JLabel("Add Vendor: ");
-		label.setFont(new Font("Tahoma", Font.BOLD, 12 ));
-		
-		JLabel categoryLabel = new JLabel("Select Category");
+		JLabel categoryLabel = new JLabel("Select Category:");
 		categoryBox = new JComboBox<String>();
 		for(Category c:manager.getCategories()){
 			categoryBox.addItem(c.getCategoryName());
 		}
+		
+		JLabel vendorLabel = new JLabel("Select Vendor:");
+		
+		vendorBox = new JComboBox<String>();
+		for(Vendor v:manager.getVendors()){
+			vendorBox.addItem(v.getVendorName());
+		}
+		
 		JLabel vName = new JLabel("Vendor Name: ");
 		vNameT = new JTextField();
 		JLabel vDesc = new JLabel("Description: ");
 		vDescT = new JTextField();
-
-		panel.add(label);
+		panel.add(vendorLabel);
+		panel.add(vendorBox);
 		panel.add(vName);
 		panel.add(vNameT);
 		panel.add(vDesc);
 		panel.add(vDescT);
+		panel.add(categoryLabel);
+		panel.add(categoryBox);
 
 		JButton addBtn = new JButton ("Add");
 		addBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
-				if (vNameT.getText().length()!=0 && vDescT.getText().length()!=0){
-							if (!(manager.addVendor(vNameT.getText(), vDescT.getText()))){
+				if (vNameT.getText().length()!=0 && vDescT.getText().length()!=0){ //if vendor name and description not empty (means a new vendor)
+							if (!(manager.addVendor(vNameT.getText(), vDescT.getText(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
 							JOptionPane.showMessageDialog(manager.getMainWindow(),
-									"Category Code Already Exists !",
-									"Duplicate Category Code",
+									"Vendor Already Exists in the Category !",
+									"Duplicate Vendor Code",
 									JOptionPane.ERROR_MESSAGE); 
 						} else {
+							vendors = manager.getVendorsPerCategory(manager.getCategoryByName((String)categoryBox.getSelectedItem()));
+							vendorTableModel.fireTableDataChanged();
+							for(Vendor v:manager.getVendors()){
+								vendorBox.addItem(v.getVendorName());
+							}
+							
 							refresh();
 						}
-				} else {
-					JOptionPane.showMessageDialog(manager.getMainWindow(),
-							"Fields cannot be empty !",
-							"Empty Fields",
-							JOptionPane.INFORMATION_MESSAGE); 
+				} else { String vendorName = (String) vendorBox.getSelectedItem();
+					if (!(manager.addVendor(vendorName, (manager.getVendor(vendorName)).getDescription(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
+						JOptionPane.showMessageDialog(manager.getMainWindow(),
+								"Vendor Already Exists in the Category !",
+								"Duplicate Vendor Code",
+								JOptionPane.ERROR_MESSAGE); 
+					}
 				}
 			}
-		});
+			});
 
 
 		panel.add(addBtn);
-
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
-		panel2.add(categoryBox);
-		JButton addVendToCatBtn = new JButton("Add Vend. to Cat.");
-		panel2.add(addVendToCatBtn);
 		
-		panel.add(panel2);
-		
-		addVendToCatBtn.addActionListener(new ActionListener() {
+		JButton viewBtn = new JButton("View");
+		viewBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				action_source  =((JButton)e.getSource()).getText();
-				if(table.getSelectedRow()!=-1){
-							String vendorName = (String)table.getValueAt(table.getSelectedRow(), 0);
-							String vendorDescription = (String)table.getValueAt(table.getSelectedRow(), 1);
-							//System.out.println("inside add vend to cat button "+vendorName);
-							//System.out.println("inside add vend to cat button "+vendorDescription);
-							//System.out.println(getCategory(getSelectedCategory()));
-							if(!(manager.addVendor(vendorName, vendorDescription, getCategory(getSelectedCategory())))){
-								JOptionPane.showMessageDialog(manager.getMainWindow(),
-										"Vendor already exists in the category!",
-										"Duplicate Vendor",
-										JOptionPane.ERROR_MESSAGE); 
-							} else {
-								AddVendorToCategoryDialog d = new AddVendorToCategoryDialog(manager, vp);
-								d.setModal(true);
-								d.setLocationRelativeTo(manager.getMainWindow());
-								d.pack();
-								d.setVisible (true);
-							}
-				}else {
-					JOptionPane.showMessageDialog( manager.getMainWindow(),
-							"Please select a row to add!",
-							"Select a Row",
-							JOptionPane.INFORMATION_MESSAGE);
+
+				ArrayList<Vendor> temp = manager.getVendorsPerCategory(manager.getCategoryByName((String)categoryBox.getSelectedItem()));
+				if (temp != null){
+					vendors = temp;
+				vendorTableModel.fireTableDataChanged();
+				}
+				else {
+					JOptionPane.showMessageDialog(manager.getMainWindow(),
+							"No Vendor Exists in the Selected Category!",
+							"Empty Vendor Category",
+							JOptionPane.ERROR_MESSAGE); 
 				}
 			}
 		});
 		
+		panel.add(viewBtn);		
 		panel.setBorder(BorderFactory.createTitledBorder(
-				loweredetched, "New Category Pane")); 
+				loweredetched, "New Vendor Pane")); 
 
 		return panel;
 	}
@@ -319,14 +313,4 @@ public class VendorPanel extends JPanel {
 		return (String)categoryBox.getSelectedItem();
 	}
 	
-	public Category getCategory(String categoryName) {
-		for(Category c :manager.getCategories()) {
-			if (c.getCategoryName().equals(categoryName)) {
-				return c;
-			}
-		}
-		return null;
-		
-	}
-
 }

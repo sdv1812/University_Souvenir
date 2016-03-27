@@ -230,9 +230,6 @@ public class Store {
 	public ArrayList<Vendor> getVendors() {
 		return vendors.getVendors();
 	}
-	public boolean addVendor(String vendorName, String vendorDescription) {
-		return vendors.addVendor(vendorName, vendorDescription);
-	}
 	
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
 		return vendors.addVendor(vendorName, vendorDescription, category);
@@ -250,11 +247,20 @@ public class Store {
 		return transactionList;
 		}
 	public Member getMember(String memberIdentity) {
-		// TODO Auto-generated method stub
 		return members.getMember(memberIdentity);
 	}
 	public Product getProductByID(String productIdentity) {
 		return products.getProductById(productIdentity);
+	}
+	public Category getCategory(String categoryCode) {
+		return categories.getCategory(categoryCode);
+	}
+	public Vendor getVendor(String vendorName) {
+		return getVendor(vendorName);
+	}
+	public Category getCategoryByName(String categoryName) {
+		// TODO Auto-generated method stub
+		return categories.getCategorybyName(categoryName);
 	}
 
 

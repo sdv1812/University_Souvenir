@@ -306,7 +306,8 @@ public class ProductPanel extends JPanel {
 
 	}
 	protected boolean performAddAction(){
-	int categoryIndex = categoryField.getSelectedIndex();
+	try {
+		int categoryIndex = categoryField.getSelectedIndex();
 	Category category=manager.getCategories().get(categoryIndex);
 	String productName=productNameField.getText();
 	String productDescription=productDescriptionField.getText();
@@ -326,7 +327,12 @@ public class ProductPanel extends JPanel {
 	productBarcodeNumberfield.setText("");
 	productThresholdfield.setText("");
 	productOrderQuantityfield.setText("");
-	
+	} catch (NumberFormatException e) {
+		JOptionPane.showMessageDialog(this,
+                "Please enter valid value!",
+                "Number Format Exception",
+                JOptionPane.ERROR_MESSAGE);
+	}
 	return true;
 	}
 	// ************Show the confirm dialog on removing and performs the remove functionality*********

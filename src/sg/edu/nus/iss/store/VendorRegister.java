@@ -17,7 +17,6 @@ public class VendorRegister {
 	}
 
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
-		Vendor newVendor = new Vendor(vendorName,vendorDescription);
 		ArrayList<Vendor> temp = vendorMap.get(category);
 		if (temp == null) { //new entry
 			temp = new ArrayList<Vendor>();
@@ -28,13 +27,19 @@ public class VendorRegister {
 				}
 			}
 		}
-		temp.add(newVendor);
+		Vendor vendorNew = new  Vendor(vendorName,vendorDescription);
+		temp.add(vendorNew);
 		vendorMap.put(category, temp);
+		for(Vendor v : vendors) {
+			if(vendorName.equals(v.getVendorName())) 
+				break;
+		else	vendors.add(vendorNew);
+		}
 		writeToFile();
 		return true;
 	}
 
-	public boolean addVendor(String vendorName, String vendorDescription) {
+/*	public boolean addVendor(String vendorName, String vendorDescription) {
 		for(Vendor v : vendors) {
 			if(vendorName.equals(v.getVendorName())) 
 				return false; 
@@ -42,7 +47,7 @@ public class VendorRegister {
 		vendors.add(new Vendor(vendorName, vendorDescription));
 		writeToFile();
 		return true;
-	}
+	}*/
 
 	//Remove Vendor by Vendor Name
 	public void removeVendor(String vendorName) {
@@ -77,6 +82,7 @@ public class VendorRegister {
 	}
 
 	public void writeToFile() {
+		System.out.println(vendorMap.keySet());
 		for (Category c : vendorMap.keySet()) {
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
 			try {

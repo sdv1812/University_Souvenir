@@ -47,11 +47,21 @@ public class CategoryRegister {
 	
 	public Category getCategory(String categoryCode) {
 		if(categories!=null){
-			System.out.println();
 			for(Category c : categories){
-				if (categoryCode.compareTo(c.getCategoryCode())==0){
+				System.out.println("catgeorcode"+categoryCode);
+				System.out.println("list catego code"+c.getCategoryCode());
+				if (categoryCode.equalsIgnoreCase(c.getCategoryCode())){
 					return c;
 				}
+			}
+		}
+		return null;
+	}
+	
+	public Category getCategorybyName(String categoryName) {
+		for(Category c :categories) {
+			if (c.getCategoryName().equals(categoryName)) {
+				return c;
 			}
 		}
 		return null;
@@ -61,27 +71,6 @@ public class CategoryRegister {
 		return categories;
 	}
 	
-	public boolean isCategoryCodePresent(String categoryCode) {// to check if category code already exists
-		if(categories!=null){
-			for(Category c : categories){
-				if (categoryCode.compareTo(c.getCategoryCode())==0){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public boolean isCategoryPresent(String categoryName) {
-		if(categories!=null){
-			for(Category c : categories){
-				if (categoryName.compareTo(c.getCategoryName())==0){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 	
 	public void createListFromFile() throws IOException
 	{

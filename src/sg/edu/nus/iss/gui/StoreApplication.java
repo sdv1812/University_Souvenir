@@ -156,9 +156,6 @@ public class StoreApplication {
 		return store.getVendors();
 	}
 
-	public boolean addVendor(String vendorName, String vendorDescription) {
-		return store.addVendor(vendorName, vendorDescription);
-	}
 	
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
 		return store.addVendor(vendorName, vendorDescription, category);
@@ -179,6 +176,14 @@ public class StoreApplication {
 	public Product getProductByID(String productIdentity) {
 		return store.getProductByID(productIdentity);
 	}
+	public Category getCategory(String categoryCode) {
+		return store.getCategory(categoryCode);
+	}
+	public Vendor getVendor(String vendorName) {
+		return store.getVendor(vendorName);
+	}
 
-
+	public Category getCategoryByName(String categoryName) {
+		return store.getCategoryByName(categoryName);
+	}
 }
