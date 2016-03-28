@@ -2,6 +2,7 @@ package sg.edu.nus.iss.store;
 
 import java.io.IOException;
 import sg.edu.nus.iss.dao.ProductDao;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -141,9 +142,11 @@ public class ProductRegister {
 	}
 	//delete products of one category
 	public void deleteProductsOfCategory(Category category){
-		for(Product p:products){
-			if((p.getCategory().getCategoryCode()==category.getCategoryCode())&&(p.getCategory().getCategoryName()==category.getCategoryName())){
-				products.remove(p);
+		Iterator<Product> i=products.iterator();
+		while (i.hasNext()) {
+			Product product = (Product) i.next();
+			if((product.getCategory().getCategoryCode()==category.getCategoryCode())&&(product.getCategory().getCategoryName()==category.getCategoryName())){
+				products.remove(product);
 			}
 		}
 
