@@ -1,10 +1,14 @@
 package sg.edu.nus.iss.gui;
 
 import sg.edu.nus.iss.store.*;
+
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,21 +37,22 @@ public class TransactionProductPanel extends JPanel {
 		quantity = new JTextField(10);
 		memberId =  new JTextField(10);
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(1,0));
+		p.setLayout(new GridLayout(0,2));
 		p.add(new JLabel("ProductId"));
 		p.add(productId);
 		p.add(new JLabel("QTY"));
 		p.add(quantity);
 		p.add(new JLabel("Member id "));
 		p.add(memberId);
+		p.add(createButtonPanel());
 		add("North",p);
 		// add("Center",productList);
-		add("East",createButtonPanel());
+		//add("East",createButtonPanel());
 
 	}
 	private JPanel createButtonPanel() {
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout (0, 1));
+		p.setLayout(new BorderLayout());
 		JButton b;
 		ActionListener l;
 
@@ -87,7 +92,7 @@ public class TransactionProductPanel extends JPanel {
         }}*/
 			}};
 			b.addActionListener (l);
-			p.add (b);
+			p.add (b, BorderLayout.NORTH);
 			return p;
 
 	}

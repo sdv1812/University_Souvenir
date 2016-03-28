@@ -74,7 +74,6 @@ public class DiscountManager {
 		if(member.getLoyaltyPoints()==-1){
 			d= getDiscount("MEMBER_FIRST");
 			//discount = totalPrice*(d.getPercentage());
-			System.out.println("member first "+d);
 			return d.getPercentage();
 		}
 		d=getDiscount("MEMBER_SUBSEQ");
@@ -86,25 +85,17 @@ public class DiscountManager {
 		double percentage = 0;
 		for (Discount d : discounts){
 			String s= d.getStartDate();
-			System.out.println("start date before loop "+s);
 			if (d.getApplicableToMember().equalsIgnoreCase("A")){
-				System.out.println("INSIDE OCCASIONAL");
 				try {
 					Date startDate = ft.parse(s);
-					System.out.println("start date after parsing "+startDate);
 					Calendar c = Calendar.getInstance();
 					c.setTime(startDate);
 					c.add(Calendar.DATE, Integer.parseInt(d.getDiscountPeriod()));
 					String output = ft.format(c.getTime());
-					System.out.println("output date "+output);
 					Date endDate = ft.parse(output);
-					System.out.println("end date after parsing "+endDate);
 					if ((dNow.after(startDate)&&dNow.before(endDate))||dNow.equals(endDate)||dNow.equals(startDate)){
-						System.out.println("INSIDE if else");
 						if(d.getPercentage()>percentage) {
-							
 							percentage = d.getPercentage();
-							System.out.println("INSIDE percentage" + percentage);
 						}
 					}
 				} catch (ParseException e) {

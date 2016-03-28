@@ -6,14 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sg.edu.nus.iss.dao.VendorDao;
+
 public class VendorRegister {
 
 	private HashMap<Category, ArrayList<Vendor>> vendorMap;
 	private ArrayList<Vendor> vendors;
+	private VendorDao vDao;
 
 	public VendorRegister() {
 		vendorMap = new HashMap<Category, ArrayList<Vendor>>();
 		vendors = new ArrayList<Vendor>();
+		vDao = new VendorDao();
 	}
 
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
@@ -38,16 +42,6 @@ public class VendorRegister {
 		writeToFile();
 		return true;
 	}
-
-/*	public boolean addVendor(String vendorName, String vendorDescription) {
-		for(Vendor v : vendors) {
-			if(vendorName.equals(v.getVendorName())) 
-				return false; 
-		}
-		vendors.add(new Vendor(vendorName, vendorDescription));
-		writeToFile();
-		return true;
-	}*/
 
 	//Remove Vendor by Vendor Name
 	public void removeVendor(String vendorName) {
@@ -80,31 +74,23 @@ public class VendorRegister {
 	public ArrayList<Vendor> getVendorsPerCategory(Category category) {
 		return vendorMap.get(category);
 	}
+	
+	public void readVendorPerCategoryFromFile(ArrayList<Category> categories) throws IOException{
+		
+		vendorMap = vDao.readVendorPerCategoryFromFile(categories);	
+	}
+	
+	public void readVendorFromFile() throws IOException{
+		vendors = vDao.readVendorFromFile();
+	}
 
 	public void writeToFile() {
-		System.out.println(vendorMap.keySet());
-		for (Category c : vendorMap.keySet()) {
-			String fileName = "Vendors"+c.getCategoryCode()+".dat";
-			try {
-				BufferedWriter writer = new BufferedWriter (new FileWriter ("StoreAppData/"+fileName));
-				for(Vendor v: vendorMap.get(c)){
-					writer.write(v.getVendorName()+","+v.getDescription()+"\n");
-				}
-				writer.close();
-			}catch (IOException ex) {
-				System.out.println("Cannot Write to file !");
-				ex.printStackTrace();
-			}
-		}
-		for (Vendor v : vendors) {
-			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter ("StoreAppData/Vendors.dat"));
-				writer.write(v.getVendorName()+","+v.getDescription()+"\n");
-				writer.close();
-			}catch (IOException ex) {
-				System.out.println("Cannot Write to file !");
-				ex.printStackTrace();
-			}
+		try{
+			vDao.writeToFile(vendorMap, vendors);
+		}catch(IOException e){
+			System.out.println("File not found!");
+			e.printStackTrace();
+			
 		}
 
 	}

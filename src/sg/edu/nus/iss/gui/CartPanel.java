@@ -28,7 +28,6 @@ public class CartPanel extends Panel {
 		setLayout(new BorderLayout());
 		cartList = new java.awt.List (6);
 		cartList.setMultipleMode(true);
-		
 		JPanel p = new JPanel();
 		p.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p.add(new JLabel("Cart Items"));
@@ -95,10 +94,10 @@ public class CartPanel extends Panel {
 		cartButton.addActionListener(actionListener);
 		panel.add(cartButton);
 		
-		JPanel buttonPanel = new  JPanel();
+		JPanel buttonPanel = new  JPanel(new BorderLayout());
+		buttonPanel.add(panel, BorderLayout.NORTH);
 		
-		
-		return panel;
+		return buttonPanel;
 	}
 
 

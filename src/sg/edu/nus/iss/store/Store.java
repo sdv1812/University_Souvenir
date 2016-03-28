@@ -112,47 +112,22 @@ public class Store {
 		return members.getMembers();
 	}
 
-	@SuppressWarnings("resource")
 	public void initializeData(){
 		try {
-
-			try {
-				members.createListFromFile();
-				categories.createListFromFile();
-				storeKeepers.createListFromFile();
-				discounts.createListFromFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
-
-			BufferedReader reader =null; 
-			String line = null;
-
-
-			for(Category c: categories.getCategories()) {
-				String fileName = "Vendors"+c.getCategoryCode()+".dat";
-				reader = new BufferedReader(new FileReader("StoreAppData/"+fileName));
-				while ((line = reader.readLine())!= null){
-					String result[] = line.split(",");
-					vendors.addVendor(result[0], result[1], categories.getCategory(c.getCategoryCode()));
-				}
-			}
-
-			try {
-				products.createListFromFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			reader.close();
-		}catch (Exception ex) {
+			members.createListFromFile();
+			categories.createListFromFile();
+			storeKeepers.createListFromFile();
+			discounts.createListFromFile();
+			vendors.readVendorPerCategoryFromFile(getCategories());
+			vendors.readVendorFromFile();
+			products.createListFromFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("File not found");
-			ex.printStackTrace();		
+			e.printStackTrace();
 		}
+
+
 	}
 
 	public void removeCategory(String categoryCode) {
@@ -205,10 +180,10 @@ public class Store {
 
 	public void makePayment(double amountreceived, double transactiontotal,
 			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-			transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
-			ArrayList<Transaction> tempList =getTransaction();
-			transaction.writeToFile(tempList);
-			}
+		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
+		ArrayList<Transaction> tempList =getTransaction();
+		transaction.writeToFile(tempList);
+	}
 
 
 	public void removeCartItem(Cart lineItem) {
@@ -217,9 +192,7 @@ public class Store {
 
 	public boolean  addProductsToCart(Product product,int quantity ,Member member){
 		boolean addProductStatus = false;
-		//System.out.println("Product id is"+product.getProductId()+"Quantity is "+quantity+"Member id is"+member.getMemberID());
 		Cart c1 =addProductsToCart.addProductsToCart(product, quantity, member);
-		//System.out.println("Product addition is "+c1.toString());
 		if(c1!=null){
 			cartList.add(c1);
 			addProductStatus = true;
@@ -230,7 +203,7 @@ public class Store {
 	public ArrayList<Vendor> getVendors() {
 		return vendors.getVendors();
 	}
-	
+
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
 		return vendors.addVendor(vendorName, vendorDescription, category);
 	}
@@ -240,12 +213,12 @@ public class Store {
 	public void removeVendor(String vendorName) {
 		vendors.removeVendor(vendorName);
 	}
-	
+
 	public ArrayList<Transaction> getTransaction(){
 		ArrayList<Transaction> t1 = transaction.getAllTransactions();
 		transactionList.addAll(t1);
 		return transactionList;
-		}
+	}
 	public Member getMember(String memberIdentity) {
 		return members.getMember(memberIdentity);
 	}

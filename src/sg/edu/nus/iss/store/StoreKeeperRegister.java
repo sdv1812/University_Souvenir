@@ -31,7 +31,6 @@ public class StoreKeeperRegister
 		for(StoreKeeper sk: storeKeepers)
 		{
 			if(storeKeeperName.equals(sk.getStoreKeeperName()))
-				System.out.println(storeKeeperName);
 				return sk; 
 		}
 	
