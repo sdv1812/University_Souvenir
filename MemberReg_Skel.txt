@@ -1,0 +1,24 @@
+package sg.edu.nus.iss.store;
+import java.io.*;
+import java.util.ArrayList;
+
+public class MemberRegister {
+	private ArrayList<Member> members;
+	private Member member;
+	
+	public MemberRegister() {
+		members = new ArrayList<Member> ();
+	}
+	public void addMember(String customerName, String memberID)
+	
+	public void addMember(String customerName, String memberID, int loyaltyPoints)
+	
+	public void removeMember(String memberID)    //Removing by selecting memberID
+	
+	public ArrayList<Member> getMembers()
+	
+	public Member getMember(String memberID)
+	
+	public boolean isMemberPresent(String idx)
+	
+	public void writeToFile(

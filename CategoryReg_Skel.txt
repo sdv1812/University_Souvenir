@@ -1,0 +1,32 @@
+package sg.edu.nus.iss.store;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class CategoryRegister {
+	private ArrayList<Category> categories;
+	private Category category;
+	
+	public CategoryRegister() 
+	
+	public void addCategory(String categoryCode, String categoryName)
+	
+	public void removeCategory(String categoryName)  // Removing by selecting category name
+	
+	public Category getCategory(String categoryCode)
+	
+	public ArrayList<Category> getCategories()
+	
+	public boolean isCategoryCodePresent(String categoryCode) // to check if category code already exists
+	
+	public boolean isCategoryPresent(String categoryName) 
+	
+	public void writeToFile()
+	
+	public boolean isCategoryCodePresent(String categoryCode) {// to check if category code already exists
+	
+	public boolean isCategoryPresent(String categoryName)
+	
+	public void writeToFile()

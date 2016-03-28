@@ -1,0 +1,17 @@
+package sg.edu.nus.iss.store;
+
+public class Member extends Customer{
+	private String memberID;
+	private int loyaltyPoints;
+	
+	public Member(String customerName, String memberID)
+	
+	public Member(String customerName, String memberID, int loyaltyPoints)
+	
+	public String getMemberID()
+	
+	public int getLoyaltyPoints()
+	
+	public void updateLoyaltyPoints(int points)
+	
+	public boolean isFirstTime()
