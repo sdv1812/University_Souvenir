@@ -2,6 +2,7 @@ package sg.edu.nus.iss.dao;
 
 import java.io.File;
 import sg.edu.nus.iss.store.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -72,4 +73,28 @@ public class ProductDao extends BaseDao{
 		}
 		super.writeToFile(writeList, Product_File);
 	}
+	
+	//add a line to file
+		public void appendProductToFile(Product p) throws IOException{
+			String productId=p.getProductId();
+			String productName=p.getName();
+			String description=p.getDescription();
+			String quantity=""+p.getQuantityAvailable();
+			String price=""+p.getPrice();
+			String barcodeNumber=p.getBarcodeNumber();
+			String threshold=""+p.getThreshold();
+			String orderQuantity=""+p.getOrderQuantity();
+			
+			StringBuffer line=new StringBuffer();
+			line.append(productId+",");
+			line.append(productName+",");
+			line.append(description+",");
+			line.append(quantity+",");
+			line.append(price+",");
+			line.append(barcodeNumber+",");
+			line.append(threshold+",");
+			line.append(orderQuantity);
+			
+			super.appendToFile(line.toString(), Product_File);
+		}
 }

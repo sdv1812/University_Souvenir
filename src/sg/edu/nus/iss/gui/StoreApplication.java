@@ -1,4 +1,5 @@
 package sg.edu.nus.iss.gui;
+import java.io.IOException;
 import java.util.ArrayList;
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
@@ -109,7 +110,12 @@ public class StoreApplication {
 
 
 	public void removeProduct(String id){
-		store.removeProduct(id);
+		try {
+			store.removeProduct(id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getTransactionTotal() {

@@ -140,7 +140,7 @@ public class Product {
 		if(productName.equals(another.getName())&&category.equals(another.getCategory())&&
 				description.equals(another.getDescription())&&(price==another.getPrice())&&
 				barcodeNumber.equals(another.getBarcodeNumber())&&(threshold==another.getThreshold())&&
-				(orderQuantity==another.getQuantityAvailable())){
+				(orderQuantity==another.getOrderQuantity())){
 			return true;
 		}else{
 			return false;

@@ -52,11 +52,11 @@ public class Store {
 		products.writeListToFile();
 	}
 
-	public void removeProduct(Product p){  //xuemin
+	public void removeProduct(Product p) throws IOException{  //xuemin
 		products.removeProduct(p);
 	}
 
-	public void removeProduct(String id){  //xuemin
+	public void removeProduct(String id) throws IOException{  //xuemin
 		products.removeProduct(id);
 	}
 

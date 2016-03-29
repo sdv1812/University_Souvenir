@@ -40,11 +40,15 @@ public class ProductRegister {
 	public void writeListToFile() throws IOException{
 		pDao.writeProductsToFile(products);
 	}
+	//add a line to file
+	public void appendToFile(Product p) throws IOException{
+		pDao.appendProductToFile(p);
+	}
 
 	//add a new product,in this method,first step is check if this product already exists,if it exists,just add quantity.
 	//if it doesn't exist,generate a new product id,then add this product to products(product list)
 	public void addProduct(Category category,String name,String description,int quantity,
-			double price,String barcodeNumber,int threshold,int orderQuantity){
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws IOException{
 
 		//go through the list of product , see if this kind of product has already exist.
 		//if the product exists,we just add the quantity to the product
@@ -54,6 +58,8 @@ public class ProductRegister {
 		for(Product p:products){			
 			if(p.equalOfProduct(temp)){
 				p.addQuantity(quantity);
+				//add
+				writeListToFile();
 				break;
 			}
 			i++;
@@ -62,6 +68,8 @@ public class ProductRegister {
 			String id=generateProductId(category);
 			Product newProduct=new Product(id, category, name, description, quantity, price, barcodeNumber, threshold, orderQuantity);
 			products.add(newProduct);
+			//add
+			appendToFile(newProduct);
 		}
 
 	}
@@ -93,12 +101,14 @@ public class ProductRegister {
 	}
 
 	//remove one product
-	public void removeProduct(Product product){
+	public void removeProduct(Product product) throws IOException{
 		products.remove(product);
+		//add
+		writeListToFile();
 	}
 
 	//remove a product by id
-	public void removeProduct(String pId){
+	public void removeProduct(String pId) throws IOException{
 		removeProduct(getProductById(pId));
 	}
 
@@ -126,8 +136,10 @@ public class ProductRegister {
 	}
 
 	//updateQuantity(id,qtypurchased)
-	public void updateQuantity(String productId,int qutPurchased){
+	public void updateQuantity(String productId,int qutPurchased) throws IOException{
 		getProductById(productId).minusQuantity(qutPurchased);
+		//add
+		writeListToFile();
 	}
 
 	//checkProductsBelowThreshold
@@ -141,7 +153,7 @@ public class ProductRegister {
 		return products;
 	}
 	//delete products of one category
-	public void deleteProductsOfCategory(Category category){
+	public void deleteProductsOfCategory(Category category) throws IOException{
 		Iterator<Product> i=products.iterator();
 		while (i.hasNext()) {
 			Product product = (Product) i.next();
@@ -149,6 +161,8 @@ public class ProductRegister {
 				products.remove(product);
 			}
 		}
+		//add
+		writeListToFile();
 
 	}
 }

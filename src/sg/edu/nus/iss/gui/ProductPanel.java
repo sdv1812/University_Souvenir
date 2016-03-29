@@ -6,6 +6,7 @@ import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.GridLayout;
 
@@ -119,11 +120,18 @@ public class ProductPanel extends JPanel {
 					productDescriptionField.getText().length()!=0 && productQuantityfield.getText().length()!=0 &&
 					productPricefield.getText().length()!=0 && productBarcodeNumberfield.getText().length()!=0 &&
 					productThresholdfield.getText().length()!=0 && productOrderQuantityfield.getText().length()!=0) {
-				boolean value = performAddAction();
-				if(value == true)
-				{
-					refresh();
+				boolean value;
+				try {
+					value = performAddAction();
+					if(value == true)
+					{
+						refresh();
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+				
 
 			}else {
 				JOptionPane.showMessageDialog(manager.getMainWindow(),
@@ -305,7 +313,7 @@ public class ProductPanel extends JPanel {
 		} 
 
 	}
-	protected boolean performAddAction(){
+	protected boolean performAddAction() throws IOException{
 	try {
 		int categoryIndex = categoryField.getSelectedIndex();
 	Category category=manager.getCategories().get(categoryIndex);

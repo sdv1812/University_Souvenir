@@ -48,7 +48,19 @@ public class BaseDao {
 		}
 		pw.close();
 		bw.close();
-		fw.close();
-		
+		fw.close();		
 	}
+	
+	//add a line to file
+		public void appendToFile(String writeLine,String fullPath) throws IOException{
+			File file=new File(fullPath);
+			FileWriter fw=new FileWriter(file,true);
+			BufferedWriter bw=new BufferedWriter(fw);
+			PrintWriter pw=new PrintWriter(bw);
+			pw.println(writeLine);
+			
+			pw.close();
+			bw.close();
+			fw.close();
+		}
 }
