@@ -30,6 +30,7 @@ public class TransactionProductPanel extends JPanel {
         productList.setMultipleMode (false);
         add ("North", new JLabel ("Products"));
         add ("Center", productList);*/
+		//setLayout(new )
 		productId = new JTextField(10);
 		quantity = new JTextField(10);
 		memberId =  new JTextField(10);
@@ -42,6 +43,7 @@ public class TransactionProductPanel extends JPanel {
 		p.add(new JLabel("Member id "));
 		p.add(memberId);
 		p.add(createButtonPanel());
+		add(p, "Center");
 		// add("Center",productList);
 		//add("East",createButtonPanel());
 
