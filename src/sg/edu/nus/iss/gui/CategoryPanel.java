@@ -35,7 +35,6 @@ public class CategoryPanel extends JPanel {
 	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
-	private static final String[] COLUMN_NAMES = {"Code", "Category Name"};
 	private AbstractTableModel categoryTableModel;
 	private ArrayList<Category> categories ;
 	private String action_source;

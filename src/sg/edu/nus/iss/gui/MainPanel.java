@@ -1,14 +1,10 @@
 package sg.edu.nus.iss.gui;
 
 import javax.swing.JPanel;
-
 import sg.edu.nus.iss.store.Cart;
-
 import javax.swing.JButton;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

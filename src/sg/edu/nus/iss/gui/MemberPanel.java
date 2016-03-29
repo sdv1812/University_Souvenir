@@ -35,7 +35,6 @@ public class MemberPanel extends JPanel {
 	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
-	private static final String[] COLUMN_NAMES = {"Name", "ID", "Loyalty Points"};
 	private AbstractTableModel memberTableModel;
 	private ArrayList<Member> members ;
 	private String action_source;
@@ -50,7 +49,7 @@ public class MemberPanel extends JPanel {
 		members = manager.getMembers();
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
-
+		memberTableModel = manager.getMemberTableModel();
 		setLayout (new BorderLayout());
 		add(createButtonPanel(), BorderLayout.EAST);
 		add(showMemberListPanel(), BorderLayout.CENTER);
@@ -175,7 +174,7 @@ public class MemberPanel extends JPanel {
 			JLabel label = new JLabel("Members : ");
 			label.setFont(new Font("Tahoma", Font.BOLD, 12));
 			table = new JTable();	
-			table.setModel(getTableModel());
+			table.setModel(memberTableModel);
 			memberTableModel.fireTableDataChanged();
 			scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
 			table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
@@ -190,49 +189,6 @@ public class MemberPanel extends JPanel {
 
 		}
 
-//**********************Set Table Mode******************************	
-
-	public TableModel getTableModel() {
-		if (memberTableModel != null) 
-			return memberTableModel;
-		else {
-			memberTableModel = new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getColumnName(int column) {
-					return COLUMN_NAMES[column];
-				}
-
-				@Override
-				public int getRowCount() {
-					return members.size();
-				}
-
-				@Override
-				public int getColumnCount() {
-					return COLUMN_NAMES.length;
-				}
-
-				@Override
-				public Object getValueAt(int rowIndex, int columnIndex) {
-					Member member = members.get(rowIndex);
-					switch (columnIndex) {
-					case 0: return member.getCustomerName();
-					case 1: return member.getMemberID();
-					case 2: return member.getLoyaltyPoints();
-					default: return null;
-					}
-				}
-			};
-
-			return memberTableModel;
-		}
-	}
 
 //******************Reflect the changes done on the screen by the buttons******************
 
