@@ -244,6 +244,10 @@ public class Store {
 	public AbstractTableModel getMemberTableModel() {
 		return members.getMemberTableModel();
 	}
+	
+	public AbstractTableModel getProductTableModel() {
+		return products.getProductTableModel();
+	}
 
 
 }

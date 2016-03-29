@@ -198,4 +198,8 @@ public class StoreApplication {
 	public AbstractTableModel getMemberTableModel() {
 		return store.getMemberTableModel();
 	}
+	
+	public AbstractTableModel getProductTableModel() {
+		return store.getProductTableModel();
+	}
 }
