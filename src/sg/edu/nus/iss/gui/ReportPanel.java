@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.gui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,12 +25,15 @@ public class ReportPanel extends JPanel {
 	private StoreApplication manager;
 	private AbstractTableModel categoryTableModel;
 	private AbstractTableModel productTableModel;
-	private AbstractTableModel memberTabelModel;
+	private AbstractTableModel memberTableModel;
 	private JTable table;
 	private JScrollPane scroller;
 	private Border raisedetched;
 	private Border loweredetched;
 	private String action_source;
+	private JPanel cards;
+	private static final String Category_ ="Category";
+	private static final String Member_ ="Member";
 
 	/**
 	 * Create the panel.
@@ -40,10 +44,16 @@ public class ReportPanel extends JPanel {
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 		categoryTableModel = manager.getCategoryTableModel(); 
 		//productTableModel = manager.getProductTableModel();
-		memberTabelModel = manager.getMemberTableModel();
-		setLayout (new BorderLayout());
+		memberTableModel = manager.getMemberTableModel();
+		setLayout (new BorderLayout());		
+		cards = new JPanel(new CardLayout());
+		cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), Category_);
+		cards.add(createReportViewPanel(memberTableModel, "List of All Members"), Member_);
+		//cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), "Category");
+		//cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), "Category");
+
+		add(cards,BorderLayout.CENTER);
 		add(createButtonPanel(), BorderLayout.EAST);
-		add(createReportViewPanel(categoryTableModel, "List of All Categories"), BorderLayout.CENTER);
 		
 	}
 	
@@ -65,8 +75,8 @@ public class ReportPanel extends JPanel {
 		catBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				action_source = (((JButton)e.getSource()).getText());
-				createReportViewPanel(categoryTableModel, "List of All Categories");
-				refresh();
+				 CardLayout cl = (CardLayout)(cards.getLayout());
+				 cl.show(cards, Category_);
 			}
 		});
 		
@@ -76,8 +86,9 @@ public class ReportPanel extends JPanel {
 		memBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				action_source = (((JButton)e.getSource()).getText());
-				createReportViewPanel(memberTabelModel, "List of All Members");
-				refresh();
+				//refresh();
+				 CardLayout cl = (CardLayout)(cards.getLayout());
+				 cl.show(cards, Member_);
 			}
 		});
 		
