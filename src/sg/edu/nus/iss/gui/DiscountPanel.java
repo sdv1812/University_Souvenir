@@ -20,8 +20,10 @@ import javax.swing.table.TableModel;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
-/*
- * Author: Sanskar Deepak
+/**
+ * 
+ * @author Sanskar Deepak
+ *
  */
 
 

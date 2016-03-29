@@ -3,12 +3,9 @@ package sg.edu.nus.iss.gui;
 import sg.edu.nus.iss.store.*;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -45,14 +42,13 @@ public class TransactionProductPanel extends JPanel {
 		p.add(new JLabel("Member id "));
 		p.add(memberId);
 		p.add(createButtonPanel());
-		add("North",p);
 		// add("Center",productList);
 		//add("East",createButtonPanel());
 
 	}
 	private JPanel createButtonPanel() {
 		JPanel p = new JPanel();
-		p.setLayout(new BorderLayout());
+		p.setLayout(new GridLayout());
 		JButton b;
 		ActionListener l;
 

@@ -2,6 +2,9 @@ package sg.edu.nus.iss.store;
 import java.io.*;
 import java.util.ArrayList;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 import sg.edu.nus.iss.dao.CustomerDao;
 
 /*
@@ -13,6 +16,8 @@ public class MemberRegister {
 	private ArrayList<Member> members;
 	private Member member;
 	private CustomerDao custDao;
+	private AbstractTableModel memberTableModel;
+	private static final String[] COLUMN_NAMES = {"Name", "ID", "Loyalty Points"};
 	
 	public MemberRegister() {
 		members = new ArrayList<Member> ();
@@ -84,5 +89,48 @@ public class MemberRegister {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public AbstractTableModel getMemberTableModel() {
+		if (memberTableModel != null) 
+			return memberTableModel;
+		else {
+			memberTableModel = new AbstractTableModel() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public String getColumnName(int column) {
+					return COLUMN_NAMES[column];
+				}
+
+				@Override
+				public int getRowCount() {
+					return members.size();
+				}
+
+				@Override
+				public int getColumnCount() {
+					return COLUMN_NAMES.length;
+				}
+
+				@Override
+				public Object getValueAt(int rowIndex, int columnIndex) {
+					Member member = members.get(rowIndex);
+					switch (columnIndex) {
+					case 0: return member.getCustomerName();
+					case 1: return member.getMemberID();
+					case 2: return member.getLoyaltyPoints();
+					default: return null;
+					}
+				}
+			};
+
+			return memberTableModel;
+		}
+	}
+
 
 }

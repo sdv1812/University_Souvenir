@@ -24,8 +24,10 @@ import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.store.Category;
 
-/*
- * Author: Sanskar Deepak
+/**
+ * 
+ * @author Sanskar Deepak
+ *
  */
 
 public class CategoryPanel extends JPanel {

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 /*
  * ProductReg class:to manage product object
  * Attribute: a list of products and a file operation class
@@ -20,6 +23,8 @@ public class ProductRegister {
 	private ProductDao pDao;
 	//Store is a management class,Store manages many lists.In ProductReg,we have a Store object reference to find category and else.
 	private Store store;
+	private AbstractTableModel productTableModel;
+	private static final String[] COLUMN_NAMES = {"Prod. ID", "Prod. Name", "Description", "Quantity Avail.", "Price", "Bar Code", "Reorder Quant.", "Order Quant."};
 
 	//constructor
 	public ProductRegister(Store store){
@@ -165,4 +170,53 @@ public class ProductRegister {
 		writeListToFile();
 
 	}
+	
+	// returns table model for the list of products
+	public AbstractTableModel getProductTableModel() {
+		if (productTableModel != null) 
+			return productTableModel;
+		else {
+			productTableModel = new AbstractTableModel() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public String getColumnName(int column) {
+					return COLUMN_NAMES[column];
+				}
+
+				@Override
+				public int getRowCount() {
+					return products.size();
+				}
+
+				@Override
+				public int getColumnCount() {
+					return COLUMN_NAMES.length;
+				}
+
+				@Override
+				public Object getValueAt(int rowIndex, int columnIndex) {
+					Product product = products.get(rowIndex);
+					switch (columnIndex) {
+					case 0: return product.getProductId();
+					case 1: return product.getName();
+					case 2: return product.getDescription();
+					case 3: return product.getQuantityAvailable();
+					case 4: return product.getPrice();
+					case 5: return product.getBarcodeNumber();
+					case 6: return product.getThreshold();
+					case 7: return product.getOrderQuantity();
+					default: return null;
+					}
+				}
+			};
+
+			return productTableModel;
+		}
+	}
+
 }
