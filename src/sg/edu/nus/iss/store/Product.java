@@ -137,10 +137,11 @@ public class Product {
 	 * check if two product is same . Be used in ProductReg.
 	 */	
 	public boolean equalOfProduct(Product another){
+		//if everything is same,then it is same
 		if(productName.equals(another.getName())&&category.equals(another.getCategory())&&
 				description.equals(another.getDescription())&&(price==another.getPrice())&&
 				barcodeNumber.equals(another.getBarcodeNumber())&&(threshold==another.getThreshold())&&
-				(orderQuantity==another.getQuantityAvailable())){
+				(orderQuantity==another.getOrderQuantity())){
 			return true;
 		}else{
 			return false;

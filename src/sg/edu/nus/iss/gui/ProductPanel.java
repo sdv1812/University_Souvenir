@@ -6,8 +6,10 @@ import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.GridLayout;
+import java.awt.Panel;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -50,9 +52,15 @@ public class ProductPanel extends JPanel {
 	private JTextField productBarcodeNumberfield;
 	private JTextField productThresholdfield;
 	private JTextField productOrderQuantityfield;
+	
+	//add
+	private MainPanel mainPanel;
 
-	public ProductPanel(StoreApplication manager) {
+	public ProductPanel(StoreApplication manager,MainPanel mainPanel) {
 		this.manager = manager;
+		//add
+		this.mainPanel=mainPanel;
+		
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 
@@ -119,11 +127,18 @@ public class ProductPanel extends JPanel {
 					productDescriptionField.getText().length()!=0 && productQuantityfield.getText().length()!=0 &&
 					productPricefield.getText().length()!=0 && productBarcodeNumberfield.getText().length()!=0 &&
 					productThresholdfield.getText().length()!=0 && productOrderQuantityfield.getText().length()!=0) {
-				boolean value = performAddAction();
-				if(value == true)
-				{
-					refresh();
+				boolean value;
+				try {
+					value = performAddAction();
+					if(value == true)
+					{
+						refresh();
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+				
 
 			}else {
 				JOptionPane.showMessageDialog(manager.getMainWindow(),
@@ -200,6 +215,18 @@ public class ProductPanel extends JPanel {
 				}
 			}
 		});
+		
+		//add a button for show the product below threthold to storekeeper
+		JButton checkProductsBelowThresholdBtn = new JButton("check products below threshold");
+
+		checkProductsBelowThresholdBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				action_source = (((JButton)e.getSource()).getText());
+				//create a new panel for display,includes a return button.
+				mainPanel.actionPerformedOfCheckProductsBelowThrethold();
+			}
+		});
+		p.add(checkProductsBelowThresholdBtn);
 
 		p.add(backBtn);
 		p.add(removeBtn);
@@ -305,7 +332,7 @@ public class ProductPanel extends JPanel {
 		} 
 
 	}
-	protected boolean performAddAction(){
+	protected boolean performAddAction() throws IOException{
 	try {
 		int categoryIndex = categoryField.getSelectedIndex();
 	Category category=manager.getCategories().get(categoryIndex);

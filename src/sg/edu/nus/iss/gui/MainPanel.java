@@ -23,12 +23,20 @@ public class MainPanel extends JPanel {
 	private CartPanel cartPanel;
 	private TransactionProductPanel transactionProductPanel;
 	private VendorPanel vendorPanel;
+	
+	//add
+	private StoreApplication manager;
+	private CheckProductsBelowThrethold checekProductsPanel;
 	private ReportPanel reportPanel;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
+		//add
+		this.manager=manager;
+		productPanel=new ProductPanel(manager, this);
+		
 		setLayout(new GridLayout(0, 2, 80, 60));
 		
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
@@ -78,7 +86,7 @@ public class MainPanel extends JPanel {
 		productBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				productPanel = new ProductPanel(manager);
+//				productPanel = new ProductPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				productPanel.setVisible(true);
@@ -153,4 +161,14 @@ public class MainPanel extends JPanel {
 		return selectedLineItem;
 	}
 
+	//add ,the method will be used when store keeper check inventory.
+	public void actionPerformedOfCheckProductsBelowThrethold(){
+		checekProductsPanel = new CheckProductsBelowThrethold(manager);
+		removeAll();
+		setLayout(new BorderLayout());
+		checekProductsPanel.setVisible(true);
+		add("Center", checekProductsPanel);
+		revalidate();
+		repaint();
+	}
 }

@@ -41,6 +41,11 @@ public class Store {
 	{
 		return products.getProducts();
 	}
+	//add
+	public ArrayList<Product> getProductsBelowThreshold(){
+		return products.checkProductsBelowThreshold();
+	}
+	
 
 	public CategoryRegister getCategoryReg(){ //xuemin
 		return categories;
@@ -53,11 +58,11 @@ public class Store {
 		products.writeListToFile();
 	}
 
-	public void removeProduct(Product p){  //xuemin
+	public void removeProduct(Product p) throws IOException{  //xuemin
 		products.removeProduct(p);
 	}
 
-	public void removeProduct(String id){  //xuemin
+	public void removeProduct(String id) throws IOException{  //xuemin
 		products.removeProduct(id);
 	}
 

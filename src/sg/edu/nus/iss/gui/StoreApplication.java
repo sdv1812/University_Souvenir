@@ -1,4 +1,5 @@
 package sg.edu.nus.iss.gui;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
@@ -110,10 +111,19 @@ public class StoreApplication {
 	public ArrayList<Product> getProducts(){
 		return store.getProducts();
 	}
-
+	
+	//add
+	public ArrayList<Product> getProductsBelowThreshold(){
+		return store.getProductsBelowThreshold();
+	}
 
 	public void removeProduct(String id){
-		store.removeProduct(id);
+		try {
+			store.removeProduct(id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getTransactionTotal() {
