@@ -13,12 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class BaseDao {
-	//private static final String foldername="./data/";
-	
-	/*public static String getFolderName(){
-		return foldername;
-	}*/
-	
+
 	public ArrayList<String> readFromFile(String fullPath) throws IOException{
 		ArrayList<String> readList=new ArrayList<>();
 		File file=new File(fullPath);
