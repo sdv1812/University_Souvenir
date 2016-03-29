@@ -107,7 +107,11 @@ public class StoreApplication {
 	public ArrayList<Product> getProducts(){
 		return store.getProducts();
 	}
-
+	
+	//add
+	public ArrayList<Product> getProductsBelowThreshold(){
+		return store.getProductsBelowThreshold();
+	}
 
 	public void removeProduct(String id){
 		try {

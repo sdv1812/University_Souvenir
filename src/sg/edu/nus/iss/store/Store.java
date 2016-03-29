@@ -40,6 +40,11 @@ public class Store {
 	{
 		return products.getProducts();
 	}
+	//add
+	public ArrayList<Product> getProductsBelowThreshold(){
+		return products.checkProductsBelowThreshold();
+	}
+	
 
 	public CategoryRegister getCategoryReg(){ //xuemin
 		return categories;

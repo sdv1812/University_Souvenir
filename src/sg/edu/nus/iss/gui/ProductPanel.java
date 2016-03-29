@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.GridLayout;
+import java.awt.Panel;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -51,9 +52,15 @@ public class ProductPanel extends JPanel {
 	private JTextField productBarcodeNumberfield;
 	private JTextField productThresholdfield;
 	private JTextField productOrderQuantityfield;
+	
+	//add
+	private MainPanel mainPanel;
 
-	public ProductPanel(StoreApplication manager) {
+	public ProductPanel(StoreApplication manager,MainPanel mainPanel) {
 		this.manager = manager;
+		//add
+		this.mainPanel=mainPanel;
+		
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 
@@ -208,6 +215,18 @@ public class ProductPanel extends JPanel {
 				}
 			}
 		});
+		
+		//add a button for show the product below threthold to storekeeper
+		JButton checkProductsBelowThresholdBtn = new JButton("check products below threshold");
+
+		checkProductsBelowThresholdBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				action_source = (((JButton)e.getSource()).getText());
+				//create a new panel for display,includes a return button.
+				mainPanel.actionPerformedOfCheckProductsBelowThrethold();
+			}
+		});
+		p.add(checkProductsBelowThresholdBtn);
 
 		p.add(backBtn);
 		p.add(removeBtn);

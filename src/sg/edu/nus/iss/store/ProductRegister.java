@@ -150,7 +150,7 @@ public class ProductRegister {
 				productsBelow.add(p);
 			}
 		}
-		return products;
+		return productsBelow;
 	}
 	//delete products of one category
 	public void deleteProductsOfCategory(Category category) throws IOException{
