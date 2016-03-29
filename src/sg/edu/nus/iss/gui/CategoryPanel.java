@@ -2,7 +2,6 @@ package sg.edu.nus.iss.gui;
 
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,9 +46,9 @@ public class CategoryPanel extends JPanel {
 		this.manager = manager;
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
-
 		setLayout (new BorderLayout());
 		categories = manager.getCategories();
+		categoryTableModel = manager.getCategoryTableModel();
 		add(createButtonPanel(), BorderLayout.EAST);
 		add(showCategoryListPanel(), BorderLayout.CENTER);
 		add(createAddCategoryPanel(), BorderLayout.SOUTH);
@@ -180,7 +179,7 @@ public class CategoryPanel extends JPanel {
 		JLabel label = new JLabel("Categories : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
-		table.setModel(getTableModel());
+		table.setModel(categoryTableModel);
 		categoryTableModel.fireTableDataChanged();
 		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
 		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
@@ -194,50 +193,6 @@ public class CategoryPanel extends JPanel {
 		return panel;
 
 	}
-
-	//**********************Set Table Mode******************************	
-
-	public TableModel getTableModel() {
-		if (categoryTableModel != null) 
-			return categoryTableModel;
-		else {
-			categoryTableModel = new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getColumnName(int column) {
-					return COLUMN_NAMES[column];
-				}
-
-				@Override
-				public int getRowCount() {
-					return categories.size();
-				}
-
-				@Override
-				public int getColumnCount() {
-					return COLUMN_NAMES.length;
-				}
-
-				@Override
-				public Object getValueAt(int rowIndex, int columnIndex) {
-					Category category = categories.get(rowIndex);
-					switch (columnIndex) {
-					case 0: return category.getCategoryCode();
-					case 1: return category.getCategoryName();
-					default: return null;
-					}
-				}
-			};
-
-			return categoryTableModel;
-		}
-	}
-
 
 	//******************Reflect the changes done on the screen by the buttons******************
 
