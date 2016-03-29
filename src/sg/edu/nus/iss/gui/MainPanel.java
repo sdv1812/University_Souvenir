@@ -23,6 +23,7 @@ public class MainPanel extends JPanel {
 	private CartPanel cartPanel;
 	private TransactionProductPanel transactionProductPanel;
 	private VendorPanel vendorPanel;
+	private ReportPanel reportPanel;
 
 	/**
 	 * Create the panel.
@@ -105,6 +106,14 @@ public class MainPanel extends JPanel {
 		JButton reportBtn = new JButton("Report");
 		reportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				reportPanel = new ReportPanel(manager);
+				removeAll();
+				setLayout(new BorderLayout());
+				reportPanel.setVisible(true);
+				add("Center", reportPanel);
+				revalidate();
+				repaint();
 			}
 		});
 		add(reportBtn);

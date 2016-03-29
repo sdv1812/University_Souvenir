@@ -20,7 +20,7 @@ import javax.swing.table.TableModel;
 
 import sg.edu.nus.iss.store.Category;
 
-public class ReportPanel extends JPanel {
+public class Report extends JPanel {
 	private StoreApplication manager;
 	private AbstractTableModel categoryTableModel;
 	private AbstractTableModel productTableModel;
@@ -34,17 +34,13 @@ public class ReportPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ReportPanel(StoreApplication manager) {
+	public Report(StoreApplication manager) {
 		this.manager = manager;
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 		categoryTableModel = manager.getCategoryTableModel(); 
 		//productTableModel = manager.getProductTableModel();
-		memberTabelModel = manager.getMemberTableModel();
-		setLayout (new BorderLayout());
-		add(createButtonPanel(), BorderLayout.EAST);
-		add(createReportViewPanel(categoryTableModel, "List of All Categories"), BorderLayout.CENTER);
-		
+		//memberTableModel = manager.getMemberTableModel();
 	}
 	
 	public JPanel createButtonPanel () {
@@ -69,19 +65,7 @@ public class ReportPanel extends JPanel {
 				refresh();
 			}
 		});
-		
-		p.add(catBtn);
 
-		JButton memBtn = new JButton("Member");
-		memBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
-				createReportViewPanel(memberTabelModel, "List of All Members");
-				refresh();
-			}
-		});
-		
-		p.add(memBtn);
 		panel.add(p, "North");
 		panel.setBorder(BorderFactory.createCompoundBorder(
 				raisedetched, loweredetched)); 
@@ -111,12 +95,7 @@ public class ReportPanel extends JPanel {
 	}
 	
 	public void refresh(){   
-		if(action_source.equalsIgnoreCase("Back")){
-			removeAll();
-			add("Center",manager.createMainPanel());
-			revalidate();
-			repaint();
-		} 
+
 	}
 
 }

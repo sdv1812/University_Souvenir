@@ -1,7 +1,5 @@
 package sg.edu.nus.iss.store;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,10 +32,17 @@ public class VendorRegister {
 		Vendor vendorNew = new  Vendor(vendorName,vendorDescription);
 		temp.add(vendorNew);
 		vendorMap.put(category, temp);
-		for(Vendor v : vendors) {
-			if(vendorName.equals(v.getVendorName())) 
-				break;
-		else	vendors.add(vendorNew);
+		if(vendors == null) { // First Entry
+			vendors.add(vendorNew);
+			System.out.println("Inside first Entry   " + vendorNew.getVendorName());
+		} else {
+			for(Vendor v : vendors) {
+				System.out.println("Inside for loop   " + vendorNew.getVendorName());
+
+				if(vendorName.equals(v.getVendorName())) 
+					break;
+				else	vendors.add(vendorNew);
+			}
 		}
 		writeToFile();
 		return true;
@@ -74,12 +79,12 @@ public class VendorRegister {
 	public ArrayList<Vendor> getVendorsPerCategory(Category category) {
 		return vendorMap.get(category);
 	}
-	
+
 	public void readVendorPerCategoryFromFile(ArrayList<Category> categories) throws IOException{
-		
+
 		vendorMap = vDao.readVendorPerCategoryFromFile(categories);	
 	}
-	
+
 	public void readVendorFromFile() throws IOException{
 		vendors = vDao.readVendorFromFile();
 	}
@@ -90,7 +95,7 @@ public class VendorRegister {
 		}catch(IOException e){
 			System.out.println("File not found!");
 			e.printStackTrace();
-			
+
 		}
 
 	}

@@ -5,6 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 import sg.edu.nus.iss.dao.CategoryDao;
 
 /*
@@ -16,6 +19,8 @@ public class CategoryRegister {
 	private ArrayList<Category> categories;
 	private Category category;
 	private CategoryDao catDao;
+	private static final String[] COLUMN_NAMES = {"Code", "Category Name"};
+	private AbstractTableModel categoryTableModel;
 	
 	public CategoryRegister() {
 		categories = new ArrayList<Category> ();
@@ -48,8 +53,6 @@ public class CategoryRegister {
 	public Category getCategory(String categoryCode) {
 		if(categories!=null){
 			for(Category c : categories){
-				System.out.println("catgeorcode"+categoryCode);
-				System.out.println("list catego code"+c.getCategoryCode());
 				if (categoryCode.equalsIgnoreCase(c.getCategoryCode())){
 					return c;
 				}
@@ -83,6 +86,47 @@ public class CategoryRegister {
 		}catch (IOException ex) {
 			System.out.println("Cannot Write to file !");
 			ex.printStackTrace();
+		}
+	}
+	
+	public AbstractTableModel getCategoryTableModel() {
+		if (categoryTableModel != null) 
+			return categoryTableModel;
+		else {
+			categoryTableModel = new AbstractTableModel() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public String getColumnName(int column) {
+					return COLUMN_NAMES[column];
+				}
+
+				@Override
+				public int getRowCount() {
+					return categories.size();
+				}
+
+				@Override
+				public int getColumnCount() {
+					return COLUMN_NAMES.length;
+				}
+
+				@Override
+				public Object getValueAt(int rowIndex, int columnIndex) {
+					Category category = categories.get(rowIndex);
+					switch (columnIndex) {
+					case 0: return category.getCategoryCode();
+					case 1: return category.getCategoryName();
+					default: return null;
+					}
+				}
+			};
+
+			return categoryTableModel;
 		}
 	}
 }

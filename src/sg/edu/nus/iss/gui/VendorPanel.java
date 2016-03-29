@@ -26,8 +26,10 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
 
-/*
- * Author: Sanskar Deepak
+/**
+ * 
+ * @author Sanskar Deepak
+ *
  */
 
 public class VendorPanel extends JPanel {
@@ -63,7 +65,7 @@ public class VendorPanel extends JPanel {
 
 	private JPanel createAddVendorPanel () { 
 
-		JPanel panel = new JPanel(new GridLayout(2, 0, 10, 0));
+		JPanel panel = new JPanel(new GridLayout(3, 4, 10, 0));
 		JLabel label = new JLabel("Add Vendor : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12 ));
 		JLabel categoryLabel = new JLabel("Select Category:");
@@ -123,8 +125,8 @@ public class VendorPanel extends JPanel {
 				}
 			}
 			});
-
-
+		panel.add(new JPanel());
+		panel.add(new JPanel());
 		panel.add(addBtn);
 		
 		JButton viewBtn = new JButton("View");

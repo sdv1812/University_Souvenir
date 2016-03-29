@@ -3,17 +3,15 @@ package sg.edu.nus.iss.gui;
 import java.awt.*;
 import javax.swing.*;
 
-/*
- * Author: Sanskar Deepak
+/**
+ * 
+ * @author Sanskar Deepak
+ *
  */
 
 
 public class ISSLogoPanel extends JPanel{
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override

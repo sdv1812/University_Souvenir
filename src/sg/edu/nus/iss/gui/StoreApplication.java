@@ -1,5 +1,9 @@
 package sg.edu.nus.iss.gui;
 import java.util.ArrayList;
+
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
@@ -185,5 +189,13 @@ public class StoreApplication {
 
 	public Category getCategoryByName(String categoryName) {
 		return store.getCategoryByName(categoryName);
+	}
+	
+	public AbstractTableModel getCategoryTableModel() {
+		return store.getCategoryTableModel();
+	}
+	
+	public AbstractTableModel getMemberTableModel() {
+		return store.getMemberTableModel();
 	}
 }

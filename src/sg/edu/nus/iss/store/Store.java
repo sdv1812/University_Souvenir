@@ -1,9 +1,10 @@
 package sg.edu.nus.iss.store;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 
 public class Store {
@@ -234,6 +235,14 @@ public class Store {
 	public Category getCategoryByName(String categoryName) {
 		// TODO Auto-generated method stub
 		return categories.getCategorybyName(categoryName);
+	}
+	
+	public AbstractTableModel getCategoryTableModel() {
+		return categories.getCategoryTableModel();
+	}
+	
+	public AbstractTableModel getMemberTableModel() {
+		return members.getMemberTableModel();
 	}
 
 
