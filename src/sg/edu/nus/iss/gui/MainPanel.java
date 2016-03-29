@@ -32,14 +32,20 @@ public class MainPanel extends JPanel {
 		//add
 		this.manager=manager;
 		productPanel=new ProductPanel(manager, this);
+		memberPanel = new MemberPanel(manager);
+		categoryPanel = new CategoryPanel(manager);
+		vendorPanel = new VendorPanel(manager);
+		reportPanel = new ReportPanel(manager);
+		discountPanel = new DiscountPanel(manager);
+		transactionProductPanel = new TransactionProductPanel(manager);
+		cartPanel = new CartPanel(manager);
+
 		
 		setLayout(new GridLayout(0, 2, 80, 60));
 		
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transactionProductPanel = new TransactionProductPanel(manager);
-				cartPanel = new CartPanel(manager);
 				removeAll();
 				setLayout(new GridLayout(0,1));
 				add(transactionProductPanel);
@@ -53,7 +59,6 @@ public class MainPanel extends JPanel {
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				memberPanel = new MemberPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				memberPanel.setVisible(true);
@@ -67,7 +72,6 @@ public class MainPanel extends JPanel {
 		JButton btnCategory = new JButton("Category");
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				categoryPanel = new CategoryPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				categoryPanel.setVisible(true);
@@ -96,7 +100,6 @@ public class MainPanel extends JPanel {
 		JButton vendorBtn = new JButton("Vendor");
 		vendorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vendorPanel = new VendorPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				vendorPanel.setVisible(true);
@@ -111,7 +114,6 @@ public class MainPanel extends JPanel {
 		reportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				reportPanel = new ReportPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				reportPanel.setVisible(true);
@@ -125,7 +127,6 @@ public class MainPanel extends JPanel {
 		JButton btnDiscount = new JButton("Discount");
 		btnDiscount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				discountPanel = new DiscountPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				discountPanel.setVisible(true);
