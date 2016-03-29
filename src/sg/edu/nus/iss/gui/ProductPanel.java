@@ -2,25 +2,20 @@ package sg.edu.nus.iss.gui;
 
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.GridLayout;
-import java.awt.Panel;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.BorderLayout;
 import java.awt.Font;
-
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -38,7 +33,6 @@ public class ProductPanel extends JPanel {
 	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
-	private static final String[] COLUMN_NAMES = {"Prod. ID", "Prod. Name", "Description", "Quantity Avail.", "Price", "Bar Code", "Reorder Quant.", "Order Quant."};
 	private AbstractTableModel productTableModel;
 	private ArrayList<Product> product_list ;
 	private String action_source;
@@ -60,7 +54,7 @@ public class ProductPanel extends JPanel {
 		this.manager = manager;
 		//add
 		this.mainPanel=mainPanel;
-		
+		productTableModel = manager.getProductTableModel();		
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 
@@ -248,7 +242,7 @@ public class ProductPanel extends JPanel {
 		JLabel label = new JLabel("Products : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
-		table.setModel(getTableModel());
+		table.setModel(productTableModel);
 		productTableModel.fireTableDataChanged();
 		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
 		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
@@ -261,55 +255,6 @@ public class ProductPanel extends JPanel {
 
 		return panel;
 
-	}
-
-	//**********************Set Table Mode******************************	
-
-	public TableModel getTableModel() {
-		if (productTableModel != null) 
-			return productTableModel;
-		else {
-			productTableModel = new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getColumnName(int column) {
-					return COLUMN_NAMES[column];
-				}
-
-				@Override
-				public int getRowCount() {
-					return product_list.size();
-				}
-
-				@Override
-				public int getColumnCount() {
-					return COLUMN_NAMES.length;
-				}
-
-				@Override
-				public Object getValueAt(int rowIndex, int columnIndex) {
-					Product product = product_list.get(rowIndex);
-					switch (columnIndex) {
-					case 0: return product.getProductId();
-					case 1: return product.getName();
-					case 2: return product.getDescription();
-					case 3: return product.getQuantityAvailable();
-					case 4: return product.getPrice();
-					case 5: return product.getBarcodeNumber();
-					case 6: return product.getThreshold();
-					case 7: return product.getOrderQuantity();
-					default: return null;
-					}
-				}
-			};
-
-			return productTableModel;
-		}
 	}
 
 

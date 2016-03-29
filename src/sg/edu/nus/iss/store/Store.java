@@ -253,6 +253,10 @@ public class Store {
 	public AbstractTableModel getProductTableModel() {
 		return products.getProductTableModel();
 	}
+	
+	public AbstractTableModel getVendorTableModel() {
+		return vendors.getVendorTableModel();
+	}
 
 
 }

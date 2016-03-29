@@ -2,22 +2,18 @@ package sg.edu.nus.iss.gui;
 
 import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.GridLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.BorderLayout;
 import java.awt.Font;
-
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -38,7 +34,6 @@ public class VendorPanel extends JPanel {
 	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
-	private static final String[] COLUMN_NAMES = {"Vendor Name", "Description"};
 	private AbstractTableModel vendorTableModel;
 	private ArrayList<Vendor> vendors ;
 	private String action_source;
@@ -51,6 +46,7 @@ public class VendorPanel extends JPanel {
 
 	public VendorPanel(StoreApplication manager) {
 		this.manager = manager;
+		vendorTableModel = manager.getVendorTableModel();
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 		setLayout (new BorderLayout());
@@ -211,7 +207,7 @@ public class VendorPanel extends JPanel {
 		JLabel label = new JLabel("Vendors : ");
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
-		table.setModel(getTableModel());
+		table.setModel(vendorTableModel);
 		vendorTableModel.fireTableDataChanged();
 		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
 		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
@@ -224,49 +220,6 @@ public class VendorPanel extends JPanel {
 
 		return panel;
 
-	}
-
-	//**********************Set Table Mode******************************	
-
-	public TableModel getTableModel() {
-		if (vendorTableModel != null) 
-			return vendorTableModel;
-		else {
-			vendorTableModel = new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getColumnName(int column) {
-					return COLUMN_NAMES[column];
-				}
-
-				@Override
-				public int getRowCount() {
-					return vendors.size();
-				}
-
-				@Override
-				public int getColumnCount() {
-					return COLUMN_NAMES.length;
-				}
-
-				@Override
-				public Object getValueAt(int rowIndex, int columnIndex) {
-					Vendor vendor = vendors.get(rowIndex);
-					switch (columnIndex) {
-					case 0: return vendor.getVendorName();
-					case 1: return vendor.getDescription();
-					default: return null;
-					}
-				}
-			};
-
-			return vendorTableModel;
-		}
 	}
 
 
