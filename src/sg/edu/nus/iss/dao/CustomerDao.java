@@ -44,6 +44,8 @@ public class CustomerDao extends BaseDao{
 			StringBuffer line = new StringBuffer() ;
 			line.append(m.getCustomerName());
 			line.append(",");
+			line.append(m.getMemberID());
+			line.append(",");
 			line.append(m.getLoyaltyPoints());
 			list.add(line);
 		}	

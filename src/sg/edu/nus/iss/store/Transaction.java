@@ -17,7 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Koushik 
+ * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves each
+ *         Transaction in file
  *
  */
 public class Transaction implements Comparable {
@@ -28,24 +29,20 @@ public class Transaction implements Comparable {
 	String dateOfPurchase;
 	double transActionTotal;
 	double discountPercentage;
+	int loyaltyPoints;
 	ArrayList<Transaction> transAction;
-	//MemberRegister member = new MemberRegister();
-	//ProductRegister product = new ProductRegister();
-	//DiscountManager discountManager = new DiscountManager();
-	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");;
+	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	public Transaction() {
 		transAction = new ArrayList<Transaction>();
 		try {
 			readFromFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public Transaction(int tranasctionId, String productId, String memberId,
-			int qtypurchased, String dateOfPurchase) {
+	public Transaction(int tranasctionId, String productId, String memberId, int qtypurchased, String dateOfPurchase) {
 		super();
 		this.tranasctionId = tranasctionId;
 		this.productId = productId;
@@ -106,6 +103,10 @@ public class Transaction implements Comparable {
 		return transActionTotal;
 	}
 
+	public void setTransActionTotal(double transActionTotal) {
+		this.transActionTotal = transActionTotal;
+	}
+
 	public double getBalance(double transActionTotal, double amountReceived) {
 		return amountReceived - transActionTotal;
 	}
@@ -116,9 +117,21 @@ public class Transaction implements Comparable {
 		System.out.println("TransactionArrayList size is" + transAction.size());
 		return transAction;
 	}
+	public int getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
 
+	public void setLoyaltyPoints(int loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
+	}
+
+	/**
+	 * @param List of cart objects
+	 * @param discountPerc
+	 * @return ProductAddition status
+	 */
 	public String addProductsToCart(List<Cart> c1, double discountPerc) {
-		String productsAdded = "success";
+		String addStatus = "failed";
 		transActionTotal = 0;
 		ArrayList<Cart> cart = new ArrayList<Cart>();
 		cart.addAll(c1);
@@ -126,48 +139,62 @@ public class Transaction implements Comparable {
 		while (productIterator.hasNext()) {
 			Cart lineItem = (Cart) productIterator.next();
 			Member currentMember = lineItem.getMember();
-			//System.out.println("Member object is"+currentMember.toString());
+			loyaltyPoints = (currentMember==null)?   0 : currentMember.getLoyaltyPoints();
 			int productQuantityOrdered = lineItem.getQuantity();
 			Product product = lineItem.getProduct();
-			if (product.getQuantityAvailable() > productQuantityOrdered) {
-				System.out.println("Transaction total before addition"
-						+ transActionTotal);// re order quanity check
-				transActionTotal += transActionTotal + product.getPrice()
-						* productQuantityOrdered;
-				System.out
-						.println("Transaction total inside addProductsToCart method is"
-								+ transActionTotal);
-				System.out.println("Transaction total is " + transActionTotal);
-			} else {
-				productsAdded = "failed";
-			}
-			discountPercentage = discountPerc;
+			System.out.println("Product available is" + product.getQuantityAvailable());
+			System.out.println("Product threshold is " + product.getThreshold());
+			transActionTotal += product.getPrice() * productQuantityOrdered;
+			System.out.println("Transaction total inside addProductsToCart method is" + transActionTotal);
+			addStatus = "sucess";
 		}
-		// call to discount
-		return productsAdded;
+		discountPercentage = discountPerc;
+		return addStatus;
 	}
 
-	public String makePayment(double amountReceived, double transActionTotal,
-			double discount, double redeemPoints, ArrayList<Cart> c1) {
+	/**
+	 * @param amountReceived
+	 * @param transActionTotal
+	 * @param discount
+	 * @param redeemPoints
+	 * @param c1
+	 * @param members
+	 * @param products
+	 * @return paymentStatus
+	 */
+	public String makePayment(double amountReceived, double transActionTotal, double discount, double redeemPoints,
+			ArrayList<Cart> c1, MemberRegister members, ProductRegister products) {
 		String paymentStatus = "success";
-		if (amountReceived > transActionTotal) {
-			transActionTotal = transActionTotal - (transActionTotal * discount)
-					/ 100 - redeemPoints;
+		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
+		System.out.println(" Temporary Transaction total is" + temptransActionTotal);
+		if (amountReceived > temptransActionTotal) {
 			double bonusPoints = transActionTotal / 100;
+			transActionTotal = temptransActionTotal;
 			System.out.println("Transaction id is" + tranasctionId);
-			System.out.println("Transaction total is" + transActionTotal);
 			System.out.println("Cartobject is" + c1.toString());
 			System.out.println("Redeem points is" + redeemPoints);
 			System.out.println("Discount is " + discount);
-			saveTransaction(tranasctionId, transActionTotal, c1, redeemPoints,
-					bonusPoints);
+			saveTransaction(tranasctionId, transActionTotal, c1, redeemPoints, bonusPoints, members, products);
+		} else {
+			paymentStatus = "failed";
+			System.out.println("Payment status is " + paymentStatus);
+			return paymentStatus;
 		}
-		paymentStatus = "failed";
 		return paymentStatus;
 	}
 
-	public String saveTransaction(int tranasctionId, double transActionTotal,
-			ArrayList<Cart> c1, double redeemPoints, double bonusPoints) {
+	/**
+	 * @param tranasctionId
+	 * @param transActionTotal
+	 * @param c1
+	 * @param redeemPoints
+	 * @param bonusPoints
+	 * @param members
+	 * @param products
+	 * @return Transaction save status
+	 */
+	public String saveTransaction(int tranasctionId, double transActionTotal, ArrayList<Cart> c1, double redeemPoints,
+			double bonusPoints, MemberRegister members, ProductRegister products) {
 		String saveTransactionStatus = "";
 		ArrayList<Cart> cart = new ArrayList<Cart>();
 		// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -178,47 +205,48 @@ public class Transaction implements Comparable {
 		Iterator productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart c2 = (Cart) productIterator.next();
-			System.out
-					.println("Cart object inside iterator is" + c2.toString());
-			if(c2.getMember()==null)
-				memberId= "PUB";
+			System.out.println("Cart object inside iterator is" + c2.toString());
+			if (c2.getMember() == null)
+				memberId = "PUB";
 			else {
-			memberId = c2.getMember().getMemberID();
+				memberId = c2.getMember().getMemberID();
 			}
 			qtyPurchased = c2.getQuantity();
 			Product p = c2.getProduct();
 			productId = p.getProductId();
-			transAction.add(new Transaction(tranasctionId, productId, memberId,
-					qtyPurchased, currentDateString));
-			System.out.println("Transaction arraylist is"
-					+ transAction.toString());
-			//product.updateQuantity(productId, qtyPurchased);
+			transAction.add(new Transaction(tranasctionId, productId, memberId, qtyPurchased, currentDateString));
+			System.out.println("Transaction arraylist is" + transAction.toString());
+			try {
+				products.updateQuantity(productId, qtyPurchased);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		//member.updateRedeemPoints(memberId, redeemPoints, bonusPoints);
+		if(!memberId.equals("PUB"))
+		members.updateRedeemPoints(memberId, redeemPoints, bonusPoints);
 		// writeToFile();
 		System.out.println("Transaction initialisations");
 		setTransActionTotal(0);
-		setTranasctionId(this.tranasctionId+1);
+		setTranasctionId(this.tranasctionId + 1);
 		System.out.println("Transaction total is" + transActionTotal);
 
 		return "";
 	}
 
-	public void setTransActionTotal(double transActionTotal) {
-		this.transActionTotal = transActionTotal;
-	}
-
-	public ArrayList<Transaction> getTransactions(String fromDate, String toDate)
-			throws ParseException {
+	/**
+	 * @param fromDate
+	 * @param toDate
+	 * @return List of Transactions within the date limit specified
+	 * @throws ParseException
+	 */
+	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		ArrayList<Transaction> transactionPeriod = new ArrayList<Transaction>();
 		formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date fromDateTransaction = formatter.parse(fromDate);
 		Date toDateTransaction = formatter.parse(toDate);
 		for (Transaction transaction : transAction) {
-			Date dateofPurchase = formatter.parse(transaction
-					.getDateOfPurchase());
-			int fromDateComparison = fromDateTransaction
-					.compareTo(dateofPurchase);
+			Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
+			int fromDateComparison = fromDateTransaction.compareTo(dateofPurchase);
 			int toDateComparison = toDateTransaction.compareTo(dateofPurchase);
 			if (fromDateComparison >= 0 && toDateComparison <= 0)
 				transactionPeriod.add(transaction);
@@ -244,11 +272,13 @@ public class Transaction implements Comparable {
 		return 0;
 	}
 
-	public void writeToFile(ArrayList<Transaction> transactionList) {
+	/**
+	 * Write to File (ArrayList of contents to file)
+	 */
+	public void writeToFile() {
 		try {
-			BufferedWriter fileWriter = new BufferedWriter(new FileWriter(
-					"StoreAppData/Transaction.dat"));
-			for (Transaction t : transactionList) {
+			BufferedWriter fileWriter = new BufferedWriter(new FileWriter("StoreAppData/Transaction.dat"));
+			for (Transaction t : transAction) {
 				fileWriter.write(t.getTranasctionId() + ",");
 				fileWriter.write(t.getProductId() + ",");
 				fileWriter.write(t.getMemberId() + ",");
@@ -261,16 +291,19 @@ public class Transaction implements Comparable {
 		}
 	}
 
+	/**
+	 * Read List of Transaction from file and Save it in ArrayList
+	 * 
+	 * @throws IOException
+	 */
 	public void readFromFile() throws IOException {
 		ArrayList<String> contentsFromFile = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader(
-				"StoreAppData/Transaction.dat"));
+		BufferedReader br = new BufferedReader(new FileReader("StoreAppData/Transaction.dat"));
 		String individualLine;
 		while ((individualLine = br.readLine()) != null) {
 			contentsFromFile.add(individualLine);
 		}
-		String line[] = contentsFromFile.toArray(new String[contentsFromFile
-				.size()]);
+		String line[] = contentsFromFile.toArray(new String[contentsFromFile.size()]);
 		int idChecker = line.length - 1;
 		for (int i = 0; i < line.length; i++) {
 			String singleTransactionLine = contentsFromFile.get(i);
@@ -280,18 +313,10 @@ public class Transaction implements Comparable {
 			String memberId = transactionFields[2];
 			int qty = Integer.parseInt(transactionFields[3]);
 			String date = transactionFields[4];
-			transAction.add(new Transaction(transactionIde, productId,
-					memberId, qty, date));
+			transAction.add(new Transaction(transactionIde, productId, memberId, qty, date));
 			if (i == idChecker) {
 				this.setTranasctionId(transactionIde + 1);
 			}
 		}
 	}
-
-	/*
-	 * private Date convertToDate(String transactionField) { SimpleDateFormat
-	 * dateFormat = new SimpleDateFormat("yyyy-MM-dd"); String dateInString =
-	 * transactionField; Date date; date = new Date (dateInString); return date;
-	 * }
-	 */
 }
