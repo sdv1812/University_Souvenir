@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.gui;
 import java.util.ArrayList;
+import java.util.List;
+
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
@@ -91,8 +93,8 @@ public class StoreApplication {
 		store.modifyDiscount(discountCode, percentage);
 	}
 
-	public boolean  addProductsToCart(String productId,int quantity,String memberId){
-		boolean addProductStatus =store.addProductsToCart( productId, quantity, memberId);
+	public boolean  addProductsToCart(Product product,int quantity,Member member){
+		boolean addProductStatus =store.addProductsToCart( product, quantity, member);
 		storeWindow.refreshCart();
 		return addProductStatus;
 		//refresh cart panel
@@ -116,8 +118,9 @@ public class StoreApplication {
 		// TODO Auto-generated method stub
 		return store.getTransactionTotal();
 	}
-	public void beginCheckout(ArrayList<Cart> cart){
-		store.beginCheckout(cart);
+	public String beginCheckout(List<Cart> cart){//CHANGE 27-3
+		String cartStatus = store.beginCheckout(cart);
+		return cartStatus;
 	}
 
 
@@ -170,6 +173,19 @@ public class StoreApplication {
 
 	public void removeVendor(String vendorName) {
 		store.removeVendor(vendorName);
+	}
+
+	public Member getMember(String memberIdentity) {
+		return store.getMember(memberIdentity);
+	}
+
+	public Product getProductByID(String productIdentity) {
+		return store.getProductByID(productIdentity);
+	}
+
+	public String getLoyaltyPoints() {
+			String loyalPoint =store.getLoyaltyPoints();
+		return loyalPoint;
 	}
 
 

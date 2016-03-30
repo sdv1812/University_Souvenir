@@ -15,7 +15,11 @@ import sg.edu.nus.iss.store.Cart;
 import sg.edu.nus.iss.store.Product;
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
-public class AddPaymentDialog extends OkCancelDialog {
+/**
+ * @author Koushik Radhakrishnan - AddPaymentDialog - Validates Payment -
+ *
+ */
+public class AddPaymentDialog extends OkCancelDialog  {
 	private StoreApplication manager ;
 	private java.util.ArrayList<Cart> cart;
 	private   JTextArea  productDetails;
@@ -25,12 +29,9 @@ public class AddPaymentDialog extends OkCancelDialog {
 	private JTextField amountReceived;
 	private CartPanel cartPanel;
 	
-	
-	
 	public AddPaymentDialog(StoreApplication manager, CartPanel cartPanel){
 		super(manager.getMainWindow(),"Payment Details");
 		this.manager = manager;
-//		TransactionWindow transactionWindow = manager.getTransactionWindow();
 		cart = cartPanel.getSelectedProducts();
 		System.out.println("Add items to cart dialog array list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
@@ -42,7 +43,7 @@ public class AddPaymentDialog extends OkCancelDialog {
 
 		total.setText(manager.getTransactionTotal());
 		discount.setText(manager.getDiscount());
-		
+		redeemPoints.setText(manager.getLoyaltyPoints());
 	}
 
 
@@ -69,18 +70,49 @@ public class AddPaymentDialog extends OkCancelDialog {
 	}
 
 
+	
 	@Override
 	protected boolean performOkAction() {
+			boolean paymentStatus = true;
 		//String makePayment(double amountReceived,double transActionTotal,double discount,double redeemPoints,ArrayList<Cart> c1 )
 		if(total.getText().equals("")||amountReceived.getText().equals("")){
     		JOptionPane.showMessageDialog(null, "InvalidDetails", "Enter All details", JOptionPane.ERROR_MESSAGE);
-    		return false ;
+    		paymentStatus = false;
+    		return paymentStatus;
     		}
-		double amountreceived = Double.parseDouble(amountReceived.getText());
-		double transactiontotal = Double.parseDouble(total.getText());
-		double discountValue  = Double.parseDouble(discount.getText());
-		double redeemPointsValue = Double.parseDouble(redeemPoints.getText());
-		manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
-		return true;
+		try{
+			double amountreceived = Double.parseDouble(amountReceived.getText());
+			double transactiontotal = Double.parseDouble(total.getText());
+			double discountValue  = Double.parseDouble(discount.getText());
+			double redeemPointsValue = Double.parseDouble(redeemPoints.getText());
+			double tempAmountcheck = transactiontotal - (transactiontotal*(discountValue/100)) + redeemPointsValue/1000;
+			System.out.println("Tempamount check is"+tempAmountcheck);
+			if(tempAmountcheck<=amountreceived){
+				manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
+				JOptionPane.showMessageDialog(this, "Payment is Sucessful");
+				//summaryDescription();
+				
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Payment is not sufficient", "Payment error", JOptionPane.ERROR_MESSAGE);
+	    		paymentStatus = false;
+	    		return   paymentStatus;
+			}
+    	
+		}catch(Exception n){
+    		JOptionPane.showMessageDialog(null, "Invalid Inputs entered", "Invalid Inputs", JOptionPane.ERROR_MESSAGE);
+    		paymentStatus = false;
+    		return paymentStatus;
+
+		}
+		paymentStatus = true;
+		return paymentStatus;
+	}
+
+
+	public  void summaryDescription() {
+			PaymentSummaryDialog paymentSummary = new PaymentSummaryDialog(manager);
+			//paymentSummary.setVisible(true);
+			
 	}
 }

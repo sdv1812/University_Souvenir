@@ -113,7 +113,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 		} else {
 		
 		if (((String)discountCategory.getSelectedItem()).equals("Member Discount")) {
-			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), "", "");
+			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), null, null);
 		} else if ((((String)discountCategory.getSelectedItem()).equals("Occasional Discount"))) {
 			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), startDateText.getText(), periodText.getText());
 		}

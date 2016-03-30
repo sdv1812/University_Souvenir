@@ -1,4 +1,6 @@
 package sg.edu.nus.iss.store;
+import javax.swing.JOptionPane;
+
 import sg.edu.nus.iss.gui.*;
 
 
@@ -17,12 +19,12 @@ public class AddProductToCart {
 	public AddProductToCart(Store store) {
 		super();
 		this.store = store;
+		productregister = new ProductRegister();
 	}
 	
-	public Cart addProductsToCart(String productId,int quantity,String memberId){
+	public Cart addProductsToCart(Product product,int quantity,Member member){
 		boolean addProductsStatus = false;
-		Product product=null;
-		try{
+		/*try{
 			product = productregister.getProductById(productId);
 			if(product==null){
 				addProductsStatus = false;
@@ -31,11 +33,28 @@ public class AddProductToCart {
 			//n.printStackTrace();
 			return null;
 		}
+		*/
+		if(product==null){
+			return null;
+		}
+		else if(product.getQuantityAvailable()<quantity){
+			JOptionPane.showMessageDialog(null, "Insuffiecient products", "Insuffiecient products", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		else if(product.getQuantityAvailable()<product.getThreshold()){
+			JOptionPane.showMessageDialog(null, "Product is Running out of stock", "Product shortage ", JOptionPane.ERROR_MESSAGE);
+			Cart c1 =cart.addCart(product, quantity, member);
+			if(c1!=null)
+				addProductsStatus = true;
+			return c1;
+		}
+		else{
+			Cart c1 =cart.addCart(product, quantity, member);
+			if(c1!=null)
+				addProductsStatus = true;
+			return c1;
+		}
 		
-		Cart c1 =cart.addCart(p1, quantity, memberId);
-		if(c1!=null)
-			addProductsStatus = true;
-		return c1;
 	}
 
 }
