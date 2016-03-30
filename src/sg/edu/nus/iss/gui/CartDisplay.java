@@ -2,6 +2,10 @@ package sg.edu.nus.iss.gui;
 
 import java.util.ArrayList;
 
+/**
+ * @author Koushik Radhakrishnan - CartDisplay - Displays Cart items 
+ *
+ */
 public class CartDisplay {
 			private String productName ;
 			private double quantity;
@@ -24,7 +28,7 @@ public class CartDisplay {
 		@Override
 		public String toString() {
 			return " [productName=" + productName + ", quantity="
-					+ quantity + ", priceName=" + priceName + "]";
+					+ quantity + ", price=" + priceName + "]";
 		}
 		
 }

@@ -86,8 +86,20 @@ public class MemberRegister {
 			
 	}
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
-		// TODO Auto-generated method stub
-		
+		Member m = getMember(memberId);
+		int loyaltyPoints;
+		Double d = redeemPoints;
+		Double d1 = bonusPoints;
+		int pointsBonus = d1.intValue();
+		int pointsRedeem = d.intValue();
+		if(m.isFirstTime()){
+			m.setLoyaltyPoints(0);
+			pointsRedeem = 0;
+		} 
+		loyaltyPoints = m.getLoyaltyPoints()-(pointsRedeem) + (pointsBonus);
+
+		m.setLoyaltyPoints(loyaltyPoints);
+		writeToFile();
 	}
 	
 	public AbstractTableModel getMemberTableModel() {

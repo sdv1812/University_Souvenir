@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.gui;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -111,7 +112,7 @@ public class StoreApplication {
 	public ArrayList<Product> getProducts(){
 		return store.getProducts();
 	}
-	
+
 	//add
 	public ArrayList<Product> getProductsBelowThreshold(){
 		return store.getProductsBelowThreshold();
@@ -130,9 +131,14 @@ public class StoreApplication {
 		// TODO Auto-generated method stub
 		return store.getTransactionTotal();
 	}
-	public void beginCheckout(ArrayList<Cart> cart){
-		store.beginCheckout(cart);
+	public String beginCheckout(List<Cart> cart){//CHANGE 27-3
+		String cartStatus = store.beginCheckout(cart);
+		return cartStatus;
 	}
+	public String getLoyaltyPoints() {
+		return store.getLoyaltyPoints();
+	}
+
 
 
 
@@ -170,7 +176,7 @@ public class StoreApplication {
 		return store.getVendors();
 	}
 
-	
+
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
 		return store.addVendor(vendorName, vendorDescription, category);
 	}
@@ -200,19 +206,19 @@ public class StoreApplication {
 	public Category getCategoryByName(String categoryName) {
 		return store.getCategoryByName(categoryName);
 	}
-	
+
 	public AbstractTableModel getCategoryTableModel() {
 		return store.getCategoryTableModel();
 	}
-	
+
 	public AbstractTableModel getMemberTableModel() {
 		return store.getMemberTableModel();
 	}
-	
+
 	public AbstractTableModel getProductTableModel() {
 		return store.getProductTableModel();
 	}
-	
+
 	public AbstractTableModel getVendorTableModel() {
 		return store.getVendorTableModel();
 	}

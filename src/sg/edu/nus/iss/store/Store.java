@@ -2,6 +2,7 @@ package sg.edu.nus.iss.store;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -120,9 +121,9 @@ public class Store {
 
 	public void initializeData(){
 		try {
+			storeKeepers.createListFromFile();
 			members.createListFromFile();
 			categories.createListFromFile();
-			storeKeepers.createListFromFile();
 			discounts.createListFromFile();
 			vendors.readVendorPerCategoryFromFile(getCategories());
 			vendors.readVendorFromFile();
@@ -172,11 +173,7 @@ public class Store {
 		// TODO Auto-generated method stub
 		return cartList;
 	}
-	public void beginCheckout(ArrayList<Cart> cartProducts) {
-		double discountPerc = discounts.getMaxDiscount(cartProducts.get(0).getMember());
-		transaction.addProductsToCart(cartProducts,discountPerc);
 
-	}
 	public String getTransactionTotal() {
 		// TODO Auto-generated method stub
 		double transactionTotal = transaction.calculateTransactionTotal();
@@ -186,9 +183,8 @@ public class Store {
 
 	public void makePayment(double amountreceived, double transactiontotal,
 			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart);
-		ArrayList<Transaction> tempList =getTransaction();
-		transaction.writeToFile(tempList);
+		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart, members, products);
+		transaction.writeToFile();
 	}
 
 
@@ -257,6 +253,19 @@ public class Store {
 	public AbstractTableModel getVendorTableModel() {
 		return vendors.getVendorTableModel();
 	}
+	
+	public String getLoyaltyPoints() {
+		int loyaltyPoints = transaction.getLoyaltyPoints();
+		String loyalPoints = Integer.toString(loyaltyPoints);
+		return loyalPoints;
+		}
+	public String beginCheckout(List<Cart> cartProducts) {//CHANGE 27-3
+		double discountPerc = discounts.getMaxDiscount(cartProducts.get(0).getMember());
+		String cartStatus = transaction.addProductsToCart(cartProducts,discountPerc);
+		return cartStatus;
+		}
+
+
 
 
 }
