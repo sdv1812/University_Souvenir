@@ -264,6 +264,10 @@ public class Store {
 		String cartStatus = transaction.addProductsToCart(cartProducts,discountPerc);
 		return cartStatus;
 		}
+	public double getBonusPoints() {
+		// TODO Auto-generated method stub
+		return transaction.getBonusPoints();
+	}
 
 
 
