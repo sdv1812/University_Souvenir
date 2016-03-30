@@ -30,7 +30,9 @@ public class Transaction implements Comparable {
 	double transActionTotal;
 	double discountPercentage;
 	int loyaltyPoints;
+	double bonusPoints;
 	ArrayList<Transaction> transAction;
+	Member currentMember;
 	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	public Transaction() {
@@ -110,6 +112,13 @@ public class Transaction implements Comparable {
 	public double getBalance(double transActionTotal, double amountReceived) {
 		return amountReceived - transActionTotal;
 	}
+	public double getBonusPoints() {
+		return bonusPoints;
+	}
+
+	public void setBonusPoints(double bonusPoints) {
+		this.bonusPoints = bonusPoints;
+	}
 
 	public ArrayList<Transaction> getAllTransactions() {
 		/* connect to text file */
@@ -138,7 +147,7 @@ public class Transaction implements Comparable {
 		Iterator productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart lineItem = (Cart) productIterator.next();
-			Member currentMember = lineItem.getMember();
+			 currentMember = lineItem.getMember();
 			loyaltyPoints = (currentMember==null)?   0 : currentMember.getLoyaltyPoints();
 			int productQuantityOrdered = lineItem.getQuantity();
 			Product product = lineItem.getProduct();
@@ -168,7 +177,7 @@ public class Transaction implements Comparable {
 		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
 		System.out.println(" Temporary Transaction total is" + temptransActionTotal);
 		if (amountReceived > temptransActionTotal) {
-			double bonusPoints = transActionTotal / 100;
+			bonusPoints  = (currentMember==null)? 0 : transActionTotal / 100;
 			transActionTotal = temptransActionTotal;
 			System.out.println("Transaction id is" + tranasctionId);
 			System.out.println("Cartobject is" + c1.toString());
@@ -182,6 +191,8 @@ public class Transaction implements Comparable {
 		}
 		return paymentStatus;
 	}
+
+	
 
 	/**
 	 * @param tranasctionId

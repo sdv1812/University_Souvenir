@@ -99,7 +99,7 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			if(tempAmountcheck<=amountreceived){
 				manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
 				//JOptionPane.showMessageDialog(this, "Payment is Sucessful");
-				summaryDescription(transactiontotal,tempAmountcheck,amountreceived,balanceAmount,earnedPoints);
+				summaryDescription(transactiontotal,tempAmountcheck,amountreceived,balanceAmount,manager.getBonusPoints());
 				JOptionPane.showMessageDialog(this,balance ,"Payment is Sucessful", 0);
 
 				
@@ -117,6 +117,7 @@ public class AddPaymentDialog extends OkCancelDialog  {
     		return paymentStatus;
 
 		}
+		
 		paymentStatus = true;
 		return paymentStatus;
 	}

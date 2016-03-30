@@ -223,4 +223,9 @@ public class StoreApplication {
 		return store.getVendorTableModel();
 	}
 
+	public double getBonusPoints() {
+		// TODO Auto-generated method stub
+		return store.getBonusPoints();
+	}
+
 }
