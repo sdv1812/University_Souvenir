@@ -16,7 +16,7 @@ public class MainPanel extends JPanel {
 	private ProductPanel productPanel;
 	private CategoryPanel categoryPanel;
 	private DiscountPanel discountPanel;
-	private CartPanel cartPanel;
+	//private CartPanel cartPanel;
 	private TransactionProductPanel transactionProductPanel;
 	private VendorPanel vendorPanel;
 	
@@ -38,7 +38,7 @@ public class MainPanel extends JPanel {
 		reportPanel = new ReportPanel(manager);
 		discountPanel = new DiscountPanel(manager);
 		transactionProductPanel = new TransactionProductPanel(manager);
-		cartPanel = new CartPanel(manager);
+		//cartPanel = new CartPanel(manager);
 
 		
 		setLayout(new GridLayout(0, 2, 80, 60));
@@ -49,7 +49,7 @@ public class MainPanel extends JPanel {
 				removeAll();
 				setLayout(new GridLayout(0,1));
 				add(transactionProductPanel);
-				add(cartPanel);
+				//add(cartPanel);
 				revalidate();
 				repaint();
 			}
@@ -149,12 +149,12 @@ public class MainPanel extends JPanel {
 
 	public void refreshCart() {
 		// TODO Auto-generated method stub
-		cartPanel.refresh();
+		transactionProductPanel.refresh();
 		
 	}
 	
 	public Cart getSelectedCartItem() {
-		Cart selectedLineItem = cartPanel.getRemoveSelectedCartItem();
+		Cart selectedLineItem = transactionProductPanel.getRemoveSelectedCartItem();
 		return selectedLineItem;
 	}
 

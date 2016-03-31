@@ -1,14 +1,24 @@
 package sg.edu.nus.iss.gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+
+import sg.edu.nus.iss.store.Cart;
+import sg.edu.nus.iss.store.Product;
 
 /**
  * @author Koushik Radhakrishnan - TransactionProduct panel - Processes Product details
@@ -20,28 +30,39 @@ public class TransactionProductPanel extends JPanel {
 	private JTextField memberId;
 	private JTextField quantity;
 	private JTextField productId;
+	private java.util.ArrayList<Cart> cart;
+	private java.util.List<Cart> cartSelectedItems;
+	private java.awt.List cartList;
+	private CartDisplay c; 
+	private Border raisedetched;
+	private Border loweredetched; 
 
 	public TransactionProductPanel(StoreApplication manager) {
 		this.manager = manager;
+		c = new CartDisplay();
+		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
+
+		setLayout(new BorderLayout());
+		add("North", createAddProductToTransactionPanel());
+		add("Center", createCartPanel());
+		add("East", createButtonPanel());
+
+	}
+
+	private JPanel createAddProductToTransactionPanel() {
 		productId = new JTextField(10);
 		quantity = new JTextField(10);
 		memberId = new JTextField(10);
 		JPanel p = new JPanel();
-		p.setLayout(new FlowLayout(FlowLayout.LEFT));
+		p.setLayout(new GridLayout(1,0,10,0));
 		p.add(new JLabel("ProductId"));
 		p.add(productId);
 		p.add(new JLabel("QTY"));
 		p.add(quantity);
 		p.add(new JLabel("Member id "));
 		p.add(memberId);
-		add("North", p);
-		add("East", createButtonPanel());
 
-	}
-
-	private JPanel createButtonPanel() {
-		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(0, 1));
 		JButton b;
 		ActionListener l;
 
@@ -77,7 +98,130 @@ public class TransactionProductPanel extends JPanel {
 		};
 		b.addActionListener(l);
 		p.add(b);
+		p.setBorder(BorderFactory.createTitledBorder(
+				loweredetched, "Add Products to Cart Panel")); 
 		return p;
+	}
+
+	private JPanel createButtonPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, 1));
+		
+		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeAll();
+				add("Center",manager.createMainPanel());
+				revalidate();
+				repaint();
+			}
+		});
+		
+		JButton cartButton;
+		cartButton = new JButton("Add CheckedItems");
+		ActionListener actionListener;
+		actionListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionevent) {
+				cartSelectedItems = getSelectedProducts();
+				if (cartSelectedItems.size() == 0) {
+					JOptionPane.showMessageDialog(null, "Select atleast one item to Payment", "Alert",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				String addProductStatus = manager.beginCheckout(cartSelectedItems);// CHANGE
+				System.out.println("Products to Payment is" + addProductStatus);
+				makeTransaction();
+				cart.removeAll(cart);
+				refresh();
+			}
+		};
+		cartButton.addActionListener(actionListener);
+		panel.add(cartButton);
+
+		cartButton = new JButton("Remove Items ");
+		actionListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionevent) {
+				manager.removeSelectedItem();
+
+			}
+		};
+		cartButton.addActionListener(actionListener);
+		panel.add(cartButton);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout());
+		buttonPanel.add(panel, BorderLayout.SOUTH);
+		buttonPanel.add(backBtn, BorderLayout.NORTH);
+		buttonPanel.setBorder(BorderFactory.createCompoundBorder(
+				raisedetched, loweredetched));
+		return buttonPanel;
+
+	}
+
+	private JPanel createCartPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		cartList = new java.awt.List(6);
+		cartList.setMultipleMode(true);
+		panel.add("North",new JLabel("Cart Items"));
+		panel.add("Center", cartList);
+		panel.setBorder(BorderFactory.createCompoundBorder(
+				raisedetched, loweredetched));
+		return panel;
+	}
+
+	public void refresh() {
+		cartList.removeAll();
+		cart = manager.getProductsAddedInCart();
+		Iterator<Cart> i = cart.iterator();
+		while (i.hasNext()) {
+			Cart c = (Cart) i.next();
+			int quantity = c.getQuantity();
+			Product product = c.getProduct();
+			String productName = product.getName();
+			double price = product.getPrice();
+			CartDisplay cartDisplay = new CartDisplay(productName, quantity, price);
+			cartList.add(cartDisplay.toString());
+		}
+	}
+
+	/**
+	 * @return List of Products selected added in Cart Panel is returned
+	 */
+	public ArrayList<Cart> getSelectedProducts() {
+		ArrayList<Cart> productList = new ArrayList<Cart>();
+		int[] cartProducts = cartList.getSelectedIndexes();
+		for (int i = 0; i < cartProducts.length; i++) {
+			Cart c1 = cart.get(cartProducts[i]);
+			productList.add(c1);
+		}
+		return productList;
+	}
+
+
+	/**
+	 * @return Particular Cart item is removed and returned
+	 */
+	public Cart getRemoveSelectedCartItem() {
+		int idx = cartList.getSelectedIndex();
+		return (idx == -1) ? null : cart.get(idx);
+
+	}
+
+	/**
+	 * Selected Products in Cart Panel is Proceeded to Payment
+	 */
+	public void makeTransaction() {
+		if (getSelectedProducts() == null) {
+			return;
+		}
+		AddPaymentDialog addPaymentDialog = new AddPaymentDialog(manager, this);
+		addPaymentDialog.pack();
+		addPaymentDialog.setVisible(true);
 
 	}
 }

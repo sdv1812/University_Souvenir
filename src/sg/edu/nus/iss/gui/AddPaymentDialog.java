@@ -27,9 +27,9 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	private JTextField discount;
 	private JTextField redeemPoints;
 	private JTextField amountReceived;
-	private CartPanel cartPanel;
+	//private CartPanel cartPanel;
 	
-	public AddPaymentDialog(StoreApplication manager, CartPanel cartPanel){
+	public AddPaymentDialog(StoreApplication manager, TransactionProductPanel cartPanel){
 		super(manager.getMainWindow(),"Payment Details");
 		this.manager = manager;
 		cart = cartPanel.getSelectedProducts();
