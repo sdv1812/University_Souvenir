@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.gui;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -226,6 +227,10 @@ public class StoreApplication {
 	public double getBonusPoints() {
 		// TODO Auto-generated method stub
 		return store.getBonusPoints();
+	}
+	
+	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
+		return store.getTransactions(fromDate, toDate);
 	}
 
 }
