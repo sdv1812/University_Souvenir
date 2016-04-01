@@ -232,5 +232,13 @@ public class StoreApplication {
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		return store.getTransactions(fromDate, toDate);
 	}
-
+	
+	public void AddQuantityForThretholdProducts(){
+		try {
+			store.getProductReg().reFreshInventoryForThreshold();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

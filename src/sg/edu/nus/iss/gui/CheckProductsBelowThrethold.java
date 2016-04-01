@@ -2,8 +2,12 @@ package sg.edu.nus.iss.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,8 +29,10 @@ public class CheckProductsBelowThrethold extends JPanel {
 	private ArrayList<Product> product_Below_list ;
 	private Border raisedetched;
 	private Border loweredetched;
+	private StoreApplication manager;
 	
 	public CheckProductsBelowThrethold(StoreApplication manager){
+		this.manager = manager;
 		raisedetched=BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched=BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		
@@ -34,8 +40,36 @@ public class CheckProductsBelowThrethold extends JPanel {
 		product_Below_list=manager.getProductsBelowThreshold();
 		System.out.println(product_Below_list.size());
 		add(showProductsBelowThreshold(),BorderLayout.CENTER);
+		add(createButtonPanel(), BorderLayout.EAST);
+		
 	}
 	
+
+	private JPanel createButtonPanel(){
+		JPanel panel = new JPanel(new BorderLayout());
+		JPanel p=new JPanel(new GridLayout(0, 1,0,10));
+		
+		
+		JButton reOrderBtn=new JButton("Reorder Products");
+		reOrderBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				manager.AddQuantityForThretholdProducts();
+				product_Below_list=manager.getProductsBelowThreshold();
+				cTableModel.fireTableDataChanged();
+			}
+		});
+
+		p.add(reOrderBtn);
+		panel.add(p,"North");
+		panel.setBorder(BorderFactory.createCompoundBorder(raisedetched, loweredetched));
+		
+		return panel;
+	}
+	
+
 	private JPanel showProductsBelowThreshold(){
 		JPanel panel=new JPanel();
 		panel.setLayout(new BorderLayout());
