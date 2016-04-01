@@ -35,9 +35,10 @@ public class MemberRegister {
 		return true;
 	}
 	
-	public void addMember(String customerName, String memberID, int loyaltyPoints){
-		members.add(new Member(customerName, memberID, loyaltyPoints));
-	}
+//	public boolean addMember(String customerName, String memberID, int loyaltyPoints){
+//		members.add(new Member(customerName, memberID, loyaltyPoints));
+//		return true;
+//	}
 	
 	public void removeMember(String memberID) {    //Removing by selecting memberID
 		for(Member m : members){
@@ -88,8 +89,6 @@ public class MemberRegister {
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
 		Member m = getMember(memberId);
 		Double loyaltyPoints;
-		Double d = redeemPoints;
-		Double d1 = bonusPoints;
 		if(m.isFirstTime()){
 			m.setLoyaltyPoints(0);
 			redeemPoints = 0.0;
