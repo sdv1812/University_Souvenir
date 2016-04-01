@@ -171,6 +171,16 @@ public class ProductRegister {
 
 	}
 	
+	//add quantity for products below threshold after clicking reorder button
+	public void reFreshInventoryForThreshold() throws IOException{
+		for(Product p:products){
+			if(p.checkBelowThrethold()){
+				p.addQuantity(p.getOrderQuantity());
+			}
+		}
+		writeListToFile();
+	}
+	
 	// returns table model for the list of products
 	public AbstractTableModel getProductTableModel() {
 		if (productTableModel != null) 
