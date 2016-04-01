@@ -109,15 +109,6 @@ public class TransactionProductPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 1));
 		
-		JButton backBtn = new JButton("Back");
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeAll();
-				add("Center",manager.createMainPanel());
-				revalidate();
-				repaint();
-			}
-		});
 		
 		JButton cartButton;
 		cartButton = new JButton("Add CheckedItems");
@@ -157,7 +148,6 @@ public class TransactionProductPanel extends JPanel {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());
 		buttonPanel.add(panel, BorderLayout.SOUTH);
-		buttonPanel.add(backBtn, BorderLayout.NORTH);
 		buttonPanel.setBorder(BorderFactory.createCompoundBorder(
 				raisedetched, loweredetched));
 		return buttonPanel;

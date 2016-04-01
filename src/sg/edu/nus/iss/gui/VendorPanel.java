@@ -155,14 +155,7 @@ public class VendorPanel extends JPanel {
 	private JPanel createButtonPanel(){ 
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
-		JButton backBtn = new JButton("Back");
 
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
-				refresh();
-			}
-		});
 
 		JButton removeBtn = new JButton ("Remove");
 		removeBtn.addActionListener (new ActionListener () {
@@ -187,7 +180,6 @@ public class VendorPanel extends JPanel {
 			}
 		});
 
-		p.add(backBtn);
 		p.add(removeBtn);
 
 		panel.add(p, "North");
@@ -235,13 +227,6 @@ public class VendorPanel extends JPanel {
 		else if(action_source.equalsIgnoreCase("Remove")){
 			vendorTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
 		}
-
-		else if(action_source.equalsIgnoreCase("Back")){
-			removeAll();
-			add("Center",manager.createMainPanel());
-			revalidate();
-			repaint();
-		} 
 
 	}
 
