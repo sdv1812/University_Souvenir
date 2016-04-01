@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,8 +33,6 @@ public class ReportPanel extends JPanel {
 	private AbstractTableModel categoryTableModel;
 	private AbstractTableModel productTableModel;
 	private AbstractTableModel memberTableModel;
-	private JTable table;
-	private JScrollPane scroller;
 	private Border raisedetched;
 	private Border loweredetched;
 	private String action_source;
@@ -134,8 +134,9 @@ public class ReportPanel extends JPanel {
 	
 	public JPanel createReportViewPanel (AbstractTableModel tableModel, String title) {
 		JPanel panel = new JPanel();
+		JScrollPane scroller;
+		JTable table;
 		panel.setLayout(new BorderLayout());
-
 		JLabel label = new JLabel(title);
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		table = new JTable();	
@@ -163,6 +164,21 @@ public class ReportPanel extends JPanel {
 	}
 	
 	private JPanel showTransactionTable() {  
+		JScrollPane scroller;
+		JTable table = new JTable();
+		scroller = new JScrollPane(table);
+		String startDate = "2000-01-01";
+		String endDate = "2000-01-01";
+
+		try {
+			productList = manager.getTransactions(startDate, endDate);
+			transactionTableModel = getTransactionTableModel();
+			table.setModel(transactionTableModel);
+			table.setFillsViewportHeight(true); 
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
 		JPanel panel = new JPanel();
 		JTextField startDateField = new JTextField();
 		JTextField endDateField = new JTextField();
@@ -185,13 +201,9 @@ public class ReportPanel extends JPanel {
 				try {
 					ft.parse(startDateField.getText());
 					ft.parse(endDateField.getText());
-					productList = manager.getTransactions(startDateField.getText(), endDateField.getText());
-					table = new JTable();	
-					transactionTableModel = getTransactionTableModel();
-					table.setModel(transactionTableModel);
+					productList = manager.getTransactions(startDateField.getText(), endDateField.getText());	
 					transactionTableModel.fireTableDataChanged();
-					scroller = new JScrollPane(table);
-					table.setFillsViewportHeight(true); 
+
 				}catch (ParseException ex) {
 					JOptionPane.showMessageDialog(null,
 		                    "Please enter valid date in given date format!",
