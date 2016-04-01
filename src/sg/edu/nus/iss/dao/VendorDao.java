@@ -19,9 +19,9 @@ public class VendorDao extends BaseDao{
 	
 	public HashMap<Category,ArrayList<Vendor>> readVendorPerCategoryFromFile(ArrayList<Category> categories) throws IOException
 	{
-		ArrayList<String> vendorListPer = new ArrayList<String>();
 		HashMap<Category,ArrayList<Vendor>> vendorMap = new HashMap<>();
 		for(Category c: categories) {
+			ArrayList<String> vendorListPer = new ArrayList<String>();
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
 			vendorListPer = super.readFromFile(FILE_NAME+fileName);
 			ArrayList<Vendor> vendorListPerCat = new ArrayList<Vendor>();
@@ -55,9 +55,9 @@ public class VendorDao extends BaseDao{
 	
 	public void writeToFile(HashMap<Category,ArrayList<Vendor>> vendorMap,ArrayList<Vendor> vendors) throws IOException
 	{
-		ArrayList<StringBuffer> list = new ArrayList<StringBuffer>();
 		ArrayList<StringBuffer> listVendors = new ArrayList<StringBuffer>();
 		for (Category c : vendorMap.keySet()) {
+			ArrayList<StringBuffer> list = new ArrayList<StringBuffer>();
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
 				for(Vendor v: vendorMap.get(c)){
 					StringBuffer write = new StringBuffer();

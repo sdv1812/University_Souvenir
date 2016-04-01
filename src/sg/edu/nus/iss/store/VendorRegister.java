@@ -36,18 +36,15 @@ public class VendorRegister {
 		Vendor vendorNew = new  Vendor(vendorName,vendorDescription);
 		temp.add(vendorNew);
 		vendorMap.put(category, temp);
-		if(vendors == null) { // First Entry
-			vendors.add(vendorNew);
-			System.out.println("Inside first Entry   " + vendorNew.getVendorName());
-		} else {
+		if(!vendors.isEmpty()) {
 			for(Vendor v : vendors) {
-				System.out.println("Inside for loop   " + vendorNew.getVendorName());
-
 				if(vendorName.equals(v.getVendorName())) 
 					break;
-				else	vendors.add(vendorNew);
 			}
-		}
+			// First Entry
+			System.out.println("Inside first Entry   " + vendorNew.getVendorName());
+		} 
+		vendors.add(vendorNew);
 		writeToFile();
 		return true;
 	}
