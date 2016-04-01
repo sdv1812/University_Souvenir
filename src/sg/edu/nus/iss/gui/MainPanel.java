@@ -36,7 +36,7 @@ public class MainPanel extends JPanel {
 		reportPanel = new ReportPanel(manager);
 		discountPanel = new DiscountPanel(manager);
 		transactionProductPanel = new TransactionProductPanel(manager);
-
+		
 		setLayout(new GridLayout(0, 2, 80, 60));
 
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
@@ -45,7 +45,6 @@ public class MainPanel extends JPanel {
 				removeAll();
 				setLayout(new GridLayout(0, 1));
 				add(transactionProductPanel);
-				// add(cartPanel);
 				revalidate();
 				repaint();
 			}
@@ -146,7 +145,7 @@ public class MainPanel extends JPanel {
 	public void refreshCart() {
 		// TODO Auto-generated method stub
 		transactionProductPanel.refresh();
-
+		
 	}
 
 	public Cart getSelectedCartItem() {

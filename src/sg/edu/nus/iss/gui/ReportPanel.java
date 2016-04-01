@@ -31,6 +31,10 @@ public class ReportPanel extends JPanel {
 	private static final String Category_ ="Category";
 	private static final String Member_ ="Member";
 	private static final String Product_ ="Product";
+	private static final String Transaction_ ="Transaction";
+	private java.awt.List productList;
+	private AbstractTableModel transactionTable;
+
 
 
 	/**
@@ -45,10 +49,13 @@ public class ReportPanel extends JPanel {
 		memberTableModel = manager.getMemberTableModel();
 		setLayout (new BorderLayout());		
 		cards = new JPanel(new CardLayout());
+		JPanel transactionPanel = new JPanel();
+		productList = manager.getTransactions(fromDate, toDate)
+		transactionPanel.add("Center", productList);
 		cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), Category_);
 		cards.add(createReportViewPanel(memberTableModel, "List of All Members"), Member_);
 		cards.add(createReportViewPanel(productTableModel, "List of All Products"),Product_);
-		//cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), "Category");
+		cards.add(transactionPanel, Transaction_);
 
 		add(cards,BorderLayout.CENTER);
 		add(createButtonPanel(), BorderLayout.EAST);
@@ -97,8 +104,18 @@ public class ReportPanel extends JPanel {
 			}
 		});
 		
-		
 		p.add(prodBtn);
+		
+		JButton transBtn = new JButton("Transaction");
+		transBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				action_source = (((JButton)e.getSource()).getText());
+				cl.show(cards, Transaction_);
+			}
+		});
+		
+		p.add(transBtn);
+		
 		panel.add(p, "North");
 		panel.setBorder(BorderFactory.createCompoundBorder(
 				raisedetched, loweredetched)); 
@@ -134,6 +151,28 @@ public class ReportPanel extends JPanel {
 			revalidate();
 			repaint();
 		} 
+	}
+	
+	private JPanel showTransactionTable() {  
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+
+		JLabel label = new JLabel("Vendors : ");
+		label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		table = new JTable();	
+		table.setModel(transactionTableModel);
+		transactionTableModel.fireTableDataChanged();
+		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
+		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
+
+		panel.add(label, "North");
+		panel.add(scroller, "Center");
+
+		panel.setBorder(BorderFactory.createCompoundBorder(
+				raisedetched, loweredetched)); 
+
+		return panel;
+
 	}
 
 }

@@ -163,7 +163,8 @@ public class TransactionProductPanel extends JPanel {
 
 	}
 
-	public JPanel createCartPanel() {
+
+	public JPanel createCartPanel() {	
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		cartList = new java.awt.List(6);
@@ -182,13 +183,13 @@ public class TransactionProductPanel extends JPanel {
 		System.out.println("Cart list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
 		while (i.hasNext()) {
-			Cart c = (Cart) i.next();
-			int quantity = c.getQuantity();
-			Product product = c.getProduct();
-			String productName = product.getName();
-			double price = product.getPrice();
-			CartDisplay cartDisplay = new CartDisplay(productName, quantity, price);
-			cartList.add(cartDisplay.toString());
+	Cart c = (Cart) i.next();
+	int quantity = c.getQuantity();
+	Product product = c.getProduct();
+	String productName = product.getName();
+	double price = product.getPrice();
+	CartDisplay cartDisplay = new CartDisplay(productName, quantity, price);
+	cartList.add(cartDisplay.toString());
 		}
 	}
 
