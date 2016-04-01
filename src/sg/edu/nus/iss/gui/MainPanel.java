@@ -33,7 +33,7 @@ public class MainPanel extends JPanel {
 		memberPanel = new MemberPanel(manager);
 		categoryPanel = new CategoryPanel(manager);
 		vendorPanel = new VendorPanel(manager);
-		reportPanel = new ReportPanel(manager);
+		//reportPanel = new ReportPanel(manager);
 		discountPanel = new DiscountPanel(manager);
 		transactionProductPanel = new TransactionProductPanel(manager);
 		
@@ -111,8 +111,8 @@ public class MainPanel extends JPanel {
 
 				removeAll();
 				setLayout(new BorderLayout());
-				reportPanel.setVisible(true);
-				add("Center", reportPanel);
+				//reportPanel.setVisible(true);
+				//add("Center", reportPanel);
 				revalidate();
 				repaint();
 			}

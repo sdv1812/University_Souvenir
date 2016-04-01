@@ -95,6 +95,7 @@ public class TransactionProductPanel extends JPanel {
 				}
 				productId.setText("");
 				quantity.setText("");
+				refresh();		
 			}
 		};
 		b.addActionListener(l);
