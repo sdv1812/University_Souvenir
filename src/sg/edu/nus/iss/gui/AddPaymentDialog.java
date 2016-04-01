@@ -27,12 +27,12 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	private JTextField discount;
 	private JTextField redeemPoints;
 	private JTextField amountReceived;
-	private CartPanel cartPanel;
+	private TransactionProductPanel transactionProductPanel;
 	
-	public AddPaymentDialog(StoreApplication manager, CartPanel cartPanel){
+	public AddPaymentDialog(StoreApplication manager, TransactionProductPanel transactionProductPanel){
 		super(manager.getMainWindow(),"Payment Details");
 		this.manager = manager;
-		cart = cartPanel.getSelectedProducts();
+		cart = transactionProductPanel.getSelectedProducts();
 		System.out.println("Add items to cart dialog array list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
 		while(i.hasNext()){

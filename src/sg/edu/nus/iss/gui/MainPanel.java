@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
 public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = -8820162333877980019L;
@@ -16,11 +15,10 @@ public class MainPanel extends JPanel {
 	private ProductPanel productPanel;
 	private CategoryPanel categoryPanel;
 	private DiscountPanel discountPanel;
-	private CartPanel cartPanel;
 	private TransactionProductPanel transactionProductPanel;
 	private VendorPanel vendorPanel;
-	
-	//add
+
+	// add
 	private StoreApplication manager;
 	private CheckProductsBelowThrethold checekProductsPanel;
 	private ReportPanel reportPanel;
@@ -29,33 +27,31 @@ public class MainPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
-		//add
-		this.manager=manager;
-		productPanel=new ProductPanel(manager, this);
+		// add
+		this.manager = manager;
+		productPanel = new ProductPanel(manager, this);
 		memberPanel = new MemberPanel(manager);
 		categoryPanel = new CategoryPanel(manager);
 		vendorPanel = new VendorPanel(manager);
 		reportPanel = new ReportPanel(manager);
 		discountPanel = new DiscountPanel(manager);
 		transactionProductPanel = new TransactionProductPanel(manager);
-		cartPanel = new CartPanel(manager);
 
-		
 		setLayout(new GridLayout(0, 2, 80, 60));
-		
+
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeAll();
-				setLayout(new GridLayout(0,1));
+				setLayout(new GridLayout(0, 1));
 				add(transactionProductPanel);
-				add(cartPanel);
+				// add(cartPanel);
 				revalidate();
 				repaint();
 			}
 		});
 		add(btnMakeATransaction);
-		
+
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,7 +64,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(btnMemberRegistration);
-		
+
 		JButton btnCategory = new JButton("Category");
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -81,12 +77,12 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(btnCategory);
-		
+
 		JButton productBtn = new JButton("Product");
 		productBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-//				productPanel = new ProductPanel(manager);
+
+				// productPanel = new ProductPanel(manager);
 				removeAll();
 				setLayout(new BorderLayout());
 				productPanel.setVisible(true);
@@ -96,7 +92,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(productBtn);
-		
+
 		JButton vendorBtn = new JButton("Vendor");
 		vendorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,11 +105,11 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(vendorBtn);
-		
+
 		JButton reportBtn = new JButton("Report");
 		reportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				removeAll();
 				setLayout(new BorderLayout());
 				reportPanel.setVisible(true);
@@ -123,7 +119,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(reportBtn);
-		
+
 		JButton btnDiscount = new JButton("Discount");
 		btnDiscount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,7 +132,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		add(btnDiscount);
-		
+
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,17 +145,17 @@ public class MainPanel extends JPanel {
 
 	public void refreshCart() {
 		// TODO Auto-generated method stub
-		cartPanel.refresh();
-		
+		transactionProductPanel.refresh();
+
 	}
-	
+
 	public Cart getSelectedCartItem() {
-		Cart selectedLineItem = cartPanel.getRemoveSelectedCartItem();
+		Cart selectedLineItem = transactionProductPanel.getRemoveSelectedCartItem();
 		return selectedLineItem;
 	}
 
-	//add ,the method will be used when store keeper check inventory.
-	public void actionPerformedOfCheckProductsBelowThrethold(){
+	// add ,the method will be used when store keeper check inventory.
+	public void actionPerformedOfCheckProductsBelowThrethold() {
 		checekProductsPanel = new CheckProductsBelowThrethold(manager);
 		removeAll();
 		setLayout(new BorderLayout());
