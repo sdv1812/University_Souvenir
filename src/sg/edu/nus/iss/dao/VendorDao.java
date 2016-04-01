@@ -72,7 +72,6 @@ public class VendorDao extends BaseDao{
 				write.append(v.getVendorName()+",");
 				write.append(v.getDescription());
 				listVendors.add(write);
-				System.out.println(write);
 			}
 		super.writeToFile(listVendors, FILE_NAME+"Vendors.dat");	
 		}

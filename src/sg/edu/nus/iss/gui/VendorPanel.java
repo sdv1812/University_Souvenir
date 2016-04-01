@@ -6,6 +6,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -34,6 +35,7 @@ public class VendorPanel extends JPanel {
 	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
+	private static final String[] COLUMN_NAMES = {"Vendor Name", "Description"};
 	private AbstractTableModel vendorTableModel;
 	private ArrayList<Vendor> vendors ;
 	private String action_source;
@@ -43,14 +45,15 @@ public class VendorPanel extends JPanel {
 	private Border loweredetched; 
 	private JTextField vNameT;
 	private JTextField vDescT ;
-
+	
 	public VendorPanel(StoreApplication manager) {
 		this.manager = manager;
-		vendorTableModel = manager.getVendorTableModel();
+		vendors = manager.getVendors();
+		vendorTableModel = getVendorTableModel();
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 		setLayout (new BorderLayout());
-		vendors = manager.getVendors();
+		
 		add(createButtonPanel(), BorderLayout.EAST);
 		add(showVendorListPanel(), BorderLayout.CENTER);
 		add(createAddVendorPanel(), BorderLayout.SOUTH);
@@ -105,10 +108,6 @@ public class VendorPanel extends JPanel {
 						} else {
 							vendors = manager.getVendorsPerCategory(manager.getCategoryByName((String)categoryBox.getSelectedItem()));
 							vendorTableModel.fireTableDataChanged();
-							for(Vendor v:manager.getVendors()){
-								vendorBox.addItem(v.getVendorName());
-							}
-							
 							refresh();
 						}
 				} else { String vendorName = (String) vendorBox.getSelectedItem();
@@ -221,11 +220,19 @@ public class VendorPanel extends JPanel {
 		if(action_source.equalsIgnoreCase("Add")){
 			int rowIndex = vendors.size()-1;
 			vendorTableModel.fireTableRowsInserted(rowIndex, rowIndex);
+			vendorBox.removeAllItems();
+			for(Vendor v:manager.getVendors()){
+				vendorBox.addItem(v.getVendorName());
+			}
 			vNameT.setText(null);
 			vDescT.setText(null);
 		}
 		else if(action_source.equalsIgnoreCase("Remove")){
 			vendorTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
+			vendorBox.removeAllItems();
+			for(Vendor v:manager.getVendors()){
+				vendorBox.addItem(v.getVendorName());
+			}
 		}
 
 	}
@@ -255,5 +262,48 @@ public class VendorPanel extends JPanel {
 	public String getSelectedCategory() {
 		return (String)categoryBox.getSelectedItem();
 	}
+	
+
+	public AbstractTableModel getVendorTableModel() {
+		if (vendorTableModel != null) 
+			return vendorTableModel;
+		else {
+			vendorTableModel = new AbstractTableModel() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public String getColumnName(int column) {
+					return COLUMN_NAMES[column];
+				}
+
+				@Override
+				public int getRowCount() {
+					return vendors.size();
+				}
+
+				@Override
+				public int getColumnCount() {
+					return COLUMN_NAMES.length;
+				}
+
+				@Override
+				public Object getValueAt(int rowIndex, int columnIndex) {
+					Vendor vendor = vendors.get(rowIndex);
+					switch (columnIndex) {
+					case 0: return vendor.getVendorName();
+					case 1: return vendor.getDescription();
+					default: return null;
+					}
+				}
+			};
+
+			return vendorTableModel;
+		}
+	}
+
 	
 }

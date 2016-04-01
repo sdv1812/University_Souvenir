@@ -38,7 +38,6 @@ public class CheckProductsBelowThrethold extends JPanel {
 		
 		setLayout(new BorderLayout());
 		product_Below_list=manager.getProductsBelowThreshold();
-		System.out.println(product_Below_list.size());
 		add(showProductsBelowThreshold(),BorderLayout.CENTER);
 		add(createButtonPanel(), BorderLayout.EAST);
 		
