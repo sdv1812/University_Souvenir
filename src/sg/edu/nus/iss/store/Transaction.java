@@ -257,9 +257,7 @@ public class Transaction implements Comparable {
 		Date toDateTransaction = formatter.parse(toDate);
 		for (Transaction transaction : transAction) {
 			Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
-			int fromDateComparison = fromDateTransaction.compareTo(dateofPurchase);
-			int toDateComparison = toDateTransaction.compareTo(dateofPurchase);
-			if (fromDateComparison >= 0 && toDateComparison <= 0)
+				if ((dateofPurchase.after(fromDateTransaction)&&dateofPurchase.before(toDateTransaction))||dateofPurchase.equals(toDateTransaction)||dateofPurchase.equals(fromDateTransaction))
 				transactionPeriod.add(transaction);
 
 		}
