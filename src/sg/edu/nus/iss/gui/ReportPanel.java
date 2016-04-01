@@ -50,7 +50,7 @@ public class ReportPanel extends JPanel {
 		setLayout (new BorderLayout());		
 		cards = new JPanel(new CardLayout());
 		JPanel transactionPanel = new JPanel();
-		productList = manager.getTransactions(fromDate, toDate)
+		productList = manager.getTransactions(fromDate, toDate);
 		transactionPanel.add("Center", productList);
 		cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), Category_);
 		cards.add(createReportViewPanel(memberTableModel, "List of All Members"), Member_);

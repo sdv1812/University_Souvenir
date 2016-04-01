@@ -2,6 +2,7 @@ package sg.edu.nus.iss.gui;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import sg.edu.nus.iss.utils.OkCancelDialog;
@@ -58,7 +59,8 @@ public class PaymentSummaryDialog extends OkCancelDialog {
 
 	@Override
 	protected boolean performOkAction() {
-
+		JOptionPane.showMessageDialog(null, "Payment is successfull", "Confirmation",
+				JOptionPane.INFORMATION_MESSAGE);
 		return true;
 	}
 
