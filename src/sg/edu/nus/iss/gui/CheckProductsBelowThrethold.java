@@ -61,7 +61,20 @@ public class CheckProductsBelowThrethold extends JPanel {
 			}
 		});
 		
+		JButton reOrderBtn=new JButton("Reorder Products");
+		reOrderBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				manager.AddQuantityForThretholdProducts();
+				action_source = (((JButton)e.getSource()).getText());
+				refresh();
+			}
+		});
+		
 		p.add(backBtn);
+		p.add(reOrderBtn);
 		panel.add(p,"North");
 		panel.setBorder(BorderFactory.createCompoundBorder(raisedetched, loweredetched));
 		
@@ -93,6 +106,8 @@ public class CheckProductsBelowThrethold extends JPanel {
 			add("Center",manager.createMainPanel());
 			revalidate();
 			repaint();
+		}else if(action_source.equalsIgnoreCase("Reorder Products")){
+			cTableModel.fireTableDataChanged();
 		}
 	}
 	//**********************Set Table Mode******************************	
