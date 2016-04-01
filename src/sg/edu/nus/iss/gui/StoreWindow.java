@@ -49,10 +49,6 @@ public class StoreWindow extends JFrame {
 		add ("Center", loginPanel);
 	}
 
-	public MainPanel createMainPanel() {
-		// TODO Auto-generated method stub
-		return (loginPanel.createMainPanel());
-	}
 
 	public void refreshCart() {
 		// TODO Auto-generated method stub

@@ -53,9 +53,6 @@ public class StoreApplication {
 	public StoreWindow getMainWindow() {
 		return storeWindow;
 	}
-	public MainPanel createMainPanel() {
-		return(storeWindow.createMainPanel());
-	}
 
 	public boolean addMember(String memberName, String memberID) {
 		// TODO Auto-generated method stub
