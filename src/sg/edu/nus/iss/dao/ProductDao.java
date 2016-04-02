@@ -1,8 +1,7 @@
 package sg.edu.nus.iss.dao;
 
-import java.io.File;
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,8 +38,14 @@ public class ProductDao extends BaseDao{
 			int threshold=Integer.parseInt(filed[6]);
 			int orderQuantity=Integer.parseInt(filed[7]);
 			
-			Product productNew=new Product(productId, category, productName, description, quantity, price, barcodeNumber, threshold, orderQuantity);
-			productList.add(productNew);						
+			Product productNew;
+			try {
+				productNew = new Product(productId, category, productName, description, quantity, price, barcodeNumber, threshold, orderQuantity);
+				productList.add(productNew);
+			} catch (BadValueException e) {
+				e.printStackTrace();
+			}
+									
 			
 		}
 		return productList;

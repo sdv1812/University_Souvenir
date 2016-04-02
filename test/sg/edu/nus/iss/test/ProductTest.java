@@ -8,9 +8,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sg.nus.iss.ft6.domain.Category;
-import sg.nus.iss.ft6.domain.Product;
-import sg.nus.iss.ft6.domain.Vendor;
+import sg.edu.nus.iss.exceptions.BadValueException;
+import sg.edu.nus.iss.store.Category;
+import sg.edu.nus.iss.store.Product;
+import sg.edu.nus.iss.store.Vendor;
+
+
 
 /*
  * author:Wang Xuemin
@@ -24,15 +27,15 @@ public class ProductTest {
 	private Vendor vendor1;
 	private Vendor vendor2;
 	
-	public ProductTest() {
+	public ProductTest() throws BadValueException {
 		// TODO Auto-generated constructor stub
 		vendor1=new Vendor("vendor1", "a good vendor");
 		vendor2=new Vendor("vendor2", "a bad vendor");
 		ArrayList<Vendor> vendorList=new ArrayList<>();
 		vendorList.add(vendor1);
 		vendorList.add(vendor2);
-		category1=new Category("CLO","clothes",vendorList);
-		category2=new Category("STA","station",vendorList);
+		category1=new Category("CLO","clothes");
+		category2=new Category("STA","station");
 		product1=new Product(category1, "product1", "description of product1", 10, 99.0, "98989", 3, 10);
 		product2=new Product("CLO/1",category1, "product2", "description of product2", 10, 99.0, "98989", 3, 10);
 	}
@@ -47,13 +50,13 @@ public class ProductTest {
 
 	@Test
 	public void testGetId() {
-		assertEquals("CLO/1", product2.getId());
+		assertEquals("CLO/1", product2.getProductId());
 	}
 	
 	@Test
 	public void testSetId() {
-		product2.setId("CLO/2");
-		assertEquals("CLO/2", product2.getId());
+		product2.setProductId("CLO/2");
+		assertEquals("CLO/2", product2.getProductId());
 	}
 	
 	@Test
@@ -91,13 +94,13 @@ public class ProductTest {
 	
 	@Test
 	public void testGetQuantity() {
-		assertEquals(10, product1.getQuantity());
+		assertEquals(10, product1.getQuantityAvailable());
 	}
 	
 	@Test
 	public void testSetQuantity() {
-		product1.setQuantity(20);
-		assertEquals(20, product1.getQuantity());
+		product1.setQuantityAvailable(20);
+		assertEquals(20, product1.getQuantityAvailable());
 	}
 	
 	@Test
@@ -147,14 +150,14 @@ public class ProductTest {
 	@Test
 	public void testCheckBelowThrethold(){
 		assertFalse(product1.checkBelowThrethold());
-		product1.setQuantity(1);
+		product1.setQuantityAvailable(1);
 		assertTrue(product1.checkBelowThrethold());
 	}
 	
 	@Test
 	public void testAddQuantity(){
 		product1.addQuantity(10);
-		assertEquals(20, product1.getQuantity());
+		assertEquals(20, product1.getQuantityAvailable());
 	}
 	
 	@Test
@@ -166,3 +169,4 @@ public class ProductTest {
 	}
 
 }
+

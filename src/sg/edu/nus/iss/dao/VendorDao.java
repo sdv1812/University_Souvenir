@@ -1,9 +1,11 @@
 package sg.edu.nus.iss.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
 
@@ -24,15 +26,23 @@ public class VendorDao extends BaseDao{
 			ArrayList<String> vendorListPer = new ArrayList<String>();
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
 			vendorListPer = super.readFromFile(FILE_NAME+fileName);
+			if (vendorListPer == null)  continue ;
+			else{
 			ArrayList<Vendor> vendorListPerCat = new ArrayList<Vendor>();
 		for(String line : vendorListPer)
 		{
 			String list[] = line.split(",");
 			if(list != null){
-				vendorListPerCat.add(new Vendor(list[0], list[1]));
+				try {
+					vendorListPerCat.add(new Vendor(list[0], list[1]));
+				} catch (BadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				vendorMap.put(c, vendorListPerCat);
 				
 			}
+		}
 		}
 	}
 		return vendorMap;
@@ -46,7 +56,12 @@ public class VendorDao extends BaseDao{
 		{
 			String list[] = line.split(",");
 			if(list != null){
-				vendorList.add(new Vendor(list[0], list[1]));
+				try {
+					vendorList.add(new Vendor(list[0], list[1]));
+				} catch (BadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return vendorList;

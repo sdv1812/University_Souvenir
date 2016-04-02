@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
 /**
@@ -111,8 +113,11 @@ public class AddDiscountDialog extends OkCancelDialog{
 		}
 		
 		try {
+			String dCategory = (String)discountCategory.getSelectedItem();
+			if(dCategory.equals("Occasional Discount")){
 			ft.parse(startDateText.getText()); //to check for parsing error
 			Integer.parseInt(periodText.getText());
+			}
 			Float.parseFloat(percText.getText());
 		
 		if (((String)discountCategory.getSelectedItem()).equals("Member Discount")) {
@@ -137,6 +142,9 @@ public class AddDiscountDialog extends OkCancelDialog{
                     "Please enter valid date in given date format!",
                     "Date Format Exception",
                     JOptionPane.ERROR_MESSAGE);
+		} catch (BadValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return b;

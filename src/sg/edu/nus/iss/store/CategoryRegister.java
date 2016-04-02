@@ -1,14 +1,11 @@
 package sg.edu.nus.iss.store;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
 import sg.edu.nus.iss.dao.CategoryDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 /*
  * CategoryRegister class:Manager class to manage Category Object
@@ -27,7 +24,7 @@ public class CategoryRegister {
 		catDao = new CategoryDao();
 	}
 	
-	public boolean addCategory(String categoryCode, String categoryName) {
+	public boolean addCategory(String categoryCode, String categoryName) throws BadValueException {
 		for(Category c : categories){
 			if(c.getCategoryCode().equalsIgnoreCase(categoryCode)){
 				return false;

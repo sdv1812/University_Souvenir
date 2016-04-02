@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Cart;
 import sg.edu.nus.iss.store.Product;
 
@@ -77,18 +78,20 @@ public class TransactionProductPanel extends JPanel {
 					Quantity = Integer.parseInt(quantity.getText());
 					memberIdentity = memberId.getText();
 				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(null, "InvalidDetails", "Enter valid format",
+					JOptionPane.showMessageDialog(null, "Invalid Details", "Enter valid format",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				if (productIdentity.length() == 0 || Quantity <= 0) {
-					JOptionPane.showMessageDialog(null, "InvalidDetails", "InvalidDetails", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Invalid Details", "Invalid Details", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				System.out.println("Entering before addition"+manager.getMember(memberIdentity));
-				boolean addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
-						manager.getMember(memberIdentity));
-				System.out.println("Add product status is"+addProductStatus);
+				boolean addProductStatus;
+				try {
+					addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
+							manager.getMember(memberIdentity));
+
 				if (!addProductStatus) {
 					JOptionPane.showMessageDialog(null, "Invalid Product detail", "No Product found",
 							JOptionPane.ERROR_MESSAGE);
@@ -96,12 +99,15 @@ public class TransactionProductPanel extends JPanel {
 				productId.setText("");
 				quantity.setText("");
 				refresh();		
+				} catch (BadValueException e1) {
+					e1.printStackTrace();
+				}
 			}
 		};
 		b.addActionListener(l);
 		p.add(b);
 		p.setBorder(BorderFactory.createTitledBorder(
-				loweredetched, "Add Products to Cart Panel")); 
+				loweredetched, "Add Products to Cart :")); 
 		return p;
 	}
 
@@ -123,8 +129,7 @@ public class TransactionProductPanel extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				String addProductStatus = manager.beginCheckout(cartSelectedItems);// CHANGE
-				System.out.println("Products to Payment is" + addProductStatus);
+				String addProductStatus = manager.beginCheckout(cartSelectedItems);
 				makeTransaction();
 				cart.removeAll(cart);
 				refresh();

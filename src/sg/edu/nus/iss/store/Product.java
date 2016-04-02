@@ -1,9 +1,6 @@
 package sg.edu.nus.iss.store;
 
-
-import javax.management.loading.PrivateClassLoader;
-
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 /*
  * Product class:for every kind of product
@@ -22,7 +19,20 @@ public class Product {
 	private int orderQuantity;
 	
 	public Product(String id,Category category,String name,String description,int quantity,
-			double price,String barcodeNumber,int threshold,int orderQuantity){
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws BadValueException{
+		String error = null;
+		if(id == null) 
+			error = "Product ID is null";
+		else if (category == null) 
+			error = "Product Category is null";
+		else if (name == null)
+			error = "Product name is null";
+		else if (description == null) 
+			error = "Description is null";
+		else if (barcodeNumber == null )
+			error = "Barcode is null";
+		if (error != null)
+			throw new BadValueException(error);
 		this.productId=id;
 		this.category=category;
 		this.productName=name;
@@ -35,7 +45,18 @@ public class Product {
 	}
 	
 	public Product(Category category,String name,String description,int quantity,
-			double price,String barcodeNumber,int threshold,int orderQuantity){
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws BadValueException{
+		String error = null;
+		if (category == null) 
+			error = "Product Category is null";
+		else if (name == null)
+			error = "Product name is null";
+		else if (description == null) 
+			error = "Description is null";
+		else if (barcodeNumber == null )
+			error = "Barcode is null";
+		if (error != null)
+			throw new BadValueException(error);
 		this.category=category;
 		this.productName=name;
 		this.description=description;

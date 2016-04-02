@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import sg.edu.nus.iss.dao.DiscountDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 /*
  * DiscountManager class: Manager class to manage Discount Objects.
@@ -27,7 +28,7 @@ public class DiscountManager {
 		//ft.format(dNow);
 	}
 
-	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
+	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
 			for(Discount d : discounts){
 				if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
 					return false;

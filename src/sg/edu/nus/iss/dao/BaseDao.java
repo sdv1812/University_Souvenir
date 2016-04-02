@@ -15,6 +15,9 @@ public class BaseDao {
 	public ArrayList<String> readFromFile(String fullPath) throws IOException{
 		ArrayList<String> readList=new ArrayList<>();
 		File file=new File(fullPath);
+		if(!file.exists())
+			return null;
+		else{
 		FileReader fr;
 		fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
@@ -26,7 +29,8 @@ public class BaseDao {
 		br.close();
 		fr.close();
 		
-		return readList;		
+		return readList;
+		}
 	}
 	
 	public void writeToFile(ArrayList<StringBuffer> writeList,String fullPath) throws IOException{

@@ -12,7 +12,10 @@ import sg.edu.nus.iss.utils.OkCancelDialog;
  *
  */
 public class PaymentSummaryDialog extends OkCancelDialog {
-	private StoreApplication manager;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField transactionTotalAmount;
 	private JTextField discountedAmount;
 	private JTextField receivedAmount;
@@ -22,7 +25,6 @@ public class PaymentSummaryDialog extends OkCancelDialog {
 	public PaymentSummaryDialog(StoreApplication manager, double transactionTotal, double amountAfterDiscount,
 			double amountReceived, double balanceAmount, double earnedPoints) {
 		super(manager.getMainWindow(), "Summary Details");
-		this.manager = manager;
 		transactionTotalAmount.setText(Double.toString(transactionTotal));
 		transactionTotalAmount.setEditable(false);
 		discountedAmount.setText(Double.toString(amountAfterDiscount));

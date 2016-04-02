@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 /*
  * Customer class:to to create Customer Object (member + non member).
  * Author: Sanskar Deepak
@@ -8,7 +10,12 @@ package sg.edu.nus.iss.store;
 public class Customer {
 	private String customerName;
 	
-	public Customer(String customerName) {
+	public Customer(String customerName) throws BadValueException {
+		String error = null;
+		if (customerName== null)
+			error = "Customer name is null";
+		if(error !=null)
+			throw new BadValueException(error);
 		this.customerName = customerName;
 	}
 

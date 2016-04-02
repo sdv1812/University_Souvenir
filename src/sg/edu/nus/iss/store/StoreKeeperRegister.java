@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.dao.StoreKeeperDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 //**** Created by T. Surenthiran  *****
 
@@ -18,7 +19,7 @@ public class StoreKeeperRegister
 		storeDao = new StoreKeeperDao();
 	}
 	
-	public void addStoreKeeper(String storeKeeperName, String password)
+	public void addStoreKeeper(String storeKeeperName, String password) throws BadValueException
 	{
 		StoreKeeper storeKeeper= new StoreKeeper(storeKeeperName, password);
 		storeKeepers.add(storeKeeper);
