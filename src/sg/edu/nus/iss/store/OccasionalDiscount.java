@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 /*
  * OccasionalDiscount class: Sub-class of Discount class .
  * Author: Sanskar Deepak
@@ -11,8 +13,15 @@ public class OccasionalDiscount extends Discount {
 		
 
 	public OccasionalDiscount(String discountCode, String description, String startDate, String discountPeriod,
-			float percentage) {
+			float percentage) throws BadValueException {
 		super(discountCode, description, percentage);
+		String error = null;
+		if (startDate == null) 
+			error = "start Date is null";
+		else if (discountPeriod == null)
+			error = "Discount period is null";
+		if(error != null) 
+			throw new BadValueException(error);
 		this.startDate = startDate;
 		this.discountPeriod = discountPeriod;
 		applicableToMember = "A";

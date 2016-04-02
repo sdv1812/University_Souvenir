@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 /*
  * Discount class: for all kinds of Discounts.
  * Author: Sanskar Deepak
@@ -14,7 +16,14 @@ public abstract class Discount {
 
 	
 	public Discount (String discountCode, String description, 
-					 float percentage){
+					 float percentage) throws BadValueException{
+		String error = null;
+		if (discountCode == null)
+			error = "discount code is null";
+		else if (description == null)
+			error = "discount description is null";
+		if (error != null)
+			throw new BadValueException(error);
 		this.discountCode=discountCode;
 		this.description=description;
 		this.percentage=percentage;

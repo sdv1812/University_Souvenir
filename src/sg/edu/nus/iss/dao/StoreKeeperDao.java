@@ -3,6 +3,7 @@ package sg.edu.nus.iss.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.StoreKeeper;
 
 /**
@@ -29,7 +30,11 @@ public class StoreKeeperDao extends BaseDao{
 			for(String line: fileList)
 			{
 				String storeData[] = line.split(",");
-				storeKeeperList.add(new StoreKeeper(storeData[0],storeData[1]));
+				try {
+					storeKeeperList.add(new StoreKeeper(storeData[0],storeData[1]));
+				} catch (BadValueException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return storeKeeperList;

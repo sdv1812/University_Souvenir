@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
@@ -61,7 +63,7 @@ public class Store {
 		products.removeProduct(id);
 	}
 
-	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword) {
+	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword) throws BadValueException {
 		storeKeepers.addStoreKeeper(storeKeeperName, storeKeeperPassword);
 		storeKeepers.writeToFile();
 	}
@@ -70,13 +72,13 @@ public class Store {
 		return storeKeepers.validate(storeKeeperName, password);
 	}
 
-	public boolean addMember(String memberName, String memberID) {
+	public boolean addMember(String memberName, String memberID) throws BadValueException {
 		boolean b = members.addMember(memberName, memberID);
 		members.writeToFile();
 		return b;
 	}
 
-	public boolean addCategory(String categoryCode, String categoryName) {
+	public boolean addCategory(String categoryCode, String categoryName) throws BadValueException {
 		boolean b = categories.addCategory(categoryCode, categoryName);
 		categories.writeToFile();
 		return b;
@@ -121,7 +123,7 @@ public class Store {
 	}
 
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate,
-			String discountPeriod) {
+			String discountPeriod) throws BadValueException {
 		boolean b = discounts.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
 		discounts.writeToFile();
 		return b;
@@ -163,7 +165,7 @@ public class Store {
 		cartList.remove(lineItem);
 	}
 
-	public boolean addProductsToCart(Product product, int quantity, Member member) {
+	public boolean addProductsToCart(Product product, int quantity, Member member) throws BadValueException {
 		boolean addProductStatus = false;
 		Cart c1 = addProductsToCart.addProductsToCart(product, quantity, member);
 		if (c1 != null) {
@@ -177,7 +179,7 @@ public class Store {
 		return vendors.getVendors();
 	}
 
-	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
+	public boolean addVendor(String vendorName, String vendorDescription, Category category) throws BadValueException {
 		return vendors.addVendor(vendorName, vendorDescription, category);
 	}
 

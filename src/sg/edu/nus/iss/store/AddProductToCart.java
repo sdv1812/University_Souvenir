@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.store;
 import javax.swing.JOptionPane;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.gui.*;
 
 
@@ -10,9 +11,6 @@ public class AddProductToCart {
 	Store store;
 	Cart cart = new Cart();
 	ProductRegister productregister;
-	Category c1 = new Category("CLO ","CLOTHING");
-	Product p1 = new Product("CLO/1",c1,"Centenary Jumper","A really nice momento",247,
-			21.45,"1234",10,100);
 			
 	public AddProductToCart() {
 	}
@@ -22,7 +20,7 @@ public class AddProductToCart {
 		productregister = new ProductRegister();
 	}
 	
-	public Cart addProductsToCart(Product product,int quantity,Member member){
+	public Cart addProductsToCart(Product product,int quantity,Member member) throws BadValueException{
 		//boolean addProductsStatus = false;
 		/*try{
 			product = productregister.getProductById(productId);

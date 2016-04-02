@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.utils.ConfirmDialog;
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Member;
 
 /*
@@ -76,13 +79,19 @@ public class MemberPanel extends JPanel {
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
 				if (mNameT.getText().length()!=0 && mIdT.getText().length()!=0){
-					if (!(manager.addMember(mNameT.getText(), mIdT.getText()))){
-						JOptionPane.showMessageDialog(manager.getMainWindow(),
-								"Member Already Exists !",
-								"Duplicate Member",
-								JOptionPane.INFORMATION_MESSAGE); 
-					} else {
-						refresh();
+					try {
+						if (!(manager.addMember(mNameT.getText(), mIdT.getText()))){
+							JOptionPane.showMessageDialog(manager.getMainWindow(),
+									"Member Already Exists !",
+									"Duplicate Member",
+									JOptionPane.INFORMATION_MESSAGE); 
+						} else {
+							refresh();
+						}
+					} catch (HeadlessException e1) {
+						e1.printStackTrace();
+					} catch (BadValueException e1) {
+						e1.printStackTrace();
 					}
 				}else {
 					

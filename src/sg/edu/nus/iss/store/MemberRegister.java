@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.dao.CustomerDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 /*
  * MemberRegister class: Manager class to manage Member objects.
@@ -22,7 +23,7 @@ public class MemberRegister {
 		custDao = new CustomerDao();
 		//members.add(new Member("", "PUBLIC"));
 	}
-	public boolean addMember(String customerName, String memberID){
+	public boolean addMember(String customerName, String memberID) throws BadValueException{
 		for(Member m: members){
 			if(m.getMemberID().equals(memberID)){
 				return false;
@@ -33,7 +34,7 @@ public class MemberRegister {
 		return true;
 	}
 	
-	public void addMember(String customerName, String memberID, int loyaltyPoints){
+	public void addMember(String customerName, String memberID, int loyaltyPoints) throws BadValueException{
 		members.add(new Member(customerName, memberID, loyaltyPoints));
 	}
 	

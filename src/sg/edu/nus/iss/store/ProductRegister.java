@@ -2,6 +2,8 @@ package sg.edu.nus.iss.store;
 
 import java.io.IOException;
 import sg.edu.nus.iss.dao.ProductDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.AbstractTableModel;
@@ -47,7 +49,7 @@ public class ProductRegister {
 	//add a new product,in this method,first step is check if this product already exists,if it exists,just add quantity.
 	//if it doesn't exist,generate a new product id,then add this product to products(product list)
 	public void addProduct(Category category,String name,String description,int quantity,
-			double price,String barcodeNumber,int threshold,int orderQuantity) throws IOException{
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws IOException, BadValueException{
 
 		//go through the list of product , see if this kind of product has already exist.
 		//if the product exists,we just add the quantity to the product

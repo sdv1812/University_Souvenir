@@ -6,6 +6,8 @@ package sg.edu.nus.iss.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Member;
 
 public class CustomerDao extends BaseDao{
@@ -27,7 +29,13 @@ public class CustomerDao extends BaseDao{
 		{
 			String list[] = line.split(",");
 			if(list != null){
-			memberList.add(new Member(list[0], list[1], Integer.parseInt(list[2])));
+			try {
+				memberList.add(new Member(list[0], list[1], Integer.parseInt(list[2])));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (BadValueException e) {
+				e.printStackTrace();
+			}
 			}
 		}
 		return memberList;

@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.store.Product;
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 /*
  * Author: Wang Xuemin
@@ -303,6 +304,8 @@ public class ProductPanel extends JPanel {
                 "Please enter valid value!",
                 "Number Format Exception",
                 JOptionPane.ERROR_MESSAGE);
+	} catch (BadValueException e) {
+		e.printStackTrace();
 	}
 	return true;
 	}

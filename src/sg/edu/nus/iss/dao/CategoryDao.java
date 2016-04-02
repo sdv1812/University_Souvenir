@@ -7,6 +7,7 @@ package sg.edu.nus.iss.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 
 public class CategoryDao extends BaseDao {
@@ -28,7 +29,11 @@ public class CategoryDao extends BaseDao {
 			for(String line: fileList)
 			{
 				String categoryData[] = line.split(",");
-				categoryList.add(new Category(categoryData[0],categoryData[1]));
+				try {
+					categoryList.add(new Category(categoryData[0],categoryData[1]));
+				} catch (BadValueException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return categoryList;

@@ -91,7 +91,6 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			}
 			double tempAmountcheck = transactiontotal - (transactiontotal*(discountValue/100)) + redeemPointsValue/1000;
 			double balanceAmount = amountreceived-tempAmountcheck;
-			//double earnedPoints = transactiontotal/100;
 			String balance = "Balance to be tendered  is"+" "+Double.toString(balanceAmount);
 			System.out.println("Tempamount check is"+tempAmountcheck);
 			if(tempAmountcheck<=amountreceived){

@@ -7,6 +7,7 @@ package sg.edu.nus.iss.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.store.MemberDiscount;
 import sg.edu.nus.iss.store.OccasionalDiscount;
@@ -31,9 +32,21 @@ public class DiscountDao extends BaseDao{
 			{
 				String discountData[] = line.split(",");
 				if (discountData[5].equals("M"))
-					 discount = new MemberDiscount(discountData[0], discountData[1], Float.parseFloat(discountData[4]));
+					try {
+						discount = new MemberDiscount(discountData[0], discountData[1], Float.parseFloat(discountData[4]));
+					} catch (NumberFormatException e1) {
+						e1.printStackTrace();
+					} catch (BadValueException e1) {
+						e1.printStackTrace();
+					}
 				else if(discountData[5].equals("A"))
-					discount =new OccasionalDiscount(discountData[0], discountData[1],discountData[2], discountData[3],Float.parseFloat(discountData[4]));
+					try {
+						discount =new OccasionalDiscount(discountData[0], discountData[1],discountData[2], discountData[3],Float.parseFloat(discountData[4]));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					} catch (BadValueException e) {
+						e.printStackTrace();
+					}
 				discountList.add(discount);
 			}
 			

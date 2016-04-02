@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 /*
  * MemberDiscount class: Sub-class of Discount Class.
  * Author: Sanskar Deepak
@@ -10,7 +12,7 @@ public class MemberDiscount extends Discount {
 	private String discountPeriod;
 	String applicableToMember;
 
-	public MemberDiscount(String discountCode, String description,float percentage) {
+	public MemberDiscount(String discountCode, String description,float percentage) throws BadValueException {
 		super(discountCode, description, percentage);
 		startDate = "ALWAYS";
 		discountPeriod = "ALWAYS";
@@ -27,7 +29,6 @@ public class MemberDiscount extends Discount {
 
 	@Override
 	public String getApplicableToMember() {
-		// TODO Auto-generated method stub
 		return applicableToMember;
 	}
 

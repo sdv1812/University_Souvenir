@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Cart;
 import sg.edu.nus.iss.store.Product;
 
@@ -86,8 +87,11 @@ public class TransactionProductPanel extends JPanel {
 					return;
 				}
 				System.out.println("Entering before addition"+manager.getMember(memberIdentity));
-				boolean addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
-						manager.getMember(memberIdentity));
+				boolean addProductStatus;
+				try {
+					addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
+							manager.getMember(memberIdentity));
+
 				System.out.println("Add product status is"+addProductStatus);
 				if (!addProductStatus) {
 					JOptionPane.showMessageDialog(null, "Invalid Product detail", "No Product found",
@@ -96,6 +100,10 @@ public class TransactionProductPanel extends JPanel {
 				productId.setText("");
 				quantity.setText("");
 				refresh();		
+				} catch (BadValueException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		};
 		b.addActionListener(l);

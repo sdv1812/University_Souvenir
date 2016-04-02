@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import sg.edu.nus.iss.dao.VendorDao;
+import sg.edu.nus.iss.exceptions.BadValueException;
 
 public class VendorRegister {
 
@@ -17,7 +18,7 @@ public class VendorRegister {
 		vDao = new VendorDao();
 	}
 
-	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
+	public boolean addVendor(String vendorName, String vendorDescription, Category category) throws BadValueException {
 		ArrayList<Vendor> temp = vendorMap.get(category);
 		int count = 0;
 		if (temp == null) { //new entry

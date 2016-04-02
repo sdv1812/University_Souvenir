@@ -2,6 +2,8 @@ package sg.edu.nus.iss.store;
 
 import java.util.ArrayList;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
+
 /**
  * @author Koushik Radhakrishnan - Cart - Holds Cart item details
  *
@@ -36,8 +38,12 @@ public class Cart {
 		cart = new ArrayList<Cart>();
 	}
 
-	public Cart(Product product, Member member, int quantity) {
-
+	public Cart(Product product, Member member, int quantity) throws BadValueException {
+		String error = null;
+		if(product == null)
+			error = "Product is null";
+		if (error !=null)
+			throw new BadValueException(error);
 		this.product = product;
 		this.member = member;
 		this.quantity = quantity;
@@ -55,7 +61,7 @@ public class Cart {
 		this.cart = cart;
 	}
 
-	public Cart addCart(Product product, int quantity, Member member) {
+	public Cart addCart(Product product, int quantity, Member member) throws BadValueException {
 
 		Cart c = new Cart(product, member, quantity);
 		cart.add(c);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
 
@@ -29,7 +30,12 @@ public class VendorDao extends BaseDao{
 		{
 			String list[] = line.split(",");
 			if(list != null){
-				vendorListPerCat.add(new Vendor(list[0], list[1]));
+				try {
+					vendorListPerCat.add(new Vendor(list[0], list[1]));
+				} catch (BadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				vendorMap.put(c, vendorListPerCat);
 				
 			}
@@ -46,7 +52,12 @@ public class VendorDao extends BaseDao{
 		{
 			String list[] = line.split(",");
 			if(list != null){
-				vendorList.add(new Vendor(list[0], list[1]));
+				try {
+					vendorList.add(new Vendor(list[0], list[1]));
+				} catch (BadValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return vendorList;

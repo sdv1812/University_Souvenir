@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Product;
 import sg.edu.nus.iss.store.Vendor;
@@ -26,7 +27,7 @@ public class ProductTest {
 	private Vendor vendor1;
 	private Vendor vendor2;
 	
-	public ProductTest() {
+	public ProductTest() throws BadValueException {
 		// TODO Auto-generated constructor stub
 		vendor1=new Vendor("vendor1", "a good vendor");
 		vendor2=new Vendor("vendor2", "a bad vendor");

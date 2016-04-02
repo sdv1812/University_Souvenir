@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
 
 
@@ -57,7 +58,7 @@ public class ProductRegisterTest {
 	}
 	
 	@Test
-	public void testAddProduct() throws IOException{
+	public void testAddProduct() throws IOException, BadValueException{
 		String id="CLO/3";
 		String name = "Name of new product";
         Category category = testStore.getCategoryReg().getCategory("CLO");

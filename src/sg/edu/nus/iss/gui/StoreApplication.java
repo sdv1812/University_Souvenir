@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
@@ -46,11 +48,11 @@ public class StoreApplication {
 		return storeWindow;
 	}
 
-	public boolean addMember(String memberName, String memberID) {
+	public boolean addMember(String memberName, String memberID) throws BadValueException {
 		return store.addMember(memberName, memberID);
 	}
 
-	public boolean addCategory(String categoryCode, String categoryName) {
+	public boolean addCategory(String categoryCode, String categoryName) throws BadValueException {
 		return store.addCategory(categoryCode, categoryName);
 	}
 
@@ -70,7 +72,7 @@ public class StoreApplication {
 		return store.getDiscounts();
 	}
 
-	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) {
+	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
 		return store.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
 	}
 
@@ -82,7 +84,7 @@ public class StoreApplication {
 		store.modifyDiscount(discountCode, percentage);
 	}
 
-	public boolean  addProductsToCart(Product product,int quantity,Member member){
+	public boolean  addProductsToCart(Product product,int quantity,Member member) throws BadValueException{
 		boolean addProductStatus =store.addProductsToCart( product, quantity, member);
 		storeWindow.refreshCart();
 		return addProductStatus;
@@ -157,7 +159,7 @@ public class StoreApplication {
 	}
 
 
-	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
+	public boolean addVendor(String vendorName, String vendorDescription, Category category) throws BadValueException {
 		return store.addVendor(vendorName, vendorDescription, category);
 	}
 

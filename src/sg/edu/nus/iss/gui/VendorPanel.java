@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.utils.ConfirmDialog;
+import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
 
@@ -100,21 +103,36 @@ public class VendorPanel extends JPanel {
 			public void actionPerformed (ActionEvent e) {
 				action_source  =((JButton)e.getSource()).getText();
 				if (vNameT.getText().length()!=0 && vDescT.getText().length()!=0){ //if vendor name and description not empty (means a new vendor)
-							if (!(manager.addVendor(vNameT.getText(), vDescT.getText(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
+							try {
+								if (!(manager.addVendor(vNameT.getText(), vDescT.getText(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
+								JOptionPane.showMessageDialog(manager.getMainWindow(),
+										"Vendor Already Exists in the Category !",
+										"Duplicate Vendor Code",
+										JOptionPane.ERROR_MESSAGE); 
+} else {
+								vendors = manager.getVendorsPerCategory(manager.getCategoryByName((String)categoryBox.getSelectedItem()));
+								vendorTableModel.fireTableDataChanged();
+								refresh();
+}
+							} catch (HeadlessException e1) {
+								e1.printStackTrace();
+							} catch (BadValueException e1) {
+								e1.printStackTrace();
+							}
+				} else { String vendorName = (String) vendorBox.getSelectedItem();
+					try {
+						if (!(manager.addVendor(vendorName, (manager.getVendor(vendorName)).getDescription(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
 							JOptionPane.showMessageDialog(manager.getMainWindow(),
 									"Vendor Already Exists in the Category !",
 									"Duplicate Vendor Code",
 									JOptionPane.ERROR_MESSAGE); 
-						} else {
-							vendors = manager.getVendorsPerCategory(manager.getCategoryByName((String)categoryBox.getSelectedItem()));
-							vendorTableModel.fireTableDataChanged();
-							refresh();
 						}
-				} else { String vendorName = (String) vendorBox.getSelectedItem();
-					if (!(manager.addVendor(vendorName, (manager.getVendor(vendorName)).getDescription(), manager.getCategoryByName((String) categoryBox.getSelectedItem())))){
+					} catch (HeadlessException e1) {
+						e1.printStackTrace();
+					} catch (BadValueException e1) {
 						JOptionPane.showMessageDialog(manager.getMainWindow(),
-								"Vendor Already Exists in the Category !",
-								"Duplicate Vendor Code",
+								"Bad Value entered !",
+								"Bad Value",
 								JOptionPane.ERROR_MESSAGE); 
 					}
 				}
