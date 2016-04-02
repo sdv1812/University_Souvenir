@@ -58,6 +58,13 @@ public class Cart {
 	public Cart addCart(Product product, int quantity, Member member) {
 
 		Cart c = new Cart(product, member, quantity);
+		for(Cart c1 :cart){
+			Product p = c1.getProduct();
+			if(p.equalOfProduct(c.getProduct())){
+					c1.setQuantity(c.getQuantity()+c1.getQuantity());
+					return c1;
+			}
+			}
 		cart.add(c);
 		return c;
 	}

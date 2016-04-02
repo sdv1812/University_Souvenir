@@ -198,8 +198,15 @@ public class Store {
 		boolean addProductStatus = false;
 		Cart c1 = addProductsToCart.addProductsToCart(product, quantity, member);
 		if (c1 != null) {
-			cartList.add(c1);
-			addProductStatus = true;
+			if(cartList.contains(c1)){
+				addProductStatus = true;
+
+			}else{
+				cartList.add(c1);
+				addProductStatus = true;
+			}
+				
+			
 		}
 		return addProductStatus;
 	}
@@ -291,5 +298,10 @@ public class Store {
 		return transaction;
 
 	}
+	/* Discount changes */
+	public DiscountManager getDiscountManager(){
+				return discounts;
+	}
+	
 
 }
