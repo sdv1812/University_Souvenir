@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class VendorDao extends BaseDao{
 			ArrayList<String> vendorListPer = new ArrayList<String>();
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
 			vendorListPer = super.readFromFile(FILE_NAME+fileName);
+			if (vendorListPer == null)  continue ;
+			else{
 			ArrayList<Vendor> vendorListPerCat = new ArrayList<Vendor>();
 		for(String line : vendorListPer)
 		{
@@ -39,6 +42,7 @@ public class VendorDao extends BaseDao{
 				vendorMap.put(c, vendorListPerCat);
 				
 			}
+		}
 		}
 	}
 		return vendorMap;
