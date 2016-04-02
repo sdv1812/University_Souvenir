@@ -254,11 +254,12 @@ public class Transaction implements Comparable {
 		formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date fromDateTransaction = formatter.parse(fromDate);
 		Date toDateTransaction = formatter.parse(toDate);
+		if(!toDateTransaction.before(fromDateTransaction)){
 		for (Transaction transaction : transAction) {
 			Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
 				if ((dateofPurchase.after(fromDateTransaction)&&dateofPurchase.before(toDateTransaction))||dateofPurchase.equals(toDateTransaction)||dateofPurchase.equals(fromDateTransaction))
 				transactionPeriod.add(transaction);
-
+		}
 		}
 		Collections.sort(transactionPeriod, Transaction.transProductId);
 		return transactionPeriod;

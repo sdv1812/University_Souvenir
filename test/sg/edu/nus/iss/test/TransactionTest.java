@@ -1,9 +1,10 @@
 package sg.edu.nus.iss.test;
 
 import static org.junit.Assert.*;
-
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,52 +12,82 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import sg.edu.nus.iss.gui.StoreApplication;
+import sg.edu.nus.iss.store.*;
 
 /**
  * @author koushik - Transaction JUnit Test Class
  *
  */
 public class TransactionTest {
-	Transaction transaction;
-	ArrayList<Cart> cartList;
-	MemberRegister members;
-	ProductRegister products;
-	StoreApplication manager;
-	Store store;
-	ArrayList<Transaction> transactionList;
+	private Transaction transaction;
+	private ArrayList<Cart> cartList,cartList2;
+	private MemberRegister members;
+	private ProductRegister products;
+	private Category c1,c3;
+	private Product p1,p3;
+	private Member m1,m3;
+	private Cart cart1,cart2,cart3,cart4,cart5 ; 
 
 	@Before
 	public void setUp() throws Exception {
-		manager = new StoreApplication();
-		store = new Store();
-		store.initializeData();
-		members = store.getMemberRegister();
-		products = store.getProductReg();
+		transaction = new Transaction();
+		members = new MemberRegister();
+		products = new ProductRegister();
 		cartList = new ArrayList<Cart>();
-		transaction = store.getTransaction();
-		transactionList = new ArrayList<Transaction>();
-		Category c1 = new Category("CLO", "CLOTHING");
-		Product p1 = new Product("CLO/1", c1, "Centenary Jumper", "A really nice momento", 235, 21.45, "wqd", 4, 5);
-		Member m1 = new Member("sanskar", "e0013519", -1);
-		Cart cart = new Cart(p1, m1, 4);
-		cartList.add(cart);
-	}
+		
+		c1 = new Category("CLO", "CLOTHING");
+		c3=new Category("STA","station");
+		
+		p1 = new Product("CLO/1", c1, "Centenary Jumper", "A really nice momento", 235, 21.45, "wqd", 4, 5);
+		p3=new Product("ELE/1",c3, "product2", "description of product2", 10, 99.0, "98989", 3, 10);
+		
+		m1 = new Member("sanskar", "e0013519", -1);
+		m3 = new Member("Srishti", "E0013502", 12);
+		
+		cart1 = new Cart(p1, m1, 4);
+		cart2= 	new Cart(p3,m1,12);
+		cart3 = new Cart(p3,m3,12);
+		cart4 = new Cart(p1,m3,4);
+		cart5 = new Cart(p1,m1,10);
 
+		cartList.add(cart1);
+		cartList.add(cart4);
+		cartList.add(cart5);
+		
+		cartList2 = new ArrayList<Cart>();
+		cartList2.add(cart2);
+		cartList2.add(cart3);
+		
+	}
+	
+	@After
+	public void tearDown(){
+		transaction = null;
+		members = null;
+		products = null;
+		p1 = p3= null;
+		c1=c3=null;
+		m1=m3=null;
+		cart1=cart2=cart3=cart4=cart5 =null;
+		cartList = cartList2 = null;
+		
+	}
+	
 	@Test
 	public void testAddProductsToCart() {
-		String result = transaction.addProductsToCart(cartList, 10);
-		assertEquals("sucess", result);
+		assertEquals(transaction.addProductsToCart(cartList, 0.0),"sucess");
+		assertEquals(transaction.addProductsToCart(cartList2, 10),"sucess");
 	}
 
 	@Test
 	public void testMakePayment() {
-		double amountReceived = 20;
+		double amountReceived = -1;
 		double transactionTotal = 15;
 		double discount = 10;
 		double redeemPoints = 100;
 		String paymentStatus = transaction.makePayment(amountReceived, transactionTotal, discount, redeemPoints,
 				cartList, members, products);
-		assertEquals("Payment is successful when amount received greater or equal to Transaction total ", "success",
+		assertEquals("Payment is successful when amount received greater or equal to Transaction total ", "failed",
 				paymentStatus);
 		amountReceived = 12;
 		paymentStatus = transaction.makePayment(amountReceived, transactionTotal, discount, redeemPoints, cartList,
@@ -71,26 +102,39 @@ public class TransactionTest {
 	 */
 	@Test
 	public void testSaveTransaction() {
-		transactionList = transaction.getAllTransactions();
-		assertNotNull("Whenever Payment is successfull corresponding Transaction is saved in List and written to file",
-				transactionList);
-	}
-
-	@Test
-	public void testGetTransactionsWithinPeriod() throws ParseException {
-		ArrayList<Transaction> t1 = transaction.getTransactions("2016-03-30", "2016-03-31");
-		assertNotNull("List of Transactions returned is not null ", t1);
-		assertTrue("Getting list of transactions within the specified date", t1.size() > 0);
-	}
-
-	/**
-	 * Getting all Transactions from the file
-	 */
-	@Test
-	public void getAllTransactions() {
 		ArrayList<Transaction> transactionlist = transaction.getAllTransactions();
-		assertNotNull("List of Transactions is not null", transactionlist);
-		assertTrue("List of Transactions returned", transactionlist.size() > 0);
+		Transaction t1 = new Transaction(12, cart1.getProduct().getProductId(),cart1.getMember().getMemberID(),
+				cart1.getQuantity(),"04-02-2016");
+		Transaction t2 = new Transaction(12, cart2.getProduct().getProductId(),cart2.getMember().getMemberID(),
+				cart2.getQuantity(),"04-02-2016");
+		Transaction t3 = new Transaction(12, cart3.getProduct().getProductId(),cart3.getMember().getMemberID(),
+				cart3.getQuantity(),"04-02-2016");
+		
+		transactionlist.add(t1);
+		transactionlist.add(t2);
+		transactionlist.add(t3);
+		
+		assertTrue(transactionlist.contains(t1));
+		assertTrue(transactionlist.contains(t2));
+		assertTrue(transactionlist.contains(t3));		
+	}
+
+	@Test
+	public void testGetTransactionsWithinPeriod() throws ParseException{
+		ArrayList<Transaction> transactionlist = transaction.getAllTransactions();
+		Transaction t1 = new Transaction(12, cart1.getProduct().getProductId(),cart1.getMember().getMemberID(),
+				cart1.getQuantity(),"04-02-2016");
+		Transaction t2 = new Transaction(12, cart2.getProduct().getProductId(),cart2.getMember().getMemberID(),
+				cart2.getQuantity(),"04-02-2016");
+		
+		transactionlist.add(t1);
+		transactionlist.add(t2);
+		
+		assertTrue(transactionlist.contains(t1));
+		assertTrue(transactionlist.contains(t2));
+		 
+		assertTrue(transaction.getTransactions("2016-03-30", "2016-02-20").isEmpty());
+		assertNotNull(transaction.getTransactions("2016-03-30", "2016-03-31"));
 	}
 
 }

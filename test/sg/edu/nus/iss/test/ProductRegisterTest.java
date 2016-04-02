@@ -2,31 +2,34 @@ package sg.edu.nus.iss.test;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sg.edu.nus.iss.store.Category;
-import sg.edu.nus.iss.store.Product;
-import sg.edu.nus.iss.store.ProductRegister;
-import sg.edu.nus.iss.store.Store;
+import sg.edu.nus.iss.store.*;
+
 
 /*
  * author:Wang Xuemin
  */
 
-public class ProductRegTest {
+public class ProductRegisterTest {
+	private Store testStore;
 	private ProductRegister pr;
-	
+	public ProductRegisterTest() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		
-		pr= new ProductRegister();
+		testStore=new Store();
+		pr=testStore.getProductReg();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		pr = null;
 	}
 
 	@Test
@@ -43,21 +46,21 @@ public class ProductRegTest {
 	@Test
 	public void testGetProductById(){
 		Product result=pr.getProductById("CLO/2");
-		assertEquals("CLO/2", result.getId());
+		assertEquals("CLO/2", result.getProductId());
 	}
 	
 	@Test
-	public void testRemoveProductById(){
-		pr.removeProductById("CLO/2");
+	public void testRemoveProductById() throws IOException{
+		pr.removeProduct("CLO/2");
 		assertEquals(1, pr.getProducts().size());
 		assertEquals(null, pr.getProductById("CLO/2"));
 	}
 	
 	@Test
-	public void testAddProduct(){
+	public void testAddProduct() throws IOException{
 		String id="CLO/3";
 		String name = "Name of new product";
-        Category category = testStore.getCategoryReg().getCategoryByCode("CLO");
+        Category category = testStore.getCategoryReg().getCategory("CLO");
         String briefDescription = "new shirt";
         int quantityAvailable = 100;
         double price = 15.2;
@@ -82,16 +85,17 @@ public class ProductRegTest {
         assertEquals(3, pr.getProducts().size());
         
         //all attributes are same as set
-        assertEquals(id,result.getId());
+        assertEquals(id,result.getProductId());
         assertEquals(name,result.getName());
         assertEquals(category,result.getCategory());
         assertEquals(briefDescription,result.getDescription());
-        assertEquals(quantityAvailable,result.getQuantity());
+        assertEquals(quantityAvailable,result.getQuantityAvailable());
         assertEquals(price,result.getPrice(),0.01);
         assertEquals(barCode,result.getBarcodeNumber());
         assertEquals(threshold,result.getThreshold());
         assertEquals(orderQuantity,result.getOrderQuantity());
         
 	}
+	
 
 }
