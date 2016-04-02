@@ -3,15 +3,10 @@ package sg.edu.nus.iss.test;
 import static org.junit.Assert.*;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import sg.edu.nus.iss.gui.StoreApplication;
 import sg.edu.nus.iss.store.*;
 
 /**
