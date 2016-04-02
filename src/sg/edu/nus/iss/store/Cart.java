@@ -18,9 +18,9 @@ public class Cart {
 		return member;
 	}
 
-//	public void setMember(String memberId) {
-//		this.member = member;
-//	}
+	public void setMember(String memberId) {
+		this.member = member;
+	}
 
 	public int getQuantity() {
 		return quantity;
@@ -64,6 +64,13 @@ public class Cart {
 	public Cart addCart(Product product, int quantity, Member member) throws BadValueException {
 
 		Cart c = new Cart(product, member, quantity);
+		for(Cart c1 :cart){
+			Product p = c1.getProduct();
+			if(p.equalOfProduct(c.getProduct())){
+					c1.setQuantity(c.getQuantity()+c1.getQuantity());
+					return c1;
+			}
+			}
 		cart.add(c);
 		return c;
 	}
