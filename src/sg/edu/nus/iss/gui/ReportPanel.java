@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -75,17 +73,7 @@ public class ReportPanel extends JPanel {
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
 		CardLayout cl = (CardLayout)(cards.getLayout());
-		JButton backBtn = new JButton("Back");
 
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
-				refresh();
-			}
-		});
-
-		p.add(backBtn);
-		
 		JButton catBtn = new JButton("Category");
 		catBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -154,14 +142,6 @@ public class ReportPanel extends JPanel {
 		return panel;
 	}
 	
-	public void refresh(){   
-		if(action_source.equalsIgnoreCase("Back")){
-			removeAll();
-			add("Center",manager.createMainPanel());
-			revalidate();
-			repaint();
-		} 
-	}
 	
 	private JPanel showTransactionTable() {  
 		JScrollPane scroller;

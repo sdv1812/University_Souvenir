@@ -2,6 +2,7 @@ package sg.edu.nus.iss.gui;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -52,9 +53,6 @@ public class StoreApplication {
 	}
 	public StoreWindow getMainWindow() {
 		return storeWindow;
-	}
-	public MainPanel createMainPanel() {
-		return(storeWindow.createMainPanel());
 	}
 
 	public boolean addMember(String memberName, String memberID) {
@@ -220,12 +218,7 @@ public class StoreApplication {
 		return store.getProductTableModel();
 	}
 
-	public AbstractTableModel getVendorTableModel() {
-		return store.getVendorTableModel();
-	}
-
 	public double getBonusPoints() {
-		// TODO Auto-generated method stub
 		return store.getBonusPoints();
 	}
 	
@@ -241,4 +234,5 @@ public class StoreApplication {
 			e.printStackTrace();
 		}
 	}
+	
 }

@@ -13,8 +13,6 @@ public class VendorRegister {
 	private HashMap<Category, ArrayList<Vendor>> vendorMap;
 	private ArrayList<Vendor> vendors;
 	private VendorDao vDao;
-	private static final String[] COLUMN_NAMES = {"Vendor Name", "Description"};
-	private AbstractTableModel vendorTableModel;
 
 	public VendorRegister() {
 		vendorMap = new HashMap<Category, ArrayList<Vendor>>();
@@ -24,6 +22,7 @@ public class VendorRegister {
 
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) {
 		ArrayList<Vendor> temp = vendorMap.get(category);
+		int count = 0;
 		if (temp == null) { //new entry
 			temp = new ArrayList<Vendor>();
 		} else {
@@ -36,18 +35,14 @@ public class VendorRegister {
 		Vendor vendorNew = new  Vendor(vendorName,vendorDescription);
 		temp.add(vendorNew);
 		vendorMap.put(category, temp);
-		if(vendors == null) { // First Entry
-			vendors.add(vendorNew);
-			System.out.println("Inside first Entry   " + vendorNew.getVendorName());
-		} else {
+		if(!vendors.isEmpty()) {
 			for(Vendor v : vendors) {
-				System.out.println("Inside for loop   " + vendorNew.getVendorName());
-
 				if(vendorName.equals(v.getVendorName())) 
-					break;
-				else	vendors.add(vendorNew);
+					count++;
 			}
-		}
+		} 
+		if(count ==0)
+		vendors.add(vendorNew);
 		writeToFile();
 		return true;
 	}
@@ -84,6 +79,15 @@ public class VendorRegister {
 		return vendorMap.get(category);
 	}
 
+	public Vendor getVendor(String vendorName) {
+		for(Vendor v : vendors) {
+			if (vendorName.equalsIgnoreCase(v.getVendorName())) {
+				return v;
+			}
+		}
+		return null;
+	}
+
 	public void readVendorPerCategoryFromFile(ArrayList<Category> categories) throws IOException{
 
 		vendorMap = vDao.readVendorPerCategoryFromFile(categories);	
@@ -103,48 +107,5 @@ public class VendorRegister {
 		}
 
 	}
-	
-
-	public AbstractTableModel getVendorTableModel() {
-		if (vendorTableModel != null) 
-			return vendorTableModel;
-		else {
-			vendorTableModel = new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public String getColumnName(int column) {
-					return COLUMN_NAMES[column];
-				}
-
-				@Override
-				public int getRowCount() {
-					return vendors.size();
-				}
-
-				@Override
-				public int getColumnCount() {
-					return COLUMN_NAMES.length;
-				}
-
-				@Override
-				public Object getValueAt(int rowIndex, int columnIndex) {
-					Vendor vendor = vendors.get(rowIndex);
-					switch (columnIndex) {
-					case 0: return vendor.getVendorName();
-					case 1: return vendor.getDescription();
-					default: return null;
-					}
-				}
-			};
-
-			return vendorTableModel;
-		}
-	}
-
 
 }

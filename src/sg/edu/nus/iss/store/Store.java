@@ -3,6 +3,7 @@ package sg.edu.nus.iss.store;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -47,7 +48,7 @@ public class Store {
 	public ArrayList<Product> getProductsBelowThreshold(){
 		return products.checkProductsBelowThreshold();
 	}
-	
+
 
 	public CategoryRegister getCategoryReg(){ //xuemin
 		return categories;
@@ -96,24 +97,6 @@ public class Store {
 	public void removeMember(String memberID) {
 		members.removeMember(memberID);
 		members.writeToFile();
-	}
-	public void printAllCategories() {
-		ArrayList<Category> temp = categories.getCategories();
-		for(Category c : temp){
-			System.out.println("Category Name : "+c.getCategoryName());
-			System.out.println("Category Code : "+c.getCategoryCode()+"\n");
-		}
-	}
-
-	public void printAllMembers() {
-		ArrayList<Member> temp = new ArrayList<Member> ();
-		temp = members.getMembers();
-		for(Member m : temp){
-			System.out.println(m.getCustomerName());
-			System.out.println(m.getLoyaltyPoints());
-			System.out.println(m.getMemberID());
-
-		}
 	}
 
 	public ArrayList<Member> getMembers() {
@@ -232,47 +215,43 @@ public class Store {
 		return categories.getCategory(categoryCode);
 	}
 	public Vendor getVendor(String vendorName) {
-		return getVendor(vendorName);
+		return vendors.getVendor(vendorName);
 	}
 	public Category getCategoryByName(String categoryName) {
 		// TODO Auto-generated method stub
 		return categories.getCategorybyName(categoryName);
 	}
-	
+
 	public AbstractTableModel getCategoryTableModel() {
 		return categories.getCategoryTableModel();
 	}
-	
+
 	public AbstractTableModel getMemberTableModel() {
 		return members.getMemberTableModel();
 	}
-	
+
 	public AbstractTableModel getProductTableModel() {
 		return products.getProductTableModel();
 	}
-	
-	public AbstractTableModel getVendorTableModel() {
-		return vendors.getVendorTableModel();
-	}
-	
+
 	public String getLoyaltyPoints() {
 		int loyaltyPoints = transaction.getLoyaltyPoints();
 		String loyalPoints = Integer.toString(loyaltyPoints);
 		return loyalPoints;
-		}
+	}
+	
 	public String beginCheckout(List<Cart> cartProducts) {//CHANGE 27-3
 		double discountPerc = discounts.getMaxDiscount(cartProducts.get(0).getMember());
 		String cartStatus = transaction.addProductsToCart(cartProducts,discountPerc);
 		return cartStatus;
-		}
+	}
+
 	public double getBonusPoints() {
 		return transaction.getBonusPoints();
 	}
+
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		return transaction.getTransactions(fromDate, toDate);
 	}
-
-
-
-
+	
 }

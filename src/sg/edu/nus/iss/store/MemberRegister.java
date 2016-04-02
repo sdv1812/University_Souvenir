@@ -87,18 +87,16 @@ public class MemberRegister {
 	}
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
 		Member m = getMember(memberId);
-		int loyaltyPoints;
+		Double loyaltyPoints;
 		Double d = redeemPoints;
 		Double d1 = bonusPoints;
-		int pointsBonus = d1.intValue();
-		int pointsRedeem = d.intValue();
 		if(m.isFirstTime()){
 			m.setLoyaltyPoints(0);
-			pointsRedeem = 0;
+			redeemPoints = 0.0;
 		} 
-		loyaltyPoints = m.getLoyaltyPoints()-(pointsRedeem) + (pointsBonus);
+		loyaltyPoints = m.getLoyaltyPoints()-(redeemPoints) + (bonusPoints);
 
-		m.setLoyaltyPoints(loyaltyPoints);
+		m.setLoyaltyPoints(loyaltyPoints.intValue());
 		writeToFile();
 	}
 	

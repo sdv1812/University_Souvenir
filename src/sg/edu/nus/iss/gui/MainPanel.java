@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import sg.edu.nus.iss.store.Cart;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,12 +18,20 @@ public class MainPanel extends JPanel {
 	private DiscountPanel discountPanel;
 	private TransactionProductPanel transactionProductPanel;
 	private VendorPanel vendorPanel;
+	private ReportPanel reportPanel;
+	private static final String Category_ ="Category";
+	private static final String Member_ ="Member";
+	private static final String Product_ ="Product";
+	private static final String Transaction_ ="Transaction";
+	private static final String Vendor_ = "Vendor";
+	private static final String Report_ = "Report";
+	private static final String Discount_ = "Discount";
+	private JPanel cards;
 
 	// add
 	private StoreApplication manager;
 	private CheckProductsBelowThrethold checekProductsPanel;
-	private ReportPanel reportPanel;
-	private MainPanel mainPanel;
+
 
 	/**
 	 * Create the panel.
@@ -30,107 +39,92 @@ public class MainPanel extends JPanel {
 	public MainPanel(StoreApplication manager) {
 		// add
 		this.manager = manager;
-		mainPanel = this;
-				
-		setLayout(new GridLayout(0, 2, 80, 60));
+
+		cards = new JPanel(new CardLayout());
+
+		memberPanel =new  MemberPanel(manager);
+		productPanel = new ProductPanel(manager);
+		categoryPanel = new CategoryPanel(manager);
+		discountPanel = new DiscountPanel(manager);
+		transactionProductPanel = new TransactionProductPanel(manager);
+		vendorPanel = new VendorPanel(manager);
+		reportPanel = new ReportPanel(manager);
+
+		cards.add(transactionProductPanel, Transaction_);
+		cards.add(memberPanel, Member_);
+		cards.add(categoryPanel, Category_);
+		cards.add(productPanel, Product_);
+		cards.add(vendorPanel, Vendor_);
+		cards.add(reportPanel, Report_);
+		cards.add(discountPanel, Discount_);
+		setLayout(new BorderLayout());
+		add(cards, "Center");
+		add(createMenuPanel(), "West");
+
+
+	}
+
+	public JPanel createMenuPanel() {
+		CardLayout layout = (CardLayout)(cards.getLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		JPanel b = new JPanel(new GridLayout(0,1,0,30));
 
 		JButton btnMakeATransaction = new JButton("Make a Transaction");
 		btnMakeATransaction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				transactionProductPanel = new TransactionProductPanel(manager);
-				removeAll();
-				setLayout(new GridLayout(0, 1));
-				add(transactionProductPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Transaction_);
 			}
 		});
-		add(btnMakeATransaction);
+		b.add(btnMakeATransaction);
 
 		JButton btnMemberRegistration = new JButton("Member Registration");
 		btnMemberRegistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				memberPanel = new MemberPanel(manager);
-				removeAll();
-				setLayout(new BorderLayout());
-				memberPanel.setVisible(true);
-				add("Center", memberPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Member_);
 			}
 		});
-		add(btnMemberRegistration);
+		b.add(btnMemberRegistration);
 
 		JButton btnCategory = new JButton("Category");
 		btnCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				categoryPanel = new CategoryPanel(manager);
-				removeAll();
-				setLayout(new BorderLayout());
-				categoryPanel.setVisible(true);
-				add("Center", categoryPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Category_);
 			}
 		});
-		add(btnCategory);
+		b.add(btnCategory);
 
 		JButton productBtn = new JButton("Product");
 		productBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				productPanel = new ProductPanel(manager, mainPanel);
-				removeAll();
-				setLayout(new BorderLayout());
-				productPanel.setVisible(true);
-				add("Center", productPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Product_);
 			}
 		});
-		add(productBtn);
+		b.add(productBtn);
 
 		JButton vendorBtn = new JButton("Vendor");
 		vendorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vendorPanel = new VendorPanel(manager);
-				removeAll();
-				setLayout(new BorderLayout());
-				vendorPanel.setVisible(true);
-				add("Center", vendorPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Vendor_);
 			}
 		});
-		add(vendorBtn);
+		b.add(vendorBtn);
 
 		JButton reportBtn = new JButton("Report");
 		reportBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				reportPanel = new ReportPanel(manager);
-				removeAll();
-				setLayout(new BorderLayout());
-				reportPanel.setVisible(true);
-				add("Center", reportPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Report_);
 			}
 		});
-		add(reportBtn);
+		b.add(reportBtn);
 
 		JButton btnDiscount = new JButton("Discount");
 		btnDiscount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				discountPanel = new DiscountPanel(manager);
-				removeAll();
-				setLayout(new BorderLayout());
-				discountPanel.setVisible(true);
-				add("Center", discountPanel);
-				revalidate();
-				repaint();
+				layout.show(cards, Discount_);
 			}
 		});
-		add(btnDiscount);
+		b.add(btnDiscount);
 
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -138,14 +132,17 @@ public class MainPanel extends JPanel {
 				System.exit(1);
 			}
 		});
-		add(btnExit);
+
+		panel.add(b, BorderLayout.NORTH);
+		panel.add(btnExit, BorderLayout.SOUTH);
+		return panel;
 
 	}
 
 	public void refreshCart() {
 		// TODO Auto-generated method stub
 		transactionProductPanel.refresh();
-		
+
 	}
 
 	public Cart getSelectedCartItem() {
@@ -153,14 +150,4 @@ public class MainPanel extends JPanel {
 		return selectedLineItem;
 	}
 
-	// add ,the method will be used when store keeper check inventory.
-	public void actionPerformedOfCheckProductsBelowThrethold() {
-		checekProductsPanel = new CheckProductsBelowThrethold(manager);
-		removeAll();
-		setLayout(new BorderLayout());
-		checekProductsPanel.setVisible(true);
-		add("Center", checekProductsPanel);
-		revalidate();
-		repaint();
-	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -46,22 +47,25 @@ public class ProductPanel extends JPanel {
 	private JTextField productBarcodeNumberfield;
 	private JTextField productThresholdfield;
 	private JTextField productOrderQuantityfield;
-	
-	//add
-	private MainPanel mainPanel;
+	private static final String Check_Below_Threshold = "Below Threshold";
+	private static final String Product_List = "Product_List";
+	private JPanel cards;
 
-	public ProductPanel(StoreApplication manager,MainPanel mainPanel) {
+
+	public ProductPanel(StoreApplication manager) {
 		this.manager = manager;
-		//add
-		this.mainPanel=mainPanel;
 		productTableModel = manager.getProductTableModel();		
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
+		
+		cards = new JPanel(new CardLayout());
+		cards.add(showProductListPanel(), Product_List);
+		cards.add(new CheckProductsBelowThrethold(manager),Check_Below_Threshold );
 
 		setLayout (new BorderLayout());
 		product_list = manager.getProducts();
 		add(createButtonPanel(), BorderLayout.EAST);
-		add(showProductListPanel(), BorderLayout.CENTER);
+		add(cards, BorderLayout.CENTER);
 		add(createAddProductPanel(), BorderLayout.SOUTH);
 
 	}
@@ -176,16 +180,9 @@ public class ProductPanel extends JPanel {
 	//*****************To Show all Buttons **********************	
 
 	private JPanel createButtonPanel(){ 
+		CardLayout layout = (CardLayout)(cards.getLayout());
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
-		JButton backBtn = new JButton("Back");
-
-		backBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
-				refresh();
-			}
-		});
 
 		JButton removeBtn = new JButton ("Remove");
 		removeBtn.addActionListener (new ActionListener () {
@@ -210,19 +207,28 @@ public class ProductPanel extends JPanel {
 			}
 		});
 		
+		JButton showProdBtn = new JButton ("Show Products");
+		showProdBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(cards, Product_List);
+				removeBtn.setEnabled(true);
+			}
+		});
+		
+		p.add(showProdBtn);
+		
 		//add a button for show the product below threthold to storekeeper
-		JButton checkProductsBelowThresholdBtn = new JButton("check products below threshold");
+		JButton checkProductsBelowThresholdBtn = new JButton("Products below Threshold");
 
 		checkProductsBelowThresholdBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				action_source = (((JButton)e.getSource()).getText());
 				//create a new panel for display,includes a return button.
-				mainPanel.actionPerformedOfCheckProductsBelowThrethold();
-			}
+				layout.show(cards, Check_Below_Threshold);
+				removeBtn.setEnabled(false);			}
 		});
 		p.add(checkProductsBelowThresholdBtn);
 
-		p.add(backBtn);
 		p.add(removeBtn);
 
 		panel.add(p, "North");
@@ -268,15 +274,8 @@ public class ProductPanel extends JPanel {
 		else if(action_source.equalsIgnoreCase("Remove")){
 			productTableModel.fireTableRowsDeleted(table.getSelectedRow(), table.getSelectedRow());
 		}
-
-		else if(action_source.equalsIgnoreCase("Back")){
-			removeAll();
-			add("Center",manager.createMainPanel());
-			revalidate();
-			repaint();
-		} 
-
 	}
+	
 	protected boolean performAddAction() throws IOException{
 	try {
 		int categoryIndex = categoryField.getSelectedIndex();

@@ -2,12 +2,10 @@ package sg.edu.nus.iss.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,42 +22,32 @@ import sg.edu.nus.iss.store.Product;
 public class CheckProductsBelowThrethold extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	private StoreApplication manager;
 	private JScrollPane scroller;
 	private JTable table;
 	private static final String[] COLUMN_NAMES = {"Prod. ID", "Prod. Name", "Description", "Quantity Avail.", "Price", "Bar Code", "Reorder Quant.", "Order Quant."};
 	private AbstractTableModel cTableModel;
 	private ArrayList<Product> product_Below_list ;
-	private String action_source;
 	private Border raisedetched;
 	private Border loweredetched;
+	private StoreApplication manager;
 	
 	public CheckProductsBelowThrethold(StoreApplication manager){
-		this.manager=manager;
+		this.manager = manager;
 		raisedetched=BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched=BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		
 		setLayout(new BorderLayout());
 		product_Below_list=manager.getProductsBelowThreshold();
-		System.out.println(product_Below_list.size());
-		add(createButtonPanel(),BorderLayout.EAST);
 		add(showProductsBelowThreshold(),BorderLayout.CENTER);
+		add(createButtonPanel(), BorderLayout.EAST);
+		
 	}
 	
+
 	private JPanel createButtonPanel(){
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel p=new JPanel(new GridLayout(0, 1,0,10));
 		
-		JButton backBtn=new JButton("Back");
-		backBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				action_source = (((JButton)e.getSource()).getText());
-				refresh();
-			}
-		});
 		
 		JButton reOrderBtn=new JButton("Reorder Products");
 		reOrderBtn.addActionListener(new ActionListener() {
@@ -68,12 +56,11 @@ public class CheckProductsBelowThrethold extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				manager.AddQuantityForThretholdProducts();
-				action_source = (((JButton)e.getSource()).getText());
-				refresh();
+				product_Below_list=manager.getProductsBelowThreshold();
+				cTableModel.fireTableDataChanged();
 			}
 		});
-		
-		p.add(backBtn);
+
 		p.add(reOrderBtn);
 		panel.add(p,"North");
 		panel.setBorder(BorderFactory.createCompoundBorder(raisedetched, loweredetched));
@@ -81,6 +68,7 @@ public class CheckProductsBelowThrethold extends JPanel {
 		return panel;
 	}
 	
+
 	private JPanel showProductsBelowThreshold(){
 		JPanel panel=new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -96,20 +84,10 @@ public class CheckProductsBelowThrethold extends JPanel {
 		panel.add(label,"North");
 		panel.add(scroller, "Center");
 		
+		panel.setBorder(BorderFactory.createCompoundBorder(raisedetched, loweredetched));
 		return panel;
 	}
 	
-	public void refresh(){   
-
-		if(action_source.equalsIgnoreCase("Back")){
-			removeAll();
-			add("Center",manager.createMainPanel());
-			revalidate();
-			repaint();
-		}else if(action_source.equalsIgnoreCase("Reorder Products")){
-			cTableModel.fireTableDataChanged();
-		}
-	}
 	//**********************Set Table Mode******************************	
 
 		public TableModel getTableModel() {

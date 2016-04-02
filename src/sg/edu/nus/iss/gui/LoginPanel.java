@@ -128,7 +128,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if(manager.validate(username.getText(), String.valueOf(password.getPassword()))){
-					mainPanel = createMainPanel();
+					mainPanel = new MainPanel(manager);
 					removeAll();
 					setLayout(new BorderLayout());
 					add("Center", mainPanel);
@@ -153,10 +153,6 @@ public class LoginPanel extends JPanel {
 
 		add(centerPanel, "Center");
 
-	}
-
-	public MainPanel createMainPanel() {
-		return (new MainPanel(manager));
 	}
 
 	public void refreshCart() {

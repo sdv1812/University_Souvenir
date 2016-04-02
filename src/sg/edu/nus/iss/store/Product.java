@@ -118,7 +118,7 @@ public class Product {
 	}
 	
 	public boolean checkBelowThrethold(){
-		if(quantity<=threshold){
+		if(quantity<threshold){
 			return true;
 		}else{
 			return false;
