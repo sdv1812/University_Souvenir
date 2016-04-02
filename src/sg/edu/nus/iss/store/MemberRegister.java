@@ -3,8 +3,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
 import sg.edu.nus.iss.dao.CustomerDao;
 
 /*
@@ -88,8 +86,6 @@ public class MemberRegister {
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
 		Member m = getMember(memberId);
 		Double loyaltyPoints;
-		Double d = redeemPoints;
-		Double d1 = bonusPoints;
 		if(m.isFirstTime()){
 			m.setLoyaltyPoints(0);
 			redeemPoints = 0.0;

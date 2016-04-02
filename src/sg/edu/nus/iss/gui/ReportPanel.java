@@ -33,7 +33,6 @@ public class ReportPanel extends JPanel {
 	private AbstractTableModel memberTableModel;
 	private Border raisedetched;
 	private Border loweredetched;
-	private String action_source;
 	private JPanel cards;
 	private static final String Category_ ="Category";
 	private static final String Member_ ="Member";
@@ -77,7 +76,6 @@ public class ReportPanel extends JPanel {
 		JButton catBtn = new JButton("Category");
 		catBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
 				 cl.show(cards, Category_);
 			}
 		});
@@ -87,7 +85,6 @@ public class ReportPanel extends JPanel {
 		JButton memBtn = new JButton("Member");
 		memBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());				 
 				 cl.show(cards, Member_);
 			}
 		});
@@ -96,7 +93,6 @@ public class ReportPanel extends JPanel {
 		JButton prodBtn = new JButton("Product");
 		prodBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
 				cl.show(cards, Product_);
 			}
 		});
@@ -106,7 +102,6 @@ public class ReportPanel extends JPanel {
 		JButton transBtn = new JButton("Transaction");
 		transBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				action_source = (((JButton)e.getSource()).getText());
 				cl.show(cards, Transaction_);
 			}
 		});
@@ -130,8 +125,8 @@ public class ReportPanel extends JPanel {
 		table = new JTable();	
 		table.setModel(tableModel);
 		tableModel.fireTableDataChanged();
-		scroller = new JScrollPane(table); //scroller automatically puts the table header at the top
-		table.setFillsViewportHeight(true); // true : table uses the entire height of the container, even if the table doesn't have enough rows to use the whole vertical space. 
+		scroller = new JScrollPane(table);
+		table.setFillsViewportHeight(true);  
 
 		panel.add(label, "North");
 		panel.add(scroller, "Center");

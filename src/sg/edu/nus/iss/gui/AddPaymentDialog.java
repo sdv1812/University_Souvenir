@@ -1,18 +1,13 @@
 package sg.edu.nus.iss.gui;
 
 import java.awt.GridLayout;
-import java.awt.List;
-import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import sg.edu.nus.iss.store.Cart;
-import sg.edu.nus.iss.store.Product;
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
 /**
@@ -20,6 +15,10 @@ import sg.edu.nus.iss.utils.OkCancelDialog;
  *
  */
 public class AddPaymentDialog extends OkCancelDialog  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private StoreApplication manager ;
 	private java.util.ArrayList<Cart> cart;
 	private   JTextArea  productDetails;
@@ -27,7 +26,6 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	private JTextField discount;
 	private JTextField redeemPoints;
 	private JTextField amountReceived;
-	private TransactionProductPanel transactionProductPanel;
 	
 	public AddPaymentDialog(StoreApplication manager, TransactionProductPanel transactionProductPanel){
 		super(manager.getMainWindow(),"Payment Details");
@@ -93,14 +91,13 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			}
 			double tempAmountcheck = transactiontotal - (transactiontotal*(discountValue/100)) + redeemPointsValue/1000;
 			double balanceAmount = amountreceived-tempAmountcheck;
-			double earnedPoints = transactiontotal/100;
+			//double earnedPoints = transactiontotal/100;
 			String balance = "Balance to be tendered  is"+" "+Double.toString(balanceAmount);
 			System.out.println("Tempamount check is"+tempAmountcheck);
 			if(tempAmountcheck<=amountreceived){
 				manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
-				//JOptionPane.showMessageDialog(this, "Payment is Sucessful");
 				summaryDescription(transactiontotal,tempAmountcheck,amountreceived,balanceAmount,manager.getBonusPoints());
-				JOptionPane.showMessageDialog(this,balance ,"Payment is Sucessful", 0);
+				JOptionPane.showMessageDialog(this,balance ,"Payment is Successful", 0);
 
 				
 			}

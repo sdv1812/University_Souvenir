@@ -1,5 +1,4 @@
 package sg.edu.nus.iss.store;
-import java.io.*;
 
 /*
  * Category class:to to create Category Object

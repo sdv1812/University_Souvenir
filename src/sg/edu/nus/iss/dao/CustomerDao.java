@@ -4,12 +4,9 @@
 
 package sg.edu.nus.iss.dao;
 
-import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import sg.edu.nus.iss.store.Member;
-import sg.edu.nus.iss.store.MemberRegister;
 
 public class CustomerDao extends BaseDao{
 	private static final String FILE_NAME = "StoreAppData/Members.dat";

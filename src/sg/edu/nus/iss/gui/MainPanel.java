@@ -28,18 +28,10 @@ public class MainPanel extends JPanel {
 	private static final String Discount_ = "Discount";
 	private JPanel cards;
 
-	// add
-	private StoreApplication manager;
-	private CheckProductsBelowThrethold checekProductsPanel;
-
-
 	/**
 	 * Create the panel.
 	 */
 	public MainPanel(StoreApplication manager) {
-		// add
-		this.manager = manager;
-
 		cards = new JPanel(new CardLayout());
 
 		memberPanel =new  MemberPanel(manager);

@@ -1,13 +1,9 @@
 package sg.edu.nus.iss.store;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
 import sg.edu.nus.iss.dao.CategoryDao;
 
 /*

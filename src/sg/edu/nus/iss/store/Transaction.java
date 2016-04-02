@@ -2,7 +2,6 @@ package sg.edu.nus.iss.store;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class Transaction implements Comparable {
 	}
 
 	public void setQtypurchased(int qtyPurchased) {
-		qtyPurchased = qtyPurchased;
+		this.qtyPurchased = qtyPurchased;
 	}
 
 	public String getDateOfPurchase() {
@@ -177,7 +176,7 @@ public class Transaction implements Comparable {
 		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
 		System.out.println(" Temporary Transaction total is" + temptransActionTotal);
 		if (amountReceived > temptransActionTotal) {
-			bonusPoints  = (currentMember==null)? 0 : transActionTotal / 100;
+			bonusPoints  = (currentMember==null)? 0 : transActionTotal / 10;
 			transActionTotal = temptransActionTotal;
 			System.out.println("Transaction id is" + tranasctionId);
 			System.out.println("Cartobject is" + c1.toString());
@@ -213,7 +212,7 @@ public class Transaction implements Comparable {
 		String currentDateString = formatter.format(date);
 		System.out.println("Current date string is" + currentDateString);
 		cart.addAll(c1);
-		Iterator productIterator = cart.iterator();
+		Iterator<Cart> productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart c2 = (Cart) productIterator.next();
 			System.out.println("Cart object inside iterator is" + c2.toString());
@@ -327,5 +326,6 @@ public class Transaction implements Comparable {
 				this.setTranasctionId(transactionIde + 1);
 			}
 		}
+		br.close();
 	}
 }

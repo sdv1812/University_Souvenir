@@ -2,13 +2,9 @@ package sg.edu.nus.iss.store;
 
 import java.io.IOException;
 import sg.edu.nus.iss.dao.ProductDao;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 /*
  * ProductReg class:to manage product object
@@ -21,8 +17,6 @@ public class ProductRegister {
 	private ArrayList<Product> products;
 	//file operation class,used to read productList from file and write productList to file
 	private ProductDao pDao;
-	//Store is a management class,Store manages many lists.In ProductReg,we have a Store object reference to find category and else.
-	private Store store;
 	private AbstractTableModel productTableModel;
 	private static final String[] COLUMN_NAMES = {"Prod. ID", "Prod. Name", "Description", "Quantity Avail.", "Price", "Bar Code", "Reorder Quant.", "Order Quant."};
 

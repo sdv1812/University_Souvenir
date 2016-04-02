@@ -34,7 +34,6 @@ public class LoginPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 6316032716933825384L;
 	private JPasswordField password;
-	private StoreApplication manager;
 	private MainPanel mainPanel;
 	private Border raisedetched;
 	private Border loweredetched; 
@@ -43,8 +42,6 @@ public class LoginPanel extends JPanel {
 	 */
 	public LoginPanel(StoreApplication manager) {
 		setBackground(SystemColor.inactiveCaption);
-		this.manager = manager;
-		
 		ISSLogoPanel logo = new ISSLogoPanel();
 
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);

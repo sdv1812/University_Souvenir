@@ -23,7 +23,7 @@ public class AddProductToCart {
 	}
 	
 	public Cart addProductsToCart(Product product,int quantity,Member member){
-		boolean addProductsStatus = false;
+		//boolean addProductsStatus = false;
 		/*try{
 			product = productregister.getProductById(productId);
 			if(product==null){
@@ -44,14 +44,14 @@ public class AddProductToCart {
 		else if(product.getQuantityAvailable()<product.getThreshold()){
 			JOptionPane.showMessageDialog(null, "Product is Running out of stock", "Product shortage ", JOptionPane.ERROR_MESSAGE);
 			Cart c1 =cart.addCart(product, quantity, member);
-			if(c1!=null)
-				addProductsStatus = true;
+//			if(c1!=null)
+//				addProductsStatus = true;
 			return c1;
 		}
 		else{
 			Cart c1 =cart.addCart(product, quantity, member);
-			if(c1!=null)
-				addProductsStatus = true;
+//			if(c1!=null)
+//				addProductsStatus = true
 			return c1;
 		}
 		

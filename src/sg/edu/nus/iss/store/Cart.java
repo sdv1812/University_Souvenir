@@ -16,9 +16,9 @@ public class Cart {
 		return member;
 	}
 
-	public void setMember(String memberId) {
-		this.member = member;
-	}
+//	public void setMember(String memberId) {
+//		this.member = member;
+//	}
 
 	public int getQuantity() {
 		return quantity;

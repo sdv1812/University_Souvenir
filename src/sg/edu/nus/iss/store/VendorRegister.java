@@ -3,9 +3,6 @@ package sg.edu.nus.iss.store;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.table.AbstractTableModel;
-
 import sg.edu.nus.iss.dao.VendorDao;
 
 public class VendorRegister {

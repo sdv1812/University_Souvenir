@@ -1,10 +1,5 @@
 package sg.edu.nus.iss.store;
 
-
-import javax.management.loading.PrivateClassLoader;
-
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
 /*
  * Product class:for every kind of product
  * Author:Wang Xuemin

@@ -2,12 +2,8 @@ package sg.edu.nus.iss.gui;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
@@ -16,14 +12,11 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
-	//private TransactionWindow transActionWindow;
 	public StoreApplication() {
 		store = new Store();
-		//transActionWindow = new TransactionWindow(this);
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		StoreApplication storeApplication = new StoreApplication();
 		storeApplication.start();
 
@@ -33,11 +26,9 @@ public class StoreApplication {
 	}
 
 	private void start() {
-		// TODO Auto-generated method stub
 		storeWindow = new StoreWindow("Store Application", this);
 		storeWindow.pack ();
 		store.initializeData();
-		//storeWindow.refresh ();
 	}
 
 	public void shutdown () {
@@ -56,7 +47,6 @@ public class StoreApplication {
 	}
 
 	public boolean addMember(String memberName, String memberID) {
-		// TODO Auto-generated method stub
 		return store.addMember(memberName, memberID);
 	}
 
@@ -73,7 +63,6 @@ public class StoreApplication {
 	}
 
 	public void removeCategory(String categoryCode) {
-		// TODO Auto-generated method stub
 		store.removeCategory(categoryCode);
 	}
 
@@ -88,9 +77,6 @@ public class StoreApplication {
 	public void removeDiscount(String discountCode) {
 		store.removeDiscount(discountCode);		
 	}
-	//public Discount getDiscount(String discountCode) {
-	//	return store.getDiscount(discountCode);
-	//}
 
 	public void modifyDiscount(String discountCode, float percentage) {
 		store.modifyDiscount(discountCode, percentage);
@@ -100,11 +86,9 @@ public class StoreApplication {
 		boolean addProductStatus =store.addProductsToCart( product, quantity, member);
 		storeWindow.refreshCart();
 		return addProductStatus;
-		//refresh cart panel
 	}
 
 	public ArrayList<Cart> getProductsAddedInCart() {
-		// TODO Auto-generated method stub
 		return store.getProductsAddedInCart();
 	}
 
@@ -112,7 +96,6 @@ public class StoreApplication {
 		return store.getProducts();
 	}
 
-	//add
 	public ArrayList<Product> getProductsBelowThreshold(){
 		return store.getProductsBelowThreshold();
 	}
@@ -121,16 +104,14 @@ public class StoreApplication {
 		try {
 			store.removeProduct(id);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public String getTransactionTotal() {
-		// TODO Auto-generated method stub
 		return store.getTransactionTotal();
 	}
-	public String beginCheckout(List<Cart> cart){//CHANGE 27-3
+	public String beginCheckout(List<Cart> cart){
 		String cartStatus = store.beginCheckout(cart);
 		return cartStatus;
 	}
@@ -230,7 +211,6 @@ public class StoreApplication {
 		try {
 			store.getProductReg().reFreshInventoryForThreshold();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
