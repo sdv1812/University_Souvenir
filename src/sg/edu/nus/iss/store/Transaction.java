@@ -16,8 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves each
- *         Transaction in file
+ * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
+ *         each Transaction in file
  *
  */
 public class Transaction implements Comparable {
@@ -111,6 +111,7 @@ public class Transaction implements Comparable {
 	public double getBalance(double transActionTotal, double amountReceived) {
 		return amountReceived - transActionTotal;
 	}
+
 	public double getBonusPoints() {
 		return bonusPoints;
 	}
@@ -120,11 +121,10 @@ public class Transaction implements Comparable {
 	}
 
 	public ArrayList<Transaction> getAllTransactions() {
-		/* connect to text file */
-		// convert each row to transaction and add it to list
-		System.out.println("TransactionArrayList size is" + transAction.size());
+
 		return transAction;
 	}
+
 	public int getLoyaltyPoints() {
 		return loyaltyPoints;
 	}
@@ -134,7 +134,8 @@ public class Transaction implements Comparable {
 	}
 
 	/**
-	 * @param List of cart objects
+	 * @param List
+	 *            of cart objects
 	 * @param discountPerc
 	 * @return ProductAddition status
 	 */
@@ -146,12 +147,10 @@ public class Transaction implements Comparable {
 		Iterator productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart lineItem = (Cart) productIterator.next();
-			 currentMember = lineItem.getMember();
-			loyaltyPoints = (currentMember==null)?   0 : currentMember.getLoyaltyPoints();
+			currentMember = lineItem.getMember();
+			loyaltyPoints = (currentMember == null) ? 0 : currentMember.getLoyaltyPoints();
 			int productQuantityOrdered = lineItem.getQuantity();
 			Product product = lineItem.getProduct();
-			System.out.println("Product available is" + product.getQuantityAvailable());
-			System.out.println("Product threshold is " + product.getThreshold());
 			transActionTotal += product.getPrice() * productQuantityOrdered;
 			System.out.println("Transaction total inside addProductsToCart method is" + transActionTotal);
 			addStatus = "sucess";
@@ -176,12 +175,8 @@ public class Transaction implements Comparable {
 		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
 		System.out.println(" Temporary Transaction total is" + temptransActionTotal);
 		if (amountReceived > temptransActionTotal) {
-			bonusPoints  = (currentMember==null)? 0 : transActionTotal / 10;
+			bonusPoints = (currentMember == null) ? 0 : transActionTotal / 10;
 			transActionTotal = temptransActionTotal;
-			System.out.println("Transaction id is" + tranasctionId);
-			System.out.println("Cartobject is" + c1.toString());
-			System.out.println("Redeem points is" + redeemPoints);
-			System.out.println("Discount is " + discount);
 			saveTransaction(tranasctionId, transActionTotal, c1, redeemPoints, bonusPoints, members, products);
 		} else {
 			paymentStatus = "failed";
@@ -190,8 +185,6 @@ public class Transaction implements Comparable {
 		}
 		return paymentStatus;
 	}
-
-	
 
 	/**
 	 * @param tranasctionId
@@ -205,7 +198,7 @@ public class Transaction implements Comparable {
 	 */
 	public String saveTransaction(int tranasctionId, double transActionTotal, ArrayList<Cart> c1, double redeemPoints,
 			double bonusPoints, MemberRegister members, ProductRegister products) {
-		String saveTransactionStatus = "";
+		String saveTransactionStatus = "failed";
 		ArrayList<Cart> cart = new ArrayList<Cart>();
 		// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -215,7 +208,6 @@ public class Transaction implements Comparable {
 		Iterator<Cart> productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart c2 = (Cart) productIterator.next();
-			System.out.println("Cart object inside iterator is" + c2.toString());
 			if (c2.getMember() == null)
 				memberId = "PUB";
 			else {
@@ -225,6 +217,7 @@ public class Transaction implements Comparable {
 			Product p = c2.getProduct();
 			productId = p.getProductId();
 			transAction.add(new Transaction(tranasctionId, productId, memberId, qtyPurchased, currentDateString));
+			saveTransactionStatus = "success";
 			System.out.println("Transaction arraylist is" + transAction.toString());
 			try {
 				products.updateQuantity(productId, qtyPurchased);
@@ -232,15 +225,11 @@ public class Transaction implements Comparable {
 				e.printStackTrace();
 			}
 		}
-		if(!memberId.equals("PUB"))
-		members.updateRedeemPoints(memberId, redeemPoints, bonusPoints);
-		// writeToFile();
-		System.out.println("Transaction initialisations");
+		if (!memberId.equals("PUB"))
+			members.updateRedeemPoints(memberId, redeemPoints, bonusPoints);
 		setTransActionTotal(0);
 		setTranasctionId(this.tranasctionId + 1);
-		System.out.println("Transaction total is" + transActionTotal);
-
-		return "";
+		return saveTransactionStatus;
 	}
 
 	/**
@@ -254,12 +243,13 @@ public class Transaction implements Comparable {
 		formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date fromDateTransaction = formatter.parse(fromDate);
 		Date toDateTransaction = formatter.parse(toDate);
-		if(!toDateTransaction.before(fromDateTransaction)){
-		for (Transaction transaction : transAction) {
-			Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
-				if ((dateofPurchase.after(fromDateTransaction)&&dateofPurchase.before(toDateTransaction))||dateofPurchase.equals(toDateTransaction)||dateofPurchase.equals(fromDateTransaction))
-				transactionPeriod.add(transaction);
-		}
+		if (!toDateTransaction.before(fromDateTransaction)) {
+			for (Transaction transaction : transAction) {
+				Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
+				if ((dateofPurchase.after(fromDateTransaction) && dateofPurchase.before(toDateTransaction))
+						|| dateofPurchase.equals(toDateTransaction) || dateofPurchase.equals(fromDateTransaction))
+					transactionPeriod.add(transaction);
+			}
 		}
 		Collections.sort(transactionPeriod, Transaction.transProductId);
 		return transactionPeriod;
