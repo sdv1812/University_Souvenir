@@ -52,7 +52,6 @@ public class VendorRegister {
 		} 
 		if(count ==0)
 		vendors.add(vendorNew);
-		writeToFile();
 		return true;
 	}
 
@@ -80,7 +79,6 @@ public class VendorRegister {
 				}
 			}
 		}
-		writeToFile();
 	}
 	
 	/** 

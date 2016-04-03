@@ -111,7 +111,6 @@ public class MemberRegister {
 		loyaltyPoints = m.getLoyaltyPoints()-(redeemPoints) + (bonusPoints);
 
 		m.setLoyaltyPoints(loyaltyPoints.intValue());
-		writeToFile();
 	}
 	
 	/**

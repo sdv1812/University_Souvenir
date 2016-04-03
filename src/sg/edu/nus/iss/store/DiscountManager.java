@@ -139,7 +139,6 @@ public class DiscountManager {
 	 */
 	public void modifyDiscount(String discountCode, float percentage) {
 		getDiscount(discountCode).setPercentage(percentage);
-		writeToFile();
 	}
 
 	public  ArrayList<Discount> getDiscounts() {
@@ -174,7 +173,6 @@ public class DiscountManager {
 					break;
 				}
 			}
-		writeToFile();
 		}
 	}
 	

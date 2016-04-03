@@ -289,7 +289,7 @@ public class ProductPanel extends JPanel {
 	int productthreshold=Integer.parseInt(productThresholdfield.getText());
 	int productOrderNumber=Integer.parseInt(productOrderQuantityfield.getText());
 	
-	manager.getStore().getProductReg().addProduct(category, productName, productDescription, productQuantity,
+	manager.getStore().addProduct(category, productName, productDescription, productQuantity,
 			productPrice, productBarcodeNumber, productthreshold, productOrderNumber);
 	
 	productNameField.setText("");

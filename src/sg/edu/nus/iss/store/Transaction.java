@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import sg.edu.nus.iss.gui.StoreApplication;
+
 /**
  * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
  *         each Transaction in file
@@ -152,7 +154,6 @@ public class Transaction implements Comparable {
 			int productQuantityOrdered = lineItem.getQuantity();
 			Product product = lineItem.getProduct();
 			transActionTotal += product.getPrice() * productQuantityOrdered;
-			System.out.println("Transaction total inside addProductsToCart method is" + transActionTotal);
 			addStatus = "sucess";
 		}
 		discountPercentage = discountPerc;
@@ -173,14 +174,12 @@ public class Transaction implements Comparable {
 			ArrayList<Cart> c1, MemberRegister members, ProductRegister products) {
 		String paymentStatus = "success";
 		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
-		System.out.println(" Temporary Transaction total is" + temptransActionTotal);
 		if (amountReceived > temptransActionTotal) {
 			bonusPoints = (currentMember == null) ? 0 : transActionTotal / 10;
 			transActionTotal = temptransActionTotal;
 			saveTransaction(tranasctionId, transActionTotal, c1, redeemPoints, bonusPoints, members, products);
 		} else {
 			paymentStatus = "failed";
-			System.out.println("Payment status is " + paymentStatus);
 			return paymentStatus;
 		}
 		return paymentStatus;
@@ -200,10 +199,8 @@ public class Transaction implements Comparable {
 			double bonusPoints, MemberRegister members, ProductRegister products) {
 		String saveTransactionStatus = "failed";
 		ArrayList<Cart> cart = new ArrayList<Cart>();
-		// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String currentDateString = formatter.format(date);
-		System.out.println("Current date string is" + currentDateString);
 		cart.addAll(c1);
 		Iterator<Cart> productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
@@ -218,9 +215,9 @@ public class Transaction implements Comparable {
 			productId = p.getProductId();
 			transAction.add(new Transaction(tranasctionId, productId, memberId, qtyPurchased, currentDateString));
 			saveTransactionStatus = "success";
-			System.out.println("Transaction arraylist is" + transAction.toString());
 			try {
 				products.updateQuantity(productId, qtyPurchased);
+				products.writeListToFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

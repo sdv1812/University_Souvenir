@@ -54,7 +54,6 @@ public class CategoryRegister {
 					break;
 				}
 			}
-		writeToFile();
 		}
 	}
 	

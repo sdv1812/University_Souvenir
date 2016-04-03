@@ -30,6 +30,7 @@ public class ProductRegister {
 
 	public ProductRegister() {
 		// TODO Auto-generated constructor stub
+		products=new ArrayList<>();
 	}
 
 	//read product list from file
@@ -60,7 +61,6 @@ public class ProductRegister {
 			if(p.equalOfProduct(temp)){
 				p.addQuantity(quantity);
 				//add
-				writeListToFile();
 				break;
 			}
 			i++;
@@ -69,8 +69,6 @@ public class ProductRegister {
 			String id=generateProductId(category);
 			Product newProduct=new Product(id, category, name, description, quantity, price, barcodeNumber, threshold, orderQuantity);
 			products.add(newProduct);
-			//add
-			appendToFile(newProduct);
 		}
 
 	}
@@ -104,8 +102,6 @@ public class ProductRegister {
 	//remove one product
 	public void removeProduct(Product product) throws IOException{
 		products.remove(product);
-		//add
-		writeListToFile();
 	}
 
 	//remove a product by id
@@ -139,8 +135,6 @@ public class ProductRegister {
 	//updateQuantity(id,qtypurchased)
 	public void updateQuantity(String productId,int qutPurchased) throws IOException{
 		getProductById(productId).minusQuantity(qutPurchased);
-		//add
-		writeListToFile();
 	}
 
 	//checkProductsBelowThreshold
@@ -162,9 +156,6 @@ public class ProductRegister {
 				products.remove(product);
 			}
 		}
-		//add
-		writeListToFile();
-
 	}
 	
 	//add quantity for products below threshold after clicking reorder button
@@ -174,7 +165,6 @@ public class ProductRegister {
 				p.addQuantity(p.getOrderQuantity());
 			}
 		}
-		writeListToFile();
 	}
 	
 	// returns table model for the list of products
