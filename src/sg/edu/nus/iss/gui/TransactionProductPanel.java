@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Cart;
+import sg.edu.nus.iss.store.CartDisplay;
 import sg.edu.nus.iss.store.Product;
 
 /**
@@ -24,20 +26,18 @@ import sg.edu.nus.iss.store.Product;
  */
 public class TransactionProductPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	StoreApplication manager;
+	private StoreApplication manager;
 	private JTextField memberId;
 	private JTextField quantity;
 	private JTextField productId;
-	private java.util.ArrayList<Cart> cart;
-	private java.util.List<Cart> cartSelectedItems;
-	private java.awt.List cartList;
-	private CartDisplay c; 
+	private ArrayList<Cart> cart;
+	private List<Cart> cartSelectedItems;
+	private java.awt.List cartList; 
 	private Border raisedetched;
 	private Border loweredetched; 
 
 	public TransactionProductPanel(StoreApplication manager) {
 		this.manager = manager;
-		c = new CartDisplay();
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 

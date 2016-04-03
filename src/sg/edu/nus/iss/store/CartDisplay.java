@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.gui;
+package sg.edu.nus.iss.store;
 
 import java.util.ArrayList;
 
@@ -11,10 +11,7 @@ public class CartDisplay {
 			private double quantity;
 			private double priceName;
 			private ArrayList<CartDisplay> cartDisplayList ;
-	
-		public CartDisplay(){
-			
-		}
+
 		public CartDisplay(String productName , int quantity , double priceName){
 				this.productName = productName;
 				this.quantity = quantity;

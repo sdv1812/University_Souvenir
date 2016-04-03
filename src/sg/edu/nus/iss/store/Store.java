@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import sg.edu.nus.iss.exceptions.BadValueException;
+
 /**
  * 
  * @author Team 6FT
  *
  */
+
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
@@ -73,6 +73,9 @@ public class Store {
 	public void removeProduct(String id) throws IOException {
 		products.removeProduct(id);
 		products.writeListToFile();
+	}
+	public double calculateBalance(double receivedAmount,double discountedAmount){
+		return transaction.calculateBalance(receivedAmount,discountedAmount);
 	}
 	
 	public void updateQuantity(String productId,int qutPurchased) throws IOException{
@@ -183,12 +186,15 @@ public class Store {
 		return total;
 	}
 
-	public void makePayment(double amountreceived, double transactiontotal, double discountValue,
-			double redeemPointsValue, ArrayList<Cart> cart) {
-		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart, members,
-				products);
-		members.writeToFile();
-		transaction.writeToFile();
+	public double makePayment(double transactiontotal, double discountValue,
+			double redeemPointsValue) {
+		return transaction.makePayment(transactiontotal, discountValue, redeemPointsValue);
+	}
+	
+	public void saveTransaction(double pointsEarned, ArrayList<Cart> cart){
+			transaction.saveTransaction(pointsEarned,cart,members,products);
+			members.writeToFile();
+			transaction.writeToFile(); 		
 	}
 
 	public void removeCartItem(Cart lineItem) {
@@ -304,3 +310,4 @@ public class Store {
 	
 
 }
+

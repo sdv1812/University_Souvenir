@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,18 +24,19 @@ import sg.edu.nus.iss.gui.StoreApplication;
  *
  */
 public class Transaction implements Comparable {
-	int tranasctionId = 1;
-	String productId;
-	String memberId;
-	int qtyPurchased;
-	String dateOfPurchase;
-	double transActionTotal;
-	double discountPercentage;
-	int loyaltyPoints;
-	double bonusPoints;
-	ArrayList<Transaction> transAction;
-	Member currentMember;
-	DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	private int tranasctionId = 1;
+	private String productId;
+	private String memberId;
+	private  int qtyPurchased;
+	private String dateOfPurchase;
+	private double transActionTotal;
+	private double discountPercentage;
+	private int loyaltyPoints;
+	private double bonusPoints;
+	private ArrayList<Transaction> transAction;
+	private Member currentMember;
+	private static final DecimalFormat df = new DecimalFormat("#.##");
+	private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	public Transaction() {
 		transAction = new ArrayList<Transaction>();
@@ -170,19 +172,24 @@ public class Transaction implements Comparable {
 	 * @param products
 	 * @return paymentStatus
 	 */
-	public String makePayment(double amountReceived, double transActionTotal, double discount, double redeemPoints,
-			ArrayList<Cart> c1, MemberRegister members, ProductRegister products) {
-		String paymentStatus = "success";
-		double temptransActionTotal = transActionTotal - (transActionTotal * discount / 100) + redeemPoints / 1000;
-		if (amountReceived > temptransActionTotal) {
-			bonusPoints = (currentMember == null) ? 0 : transActionTotal / 10;
-			transActionTotal = temptransActionTotal;
-			saveTransaction(tranasctionId, transActionTotal, c1, redeemPoints, bonusPoints, members, products);
+	public double makePayment(double transActionTotal, double discount, double redeemPoints) {
+		double temptransActionTotal = transActionTotal - ((transActionTotal * discount / 100) + (redeemPoints / 10));
+		return temptransActionTotal;
+	}
+	
+	public double calculateBalance(double receivedAmount, double totalAmount){
+		if (receivedAmount >= totalAmount) {
+			bonusPoints = (currentMember == null) ? 0 : totalAmount / 10;
+			transActionTotal = totalAmount;
+			double balance = (receivedAmount - totalAmount) ;
+			return Double.valueOf(df.format(balance)); 
 		} else {
-			paymentStatus = "failed";
-			return paymentStatus;
+			return -1;
 		}
-		return paymentStatus;
+	}
+	
+	public void saveTransaction(double redeemPoints, ArrayList<Cart> cart, MemberRegister members, ProductRegister products){
+		saveTransaction(tranasctionId, transActionTotal, cart, redeemPoints, bonusPoints, members, products);
 	}
 
 	/**
@@ -225,7 +232,6 @@ public class Transaction implements Comparable {
 		if (!memberId.equals("PUB"))
 			members.updateRedeemPoints(memberId, redeemPoints, bonusPoints);
 		setTransActionTotal(0);
-		setTranasctionId(this.tranasctionId + 1);
 		return saveTransactionStatus;
 	}
 
@@ -237,7 +243,6 @@ public class Transaction implements Comparable {
 	 */
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		ArrayList<Transaction> transactionPeriod = new ArrayList<Transaction>();
-		formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date fromDateTransaction = formatter.parse(fromDate);
 		Date toDateTransaction = formatter.parse(toDate);
 		if (!toDateTransaction.before(fromDateTransaction)) {

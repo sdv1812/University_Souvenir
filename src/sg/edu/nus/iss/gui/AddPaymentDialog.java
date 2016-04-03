@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.gui;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,13 +21,10 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	 */
 	private static final long serialVersionUID = 1L;
 	private StoreApplication manager ;
-	private java.util.ArrayList<Cart> cart;
-	private   JTextArea  productDetails;
-	private JTextField total;
-	private JTextField discount;
-	private JTextField redeemPoints;
-	private JTextField amountReceived;
-	
+	private ArrayList<Cart> cart;
+	private JTextArea productDetails;
+	private JTextField total,discount,redeemPoints;
+
 	public AddPaymentDialog(StoreApplication manager, TransactionProductPanel transactionProductPanel){
 		super(manager.getMainWindow(),"Payment Details");
 		this.manager = manager;
@@ -59,12 +57,9 @@ public class AddPaymentDialog extends OkCancelDialog  {
 		p.add(new JLabel("Discount"));
 		discount = new JTextField(20);
 		p.add(discount);
-		p.add(new JLabel("Redeem points"));
+		p.add(new JLabel("Enter points to be redeemed"));
 		redeemPoints = new JTextField(20);
 		p.add(redeemPoints);
-		p.add(new JLabel("Amount Received "));
-		amountReceived = new JTextField(20);
-		p.add(amountReceived);
 		return p;
 	}
 
@@ -73,14 +68,7 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	@Override
 	protected boolean performOkAction() {
 			boolean paymentStatus = true;
-		//String makePayment(double amountReceived,double transActionTotal,double discount,double redeemPoints,ArrayList<Cart> c1 )
-		if(total.getText().equals("")||amountReceived.getText().equals("")){
-    		JOptionPane.showMessageDialog(null, "InvalidDetails", "Enter All details", JOptionPane.ERROR_MESSAGE);
-    		paymentStatus = false;
-    		return paymentStatus;
-    		}
 		try{
-			double amountreceived = Double.parseDouble(amountReceived.getText());
 			double transactiontotal = Double.parseDouble(total.getText());
 			double discountValue  = Double.parseDouble(discount.getText());
 			double redeemPointsValue = Double.parseDouble(redeemPoints.getText());
@@ -88,22 +76,9 @@ public class AddPaymentDialog extends OkCancelDialog  {
 				JOptionPane.showMessageDialog(null, "Points redeemed cannot be greater than Points available", "Redeem Points Error", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			double tempAmountcheck = transactiontotal - (transactiontotal*(discountValue/100)) + redeemPointsValue/1000;
-			double balanceAmount = amountreceived-tempAmountcheck;
-			String balance = "Balance to be tendered  is"+" "+Double.toString(balanceAmount);
-			if(tempAmountcheck<=amountreceived){
-				manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
-				summaryDescription(transactiontotal,tempAmountcheck,amountreceived,balanceAmount,manager.getBonusPoints());
-				JOptionPane.showMessageDialog(this,balance ,"Payment is Successful", 0);
-
-				
-			}
-			else{
-				JOptionPane.showMessageDialog(null, "Payment is not sufficient", "Payment error", JOptionPane.ERROR_MESSAGE);
-	    		paymentStatus = false;
-	    		return   paymentStatus;
-			}
-    	
+			double discountedAmount= manager.makePayment(transactiontotal,discountValue,redeemPointsValue);
+			summaryDescription(discountedAmount,transactiontotal,redeemPointsValue,cart);			
+   	
 		}catch(Exception n){
     		JOptionPane.showMessageDialog(null, "Invalid Inputs entered", "Invalid Inputs", JOptionPane.ERROR_MESSAGE);
     		n.printStackTrace();
@@ -117,8 +92,8 @@ public class AddPaymentDialog extends OkCancelDialog  {
 	}
 
 
-	public  void summaryDescription(double transactionTotal,double amountAfterDiscount,double amountReceived,double balance,double earnedPoints) {
-			PaymentSummaryDialog paymentSummary = new PaymentSummaryDialog(manager,transactionTotal,amountAfterDiscount,amountReceived,balance,earnedPoints);
+	public  void summaryDescription(double discountedAmount, double transactionTotal,double redeemPointsValue,ArrayList<Cart> cart) {
+			PaymentSummaryDialog paymentSummary = new PaymentSummaryDialog(manager,discountedAmount,transactionTotal,redeemPointsValue,cart);
 			paymentSummary.pack();
 			paymentSummary.setVisible(true);
 	}

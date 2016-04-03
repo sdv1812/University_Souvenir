@@ -9,11 +9,8 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
-/**
- * 
- * @author Team 6FT
- *
- */
+
+
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
@@ -74,6 +71,14 @@ public class StoreApplication {
 
 	public ArrayList<Discount> getDiscounts(){
 		return store.getDiscounts();
+	}
+	
+	public double calculateBalance(double receivedAmount,double discountedAmount){
+		return store.calculateBalance(receivedAmount,discountedAmount);
+	}
+	
+	public void saveTransaction(double pointsEarned,ArrayList<Cart> cart){
+		store.saveTransaction(pointsEarned,cart);
 	}
 
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
@@ -149,9 +154,9 @@ public class StoreApplication {
 		confirm.setVisible(true);	
 	}
 
-	public void makePayment(double amountreceived, double transactiontotal,
-			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-		store.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
+	public double makePayment(double transactiontotal,
+			double discountValue, double redeemPointsValue) {
+		return store.makePayment(transactiontotal,discountValue,redeemPointsValue);
 
 	}
 	public String getDiscount() {
