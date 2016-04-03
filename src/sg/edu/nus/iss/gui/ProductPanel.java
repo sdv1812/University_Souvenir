@@ -61,7 +61,7 @@ public class ProductPanel extends JPanel {
 		
 		cards = new JPanel(new CardLayout());
 		cards.add(showProductListPanel(), Product_List);
-		cards.add(new CheckProductsBelowThrethold(manager),Check_Below_Threshold );
+		cards.add(new CheckProductsBelowThreshold(manager),Check_Below_Threshold );
 
 		setLayout (new BorderLayout());
 		product_list = manager.getProducts();
@@ -289,7 +289,7 @@ public class ProductPanel extends JPanel {
 	int productthreshold=Integer.parseInt(productThresholdfield.getText());
 	int productOrderNumber=Integer.parseInt(productOrderQuantityfield.getText());
 	
-	manager.getStore().getProductReg().addProduct(category, productName, productDescription, productQuantity,
+	manager.getStore().addProduct(category, productName, productDescription, productQuantity,
 			productPrice, productBarcodeNumber, productthreshold, productOrderNumber);
 	
 	productNameField.setText("");

@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
-/*
+/**
  * Author: Sanskar Deepak
  */
 
@@ -121,11 +121,11 @@ public class LoginPanel extends JPanel {
 		centerPanel.add(panelSE);
 
 
-		loginBtn.addActionListener(new ActionListener() {
+		loginBtn.addActionListener(new ActionListener() { //Action listener for login button
 			public void actionPerformed(ActionEvent e) {
 
-				if(manager.validate(username.getText(), String.valueOf(password.getPassword()))){
-					mainPanel = new MainPanel(manager);
+				if(manager.validate(username.getText(), String.valueOf(password.getPassword()))){  //Validate password
+					mainPanel = new MainPanel(manager); //Create main Panel with main menu
 					removeAll();
 					setLayout(new BorderLayout());
 					add("Center", mainPanel);
@@ -141,7 +141,7 @@ public class LoginPanel extends JPanel {
 			}
 		});
 
-		resetBtn.addActionListener(new ActionListener() {
+		resetBtn.addActionListener(new ActionListener() { //Reset the fields to blank
 			public void actionPerformed(ActionEvent e) {
 				username.setText(null);
 				password.setText(null);

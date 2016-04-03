@@ -15,7 +15,7 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.utils.OkCancelDialog;
 
 /**
- * 
+ * Dialog to add both kind of discounts : Occasional and Member
  * @author Sanskar Deepak
  *
  */
@@ -40,6 +40,9 @@ public class AddDiscountDialog extends OkCancelDialog{
 		ft = new SimpleDateFormat("yyyy-MM-dd");
 		ft.setLenient(false);
 	}
+	
+
+	@Override
 	protected JPanel createFormPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0,2));
@@ -77,14 +80,15 @@ public class AddDiscountDialog extends OkCancelDialog{
 		periodText.setEnabled(false);
 		percText.setEnabled(false);		
 		
+		// add action listener to discount category combo box
 		discountCategory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String dCategory = (String)discountCategory.getSelectedItem();
 				if(dCategory.equals("Member Discount")){
 					startDateText.setText("ALWAYS");
 					periodText.setText("ALWAYS");
-					startDateText.setEnabled(false);
-					periodText.setEnabled(false);
+					startDateText.setEnabled(false); //Since start date is "ALWAYS"
+					periodText.setEnabled(false); //Since start date is "ALWAYS"
 					codeText.setEnabled(true);
 					descText.setEnabled(true);
 					percText.setEnabled(true);
@@ -105,6 +109,9 @@ public class AddDiscountDialog extends OkCancelDialog{
 
 	}	
 	
+	/**
+	 * Implement performOkAction() to perform action on pressing OK 
+	 */
 	protected boolean performOkAction() { 
 		boolean b = false;
 		if(startDateText.getText().length()==0||periodText.getText().length()==0 || codeText.getText().length()==0 ||
@@ -114,8 +121,9 @@ public class AddDiscountDialog extends OkCancelDialog{
 		
 		try {
 			String dCategory = (String)discountCategory.getSelectedItem();
-			if(dCategory.equals("Occasional Discount")){
-			ft.parse(startDateText.getText()); //to check for parsing error
+			
+			if(dCategory.equals("Occasional Discount")){ //to check for parsing error for occasional discount
+			ft.parse(startDateText.getText()); 
 			Integer.parseInt(periodText.getText());
 			}
 			Float.parseFloat(percText.getText());
@@ -143,7 +151,6 @@ public class AddDiscountDialog extends OkCancelDialog{
                     "Date Format Exception",
                     JOptionPane.ERROR_MESSAGE);
 		} catch (BadValueException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

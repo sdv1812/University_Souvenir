@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.dao.CustomerDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * MemberRegister class: Manager class to manage Member objects.
  * Author: Sanskar Deepak
  */
@@ -21,8 +21,15 @@ public class MemberRegister {
 	public MemberRegister() {
 		members = new ArrayList<Member> ();
 		custDao = new CustomerDao();
-		//members.add(new Member("", "PUBLIC"));
 	}
+	
+	/**
+	 * 
+	 * @param customerName
+	 * @param memberID
+	 * @return boolean to check if member already exists and add the member
+	 * @throws BadValueException
+	 */
 	public boolean addMember(String customerName, String memberID) throws BadValueException{
 		for(Member m: members){
 			if(m.getMemberID().equals(memberID)){
@@ -34,11 +41,11 @@ public class MemberRegister {
 		return true;
 	}
 	
-	public void addMember(String customerName, String memberID, int loyaltyPoints) throws BadValueException{
-		members.add(new Member(customerName, memberID, loyaltyPoints));
-	}
-	
-	public void removeMember(String memberID) {    //Removing by selecting memberID
+	/**
+	 * Removing by selecting memberID
+	 * @param memberID
+	 */
+	public void removeMember(String memberID) {    
 		for(Member m : members){
 			if(memberID.compareTo(m.getMemberID())==0){
 				members.remove(m);
@@ -47,10 +54,17 @@ public class MemberRegister {
 		}
 	}
 	
+	/**
+	 * @return list of members
+	 */
 	public ArrayList<Member> getMembers() {
 		return members;
 	}
 	
+	/**
+	 * @param memberID
+	 * @return member by using member ID
+	 */
 	public Member getMember(String memberID) {  
 		for(Member m : members){
 			if (memberID.equalsIgnoreCase(m.getMemberID())){
@@ -60,21 +74,17 @@ public class MemberRegister {
 		return null;
 	}
 	
-	public boolean isMemberPresent(String idx) {
-			for(Member m : members){
-				if (idx.compareTo(m.getMemberID())==0){
-					return true;
-				}
-			}
-		return false;
-	}
-	
-	
-	public void createListFromFile() throws IOException
-	{
+	/**
+	 * Reads from file and save it to list
+	 * @throws IOException
+	 */
+	public void createListFromFile() throws IOException {
 		members = custDao.readFromFile();
 	}
-	
+
+	/**
+	 * Write list to file using Dao class
+	 */
 	public void writeToFile() {
 		try {
 			 custDao.writeToFile(members);
@@ -84,6 +94,13 @@ public class MemberRegister {
 		}
 			
 	}
+	
+	/**
+	 * Update redeemed points for a member
+	 * @param memberId
+	 * @param redeemPoints
+	 * @param bonusPoints
+	 */
 	public void updateRedeemPoints(String memberId, double redeemPoints, double bonusPoints) {
 		Member m = getMember(memberId);
 		Double loyaltyPoints;
@@ -94,9 +111,12 @@ public class MemberRegister {
 		loyaltyPoints = m.getLoyaltyPoints()-(redeemPoints) + (bonusPoints);
 
 		m.setLoyaltyPoints(loyaltyPoints.intValue());
-		writeToFile();
 	}
 	
+	/**
+	 * creates an abstract table model for table (returns data for table in GUI)
+	 * @return table model for member list
+	 */
 	public AbstractTableModel getMemberTableModel() {
 		if (memberTableModel != null) 
 			return memberTableModel;

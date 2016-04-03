@@ -9,6 +9,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * 
+ * @author Sanskar Deepak
+ *
+ */
 public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = -8820162333877980019L;

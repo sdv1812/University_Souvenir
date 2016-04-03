@@ -18,8 +18,12 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import sg.edu.nus.iss.store.Product;
-
-public class CheckProductsBelowThrethold extends JPanel {
+/**
+ * 
+ * @author Wang Xuemin
+ *
+ */
+public class CheckProductsBelowThreshold extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scroller;
@@ -31,7 +35,7 @@ public class CheckProductsBelowThrethold extends JPanel {
 	private Border loweredetched;
 	private StoreApplication manager;
 	
-	public CheckProductsBelowThrethold(StoreApplication manager){
+	public CheckProductsBelowThreshold(StoreApplication manager){
 		this.manager = manager;
 		raisedetched=BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched=BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);

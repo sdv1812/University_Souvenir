@@ -6,15 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import sg.edu.nus.iss.store.Cart;
-
+/**
+ * 
+ * @author Sanskar Deepak
+ *
+ */
 public class StoreWindow extends JFrame {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 7460404160082932891L;
 	private LoginPanel loginPanel;
-	//	/private StoreApplication manager;
 
 
 	/**
@@ -22,7 +23,6 @@ public class StoreWindow extends JFrame {
 	 */
 	public StoreWindow(String s, StoreApplication manager) {
 		super(s);
-		//this.manager = manager;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -51,7 +51,6 @@ public class StoreWindow extends JFrame {
 
 
 	public void refreshCart() {
-		// TODO Auto-generated method stub
 		loginPanel.refreshCart();
 	}
 	

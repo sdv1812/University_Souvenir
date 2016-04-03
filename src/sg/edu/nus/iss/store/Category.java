@@ -2,7 +2,7 @@ package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * Category class:to to create Category Object
  * Author: Sanskar Deepak
  */

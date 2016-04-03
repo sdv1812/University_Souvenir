@@ -8,7 +8,11 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
-
+/**
+ * 
+ * @author Team 6FT
+ *
+ */
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;
@@ -55,14 +59,37 @@ public class Store {
 		products.writeListToFile();
 	}
 
+	public void addProduct(Category category,String name,String description,int quantity,
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws IOException, BadValueException{
+		products.addProduct(category, name, description, quantity, price, barcodeNumber, threshold, orderQuantity);
+		products.writeListToFile();
+	}
+	
 	public void removeProduct(Product p) throws IOException {
 		products.removeProduct(p);
+		products.writeListToFile();
 	}
 
 	public void removeProduct(String id) throws IOException {
 		products.removeProduct(id);
+		products.writeListToFile();
 	}
-
+	
+	public void updateQuantity(String productId,int qutPurchased) throws IOException{
+		products.updateQuantity(productId, qutPurchased);
+		products.writeListToFile();
+	}
+	
+	public void deleteProductsOfCategory(Category category) throws IOException{
+		products.deleteProductsOfCategory(category);
+		products.writeListToFile();
+	}
+	
+	public void reFreshInventoryForThreshold() throws IOException{
+		products.reFreshInventoryForThreshold();
+		products.writeListToFile();
+	}
+	
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword) throws BadValueException {
 		storeKeepers.addStoreKeeper(storeKeeperName, storeKeeperPassword);
 		storeKeepers.writeToFile();
@@ -131,6 +158,7 @@ public class Store {
 
 	public void removeDiscount(String discountCode) {
 		discounts.removeDiscount(discountCode);
+		discounts.writeToFile();
 
 	}
 
@@ -142,6 +170,7 @@ public class Store {
 
 	public void modifyDiscount(String discountCode, float percentage) {
 		discounts.modifyDiscount(discountCode, percentage);
+		discounts.writeToFile();
 	}
 
 	public ArrayList<Cart> getProductsAddedInCart() {
@@ -158,6 +187,7 @@ public class Store {
 			double redeemPointsValue, ArrayList<Cart> cart) {
 		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart, members,
 				products);
+		members.writeToFile();
 		transaction.writeToFile();
 	}
 
@@ -187,7 +217,9 @@ public class Store {
 	}
 
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) throws BadValueException {
-		return vendors.addVendor(vendorName, vendorDescription, category);
+		 boolean b = vendors.addVendor(vendorName, vendorDescription, category);
+		vendors.writeToFile();
+		return b;
 	}
 
 	public ArrayList<Vendor> getVendorsPerCategory(Category category) {
@@ -196,6 +228,7 @@ public class Store {
 
 	public void removeVendor(String vendorName) {
 		vendors.removeVendor(vendorName);
+		vendors.writeToFile();
 	}
 
 	public ArrayList<Transaction> getAllTransaction() {

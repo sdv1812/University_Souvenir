@@ -70,11 +70,12 @@ public class CategoryPanel extends JPanel {
 		JTextField cCodeT = new JTextField();
 
 		panel.add(label);
-		panel.add(cName);
-		panel.add(cNameT);
-		panel.add(cCode);
-		panel.add(cCodeT);
+		panel.add(cName); //Category Name label
+		panel.add(cNameT); //Category Text Field
+		panel.add(cCode); //Category Code label
+		panel.add(cCodeT); //Category Text Field
 
+		// Add "Add" button and add listener
 		JButton addBtn = new JButton ("Add");
 		addBtn.addActionListener (new ActionListener () { 
 			public void actionPerformed (ActionEvent e) {
@@ -82,7 +83,7 @@ public class CategoryPanel extends JPanel {
 				if (cCodeT.getText().length()!=0 && cNameT.getText().length()!=0){
 					if(cCodeT.getText().length()==3) {
 						try {
-							if (!(manager.addCategory(cCodeT.getText(), cNameT.getText()))){
+							if (!(manager.addCategory(cCodeT.getText(), cNameT.getText()))){ //add category and check for existence
 								JOptionPane.showMessageDialog(manager.getMainWindow(),
 										"Category Code Already Exists !",
 										"Duplicate Category Code",
@@ -110,8 +111,8 @@ public class CategoryPanel extends JPanel {
 			}
 		});
 
+		// Reset Button resets the field
 		JButton resetBtn = new JButton("Reset");
-
 		resetBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				action_source  =((JButton)e.getSource()).getText();
@@ -123,7 +124,7 @@ public class CategoryPanel extends JPanel {
 		panel.add(addBtn);
 		panel.add(resetBtn);
 
-		panel.setBorder(BorderFactory.createTitledBorder(
+		panel.setBorder(BorderFactory.createTitledBorder( //Create Titled Border
 				loweredetched, "New Category Pane")); 
 
 		return panel;
@@ -210,7 +211,7 @@ public class CategoryPanel extends JPanel {
 
 	// ************Show the confirm dialog on removing and performs the remove functionality*********
 
-	public void showConfirmDialog(String s) { 
+	private void showConfirmDialog(String s) { 
 		String title = "Remove Member";
 		String msg = "Do you really want to remove member " + s + " ?";
 		ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {

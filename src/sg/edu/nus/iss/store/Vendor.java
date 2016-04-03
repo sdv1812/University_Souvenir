@@ -1,7 +1,11 @@
 package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
-
+/**
+ * Vendor Class for each vendor
+ * @author Sanskar Deepak
+ *
+ */
 public class Vendor {
 	private String vendorName;
 	private String description;

@@ -2,7 +2,7 @@ package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * MemberDiscount class: Sub-class of Discount Class.
  * Author: Sanskar Deepak
  */

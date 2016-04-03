@@ -2,7 +2,7 @@ package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * Customer class:to to create Customer Object (member + non member).
  * Author: Sanskar Deepak
  */

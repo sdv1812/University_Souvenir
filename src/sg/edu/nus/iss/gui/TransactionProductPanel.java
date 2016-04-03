@@ -1,13 +1,11 @@
 package sg.edu.nus.iss.gui;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Cart;
 import sg.edu.nus.iss.store.Product;
@@ -86,7 +83,6 @@ public class TransactionProductPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid Details", "Invalid Details", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				System.out.println("Entering before addition"+manager.getMember(memberIdentity));
 				boolean addProductStatus;
 				try {
 					addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
@@ -129,7 +125,7 @@ public class TransactionProductPanel extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				String addProductStatus = manager.beginCheckout(cartSelectedItems);
+				manager.beginCheckout(cartSelectedItems);
 				makeTransaction();
 				cart.removeAll(cart);
 				refresh();
@@ -173,10 +169,8 @@ public class TransactionProductPanel extends JPanel {
 	}
 
 	public void refresh() {
-		System.out.println("Entering inside refresh method");
 		cartList.removeAll();
 		cart = manager.getProductsAddedInCart();
-		System.out.println("Cart list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
 		while (i.hasNext()) {
 	Cart c = (Cart) i.next();

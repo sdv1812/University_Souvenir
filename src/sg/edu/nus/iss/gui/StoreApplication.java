@@ -9,11 +9,15 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
-
-
+/**
+ * 
+ * @author Team 6FT
+ *
+ */
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
+	
 	public StoreApplication() {
 		store = new Store();
 	}
@@ -205,13 +209,18 @@ public class StoreApplication {
 		return store.getBonusPoints();
 	}
 	
+	public Transaction getTransaction() {
+		return store.getTransaction();
+
+	}
+	
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		return store.getTransactions(fromDate, toDate);
 	}
 	
 	public void AddQuantityForThretholdProducts(){
 		try {
-			store.getProductReg().reFreshInventoryForThreshold();
+			store.reFreshInventoryForThreshold();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
