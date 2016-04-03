@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.utils;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 /**
@@ -18,6 +19,7 @@ public final class StoreConstants {
 	public static final String DISCOUNT_PATH = DIRECTORY_PATH +"Discounts.dat";
 	
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 	
 	
 }

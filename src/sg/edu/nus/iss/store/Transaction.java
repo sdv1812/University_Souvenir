@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import static sg.edu.nus.iss.utils.StoreConstants.DECIMAL_FORMAT;
 import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;
 
 /**
@@ -32,7 +33,7 @@ public class Transaction {
 	private double bonusPoints;
 	private ArrayList<Transaction> transAction;
 	private Member currentMember;
-	private static final DecimalFormat df = new DecimalFormat("#.##");
+
 
 	public Transaction() {
 		transAction = new ArrayList<Transaction>();
@@ -178,7 +179,7 @@ public class Transaction {
 			bonusPoints = (currentMember == null) ? 0 : totalAmount / 10;
 			transActionTotal = totalAmount;
 			double balance = (receivedAmount - totalAmount) ;
-			return Double.valueOf(df.format(balance)); 
+			return Double.valueOf(DECIMAL_FORMAT.format(balance)); 
 		} else {
 			return -1;
 		}
@@ -188,7 +189,7 @@ public class Transaction {
 		saveTransaction(tranasctionId, transActionTotal, cart, redeemPoints, bonusPoints, members, products);
 	}
 
-	/**
+	/**DA
 	 * @param tranasctionId
 	 * @param transActionTotal
 	 * @param c1
