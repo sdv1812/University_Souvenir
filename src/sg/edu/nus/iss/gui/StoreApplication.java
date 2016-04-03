@@ -217,7 +217,7 @@ public class StoreApplication {
 	
 	public void AddQuantityForThretholdProducts(){
 		try {
-			store.getProductReg().reFreshInventoryForThreshold();
+			store.reFreshInventoryForThreshold();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

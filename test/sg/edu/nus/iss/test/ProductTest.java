@@ -24,16 +24,9 @@ public class ProductTest {
 	private Product product2;
 	private Category category1;
 	private Category category2;
-	private Vendor vendor1;
-	private Vendor vendor2;
 	
 	public ProductTest() throws BadValueException {
 		// TODO Auto-generated constructor stub
-		vendor1=new Vendor("vendor1", "a good vendor");
-		vendor2=new Vendor("vendor2", "a bad vendor");
-		ArrayList<Vendor> vendorList=new ArrayList<>();
-		vendorList.add(vendor1);
-		vendorList.add(vendor2);
 		category1=new Category("CLO","clothes");
 		category2=new Category("STA","station");
 		product1=new Product(category1, "product1", "description of product1", 10, 99.0, "98989", 3, 10);
