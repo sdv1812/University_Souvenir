@@ -70,7 +70,22 @@ public class Store {
 		products.removeProduct(id);
 		products.writeListToFile();
 	}
-
+	
+	public void updateQuantity(String productId,int qutPurchased) throws IOException{
+		products.updateQuantity(productId, qutPurchased);
+		products.writeListToFile();
+	}
+	
+	public void deleteProductsOfCategory(Category category) throws IOException{
+		products.deleteProductsOfCategory(category);
+		products.writeListToFile();
+	}
+	
+	public void reFreshInventoryForThreshold() throws IOException{
+		products.reFreshInventoryForThreshold();
+		products.writeListToFile();
+	}
+	
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword) throws BadValueException {
 		storeKeepers.addStoreKeeper(storeKeeperName, storeKeeperPassword);
 		storeKeepers.writeToFile();

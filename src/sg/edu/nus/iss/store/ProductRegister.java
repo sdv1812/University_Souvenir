@@ -135,8 +135,6 @@ public class ProductRegister {
 	//updateQuantity(id,qtypurchased)
 	public void updateQuantity(String productId,int qutPurchased) throws IOException{
 		getProductById(productId).minusQuantity(qutPurchased);
-		//add
-		writeListToFile();
 	}
 
 	//checkProductsBelowThreshold
@@ -158,9 +156,6 @@ public class ProductRegister {
 				products.remove(product);
 			}
 		}
-		//add
-		writeListToFile();
-
 	}
 	
 	//add quantity for products below threshold after clicking reorder button
@@ -170,7 +165,6 @@ public class ProductRegister {
 				p.addQuantity(p.getOrderQuantity());
 			}
 		}
-		writeListToFile();
 	}
 	
 	// returns table model for the list of products

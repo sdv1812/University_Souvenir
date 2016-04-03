@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import sg.edu.nus.iss.gui.StoreApplication;
+
 /**
  * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
  *         each Transaction in file
@@ -221,6 +223,7 @@ public class Transaction implements Comparable {
 			System.out.println("Transaction arraylist is" + transAction.toString());
 			try {
 				products.updateQuantity(productId, qtyPurchased);
+				products.writeListToFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
