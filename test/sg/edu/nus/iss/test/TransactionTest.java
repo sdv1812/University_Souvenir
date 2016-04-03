@@ -16,8 +16,6 @@ import sg.edu.nus.iss.store.*;
 public class TransactionTest {
 	private Transaction transaction;
 	private ArrayList<Cart> cartList,cartList2;
-	private MemberRegister members;
-	private ProductRegister products;
 	private Category c1,c3;
 	private Product p1,p3;
 	private Member m1,m3;
@@ -26,8 +24,6 @@ public class TransactionTest {
 	@Before
 	public void setUp() throws Exception {
 		transaction = new Transaction();
-		members = new MemberRegister();
-		products = new ProductRegister();
 		cartList = new ArrayList<Cart>();
 		
 		c1 = new Category("CLO", "CLOTHING");
@@ -58,8 +54,6 @@ public class TransactionTest {
 	@After
 	public void tearDown(){
 		transaction = null;
-		members = null;
-		products = null;
 		p1 = p3= null;
 		c1=c3=null;
 		m1=m3=null;
@@ -76,19 +70,11 @@ public class TransactionTest {
 
 	@Test
 	public void testMakePayment() {
-		double amountReceived = -1;
 		double transactionTotal = 15;
-		double discount = 10;
 		double redeemPoints = 100;
-		String paymentStatus = transaction.makePayment(amountReceived, transactionTotal, discount, redeemPoints,
-				cartList, members, products);
-		assertEquals("Payment is successful when amount received greater or equal to Transaction total ", "failed",
-				paymentStatus);
-		amountReceived = 12;
-		paymentStatus = transaction.makePayment(amountReceived, transactionTotal, discount, redeemPoints, cartList,
-				members, products);
-		assertEquals("Payment is failed when amount received less than Transaction total", "failed", paymentStatus);
-
+		double discount = 20;
+		double paymentStatus = transaction.makePayment(transactionTotal, discount ,redeemPoints);
+		assertNotEquals(paymentStatus, 2);
 	}
 
 	/*

@@ -70,6 +70,9 @@ public class Store {
 		products.removeProduct(id);
 		products.writeListToFile();
 	}
+	public double calculateBalance(double receivedAmount,double discountedAmount){
+		return transaction.calculateBalance(receivedAmount,discountedAmount);
+	}
 	
 	public void updateQuantity(String productId,int qutPurchased) throws IOException{
 		products.updateQuantity(productId, qutPurchased);
@@ -179,12 +182,15 @@ public class Store {
 		return total;
 	}
 
-	public void makePayment(double amountreceived, double transactiontotal, double discountValue,
-			double redeemPointsValue, ArrayList<Cart> cart) {
-		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart, members,
-				products);
-		members.writeToFile();
-		transaction.writeToFile();
+	public double makePayment(double transactiontotal, double discountValue,
+			double redeemPointsValue) {
+		return transaction.makePayment(transactiontotal, discountValue, redeemPointsValue);
+	}
+	
+	public void saveTransaction(double pointsEarned, ArrayList<Cart> cart){
+			transaction.saveTransaction(pointsEarned,cart,members,products);
+			members.writeToFile();
+			transaction.writeToFile(); 		
 	}
 
 	public void removeCartItem(Cart lineItem) {

@@ -72,6 +72,14 @@ public class StoreApplication {
 	public ArrayList<Discount> getDiscounts(){
 		return store.getDiscounts();
 	}
+	
+	public double calculateBalance(double receivedAmount,double discountedAmount){
+		return store.calculateBalance(receivedAmount,discountedAmount);
+	}
+	
+	public void saveTransaction(double pointsEarned,ArrayList<Cart> cart){
+		store.saveTransaction(pointsEarned,cart);
+	}
 
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
 		return store.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
@@ -146,9 +154,9 @@ public class StoreApplication {
 		confirm.setVisible(true);	
 	}
 
-	public void makePayment(double amountreceived, double transactiontotal,
-			double discountValue, double redeemPointsValue, ArrayList<Cart> cart) {
-		store.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
+	public double makePayment(double transactiontotal,
+			double discountValue, double redeemPointsValue) {
+		return store.makePayment(transactiontotal,discountValue,redeemPointsValue);
 
 	}
 	public String getDiscount() {
