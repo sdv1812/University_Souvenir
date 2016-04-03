@@ -1,10 +1,8 @@
 package sg.edu.nus.iss.dao;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
