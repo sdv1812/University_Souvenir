@@ -69,8 +69,6 @@ public class ProductRegister {
 			String id=generateProductId(category);
 			Product newProduct=new Product(id, category, name, description, quantity, price, barcodeNumber, threshold, orderQuantity);
 			products.add(newProduct);
-			//add
-			appendToFile(newProduct);
 		}
 
 	}
@@ -104,8 +102,6 @@ public class ProductRegister {
 	//remove one product
 	public void removeProduct(Product product) throws IOException{
 		products.remove(product);
-		//add
-		writeListToFile();
 	}
 
 	//remove a product by id

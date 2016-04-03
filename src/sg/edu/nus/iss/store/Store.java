@@ -55,12 +55,20 @@ public class Store {
 		products.writeListToFile();
 	}
 
+	public void addProduct(Category category,String name,String description,int quantity,
+			double price,String barcodeNumber,int threshold,int orderQuantity) throws IOException, BadValueException{
+		products.addProduct(category, name, description, quantity, price, barcodeNumber, threshold, orderQuantity);
+		products.writeListToFile();
+	}
+	
 	public void removeProduct(Product p) throws IOException {
 		products.removeProduct(p);
+		products.writeListToFile();
 	}
 
 	public void removeProduct(String id) throws IOException {
 		products.removeProduct(id);
+		products.writeListToFile();
 	}
 
 	public void addStoreKeeper(String storeKeeperName, String storeKeeperPassword) throws BadValueException {
