@@ -2,12 +2,13 @@ package sg.edu.nus.iss.dao;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
+import sg.edu.nus.iss.utils.StoreConstants;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class ProductDao extends BaseDao{
-	private static final String Product_File="StoreAppData/Products.dat";
 	private Store store;
 	
 	public ProductDao(Store store){
@@ -16,7 +17,7 @@ public class ProductDao extends BaseDao{
 	}
 	
 	public ArrayList<Product> readProductsFromFile() throws IOException{
-		ArrayList<String> readString=super.readFromFile(Product_File);
+		ArrayList<String> readString=super.readFromFile(StoreConstants.PRODUCT_PATH);
 		
 		ArrayList<Product> productList=new ArrayList<>();
 		
@@ -76,7 +77,7 @@ public class ProductDao extends BaseDao{
 			
 			writeList.add(line);
 		}
-		super.writeToFile(writeList, Product_File);
+		super.writeToFile(writeList, StoreConstants.PRODUCT_PATH);
 	}
 	
 	//add a line to file
@@ -100,6 +101,6 @@ public class ProductDao extends BaseDao{
 			line.append(threshold+",");
 			line.append(orderQuantity);
 			
-			super.appendToFile(line.toString(), Product_File);
+			super.appendToFile(line.toString(), StoreConstants.PRODUCT_PATH);
 		}
 }

@@ -2,13 +2,13 @@ package sg.edu.nus.iss.store;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import sg.edu.nus.iss.dao.DiscountDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
+import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;
 
 /**
  * DiscountManager class: Manager class to manage Discount Objects.
@@ -17,14 +17,12 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 public class DiscountManager {
 	private ArrayList<Discount> discounts;
 	private Date dNow;
-	private SimpleDateFormat ft;
 	private DiscountDao discountDao;
 
 	public DiscountManager() {
 		discounts = new ArrayList<Discount> ();	
 		discountDao = new DiscountDao();
 		dNow = new Date(System.currentTimeMillis());
-		ft = new SimpleDateFormat("yyyy-MM-dd");
 	}
 
 	/**
@@ -44,7 +42,7 @@ public class DiscountManager {
 					return false;
 				}
 			}
-			ft.format(startDate);
+			DATE_FORMAT.format(startDate);
 			discounts.add(new OccasionalDiscount(discountCode, description, startDate, discountPeriod, percentage));
 		return true;
 	}
@@ -125,12 +123,12 @@ public class DiscountManager {
 			if (d.getApplicableToMember().equalsIgnoreCase("A")){
 				try {
 					Date startDate = d.getStartDate();
-					ft.format(startDate);
+					DATE_FORMAT.format(startDate);
 					Calendar c = Calendar.getInstance();
 					c.setTime(startDate);
 					c.add(Calendar.DATE, d.getDiscountPeriod());
-					String output = ft.format(c.getTime());
-					Date endDate = ft.parse(output);
+					String output = DATE_FORMAT.format(c.getTime());
+					Date endDate = DATE_FORMAT.parse(output);
 					if ((dNow.after(startDate)&&dNow.before(endDate))||dNow.equals(endDate)||dNow.equals(startDate)){
 						if(d.getPercentage()>percentage) {
 							percentage = d.getPercentage();

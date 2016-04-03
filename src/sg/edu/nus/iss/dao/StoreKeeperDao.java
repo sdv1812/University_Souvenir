@@ -2,6 +2,7 @@ package sg.edu.nus.iss.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import static sg.edu.nus.iss.utils.StoreConstants.STOREKEEPER_PATH;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.StoreKeeper;
@@ -12,8 +13,6 @@ import sg.edu.nus.iss.store.StoreKeeper;
  *
  */
 public class StoreKeeperDao extends BaseDao{
-
-	private static final String FILE_NAME = "StoreAppData/StoreKeepers.dat";
 	private ArrayList<StoreKeeper> storeKeeperList;
 	
 	public  StoreKeeperDao() {
@@ -23,7 +22,7 @@ public class StoreKeeperDao extends BaseDao{
 	
 	public ArrayList<StoreKeeper> createListFromFile() throws IOException{
 		ArrayList<String> fileList = new ArrayList<String>();
-		fileList = super.readFromFile(FILE_NAME);
+		fileList = super.readFromFile(STOREKEEPER_PATH);
 		
 		if(fileList!=null)
 		{
@@ -52,7 +51,7 @@ public class StoreKeeperDao extends BaseDao{
 			catLine.append(store.getPassword());
 			writeCategory.add(catLine);
 		}
-		super.writeToFile(writeCategory, FILE_NAME);
+		super.writeToFile(writeCategory, STOREKEEPER_PATH);
 	}
 	
 }

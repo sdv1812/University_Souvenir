@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JComboBox;
@@ -15,6 +14,7 @@ import javax.swing.JTextField;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.utils.OkCancelDialog;
+import static sg.edu.nus.iss.utils.StoreConstants.*;
 
 /**
  * Dialog to add both kind of discounts : Occasional and Member
@@ -24,23 +24,17 @@ import sg.edu.nus.iss.utils.OkCancelDialog;
 
 public class AddDiscountDialog extends OkCancelDialog{
 	private static final long serialVersionUID = 1L;
-	private JTextField codeText;
-	private JTextField descText;
-	private JTextField startDateText;
-	private JTextField periodText;
-	private JTextField percText;
+	private JTextField codeText	,descText , startDateText , periodText , percText;;
 	JComboBox<String> discountCategory;
 	private static final String[] options = {"Member Discount", "Occasional Discount"};
 	private StoreApplication manager;
 	private DiscountPanel dp;
-	private SimpleDateFormat ft;
 
 	public AddDiscountDialog(StoreApplication manager, DiscountPanel dp) {
 		super(manager.getMainWindow(), "Add Discount");
 		this.manager = manager;
 		this.dp = dp;
-		ft = new SimpleDateFormat("yyyy-MM-dd");
-		ft.setLenient(false);
+		DATE_FORMAT.setLenient(false);
 	}
 	
 
@@ -127,7 +121,7 @@ public class AddDiscountDialog extends OkCancelDialog{
 			String dCategory = (String)discountCategory.getSelectedItem();
 			
 			if(dCategory.equals("Occasional Discount")){ //to check for parsing error for occasional discount
-			startDate = ft.parse(startDateText.getText()); 
+			startDate = DATE_FORMAT.parse(startDateText.getText()); 
 			period = Integer.parseInt(periodText.getText());
 			}
 			Float.parseFloat(percText.getText());

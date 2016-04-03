@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,6 +22,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.store.Transaction;
+import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;;
 
 /**
  * 
@@ -45,7 +45,6 @@ public class ReportPanel extends JPanel {
 	private static final String Transaction_ ="Transaction";
 	private ArrayList<Transaction> productList;
 	private AbstractTableModel transactionTableModel;
-	private SimpleDateFormat ft;
 	private static final String[] COLUMN_NAMES = {"Trans. ID", "Prod. ID", "Member Id", "Quant purchased", "Date", "Prod Name", "Prod Desc"};
 
 
@@ -54,7 +53,6 @@ public class ReportPanel extends JPanel {
 	 */
 	public ReportPanel(StoreApplication manager) {
 		this.manager = manager;
-		ft = new SimpleDateFormat("yyyy-MM-dd");
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED); 
 		categoryTableModel = manager.getCategoryTableModel(); 
@@ -181,8 +179,8 @@ public class ReportPanel extends JPanel {
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Date startDate = ft.parse(startDateField.getText());
-					Date endDate = ft.parse(endDateField.getText());
+					Date startDate = DATE_FORMAT.parse(startDateField.getText());
+					Date endDate = DATE_FORMAT.parse(endDateField.getText());
 					if (!(startDate.after(endDate))) { // To check: start date cannot be after enddate
 					productList = manager.getTransactions(startDateField.getText(), endDateField.getText());	
 					transactionTableModel.fireTableDataChanged();

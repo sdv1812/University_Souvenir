@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Category;
+import sg.edu.nus.iss.utils.StoreConstants;
 
 public class CategoryDao extends BaseDao {
 
-	private static final String FILE_NAME = "StoreAppData/Categories.dat";
 	private ArrayList<Category> categoryList;
 	
 	public CategoryDao()
@@ -22,7 +22,7 @@ public class CategoryDao extends BaseDao {
 	
 	public ArrayList<Category> createListFromFile() throws IOException{
 		ArrayList<String> fileList = new ArrayList<String>();
-		fileList = super.readFromFile(FILE_NAME);
+		fileList = super.readFromFile(StoreConstants.CATEGORY_PATH);
 		
 		if(fileList!=null)
 		{
@@ -51,7 +51,7 @@ public class CategoryDao extends BaseDao {
 			catLine.append(cat.getCategoryName());
 			writeCategory.add(catLine);
 		}
-		super.writeToFile(writeCategory, FILE_NAME);
+		super.writeToFile(writeCategory, StoreConstants.CATEGORY_PATH);
 	}
 	
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Member;
+import sg.edu.nus.iss.utils.StoreConstants;
 
 public class CustomerDao extends BaseDao{
-	private static final String FILE_NAME = "StoreAppData/Members.dat";
 	private ArrayList<String> customerList;
 	private ArrayList<Member> memberList;
 	
@@ -24,7 +24,7 @@ public class CustomerDao extends BaseDao{
 	
 	public ArrayList<Member> readFromFile() throws IOException
 	{
-		customerList = super.readFromFile(FILE_NAME);
+		customerList = super.readFromFile(StoreConstants.MEMBER_PATH);
 		for(String line : customerList)
 		{
 			String list[] = line.split(",");
@@ -54,7 +54,7 @@ public class CustomerDao extends BaseDao{
 			line.append(m.getLoyaltyPoints());
 			list.add(line);
 		}	
-		super.writeToFile(list, FILE_NAME);
+		super.writeToFile(list, StoreConstants.MEMBER_PATH);
 	}
 	
 }

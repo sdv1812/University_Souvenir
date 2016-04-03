@@ -5,16 +5,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;
 
 /**
  * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
@@ -34,7 +33,6 @@ public class Transaction {
 	private ArrayList<Transaction> transAction;
 	private Member currentMember;
 	private static final DecimalFormat df = new DecimalFormat("#.##");
-	private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	public Transaction() {
 		transAction = new ArrayList<Transaction>();
@@ -205,7 +203,7 @@ public class Transaction {
 		String saveTransactionStatus = "failed";
 		ArrayList<Cart> cart = new ArrayList<Cart>();
 		Date date = new Date();
-		String currentDateString = formatter.format(date);
+		String currentDateString = DATE_FORMAT.format(date);
 		cart.addAll(c1);
 		Iterator<Cart> productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
@@ -241,11 +239,11 @@ public class Transaction {
 	 */
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {
 		ArrayList<Transaction> transactionPeriod = new ArrayList<Transaction>();
-		Date fromDateTransaction = formatter.parse(fromDate);
-		Date toDateTransaction = formatter.parse(toDate);
+		Date fromDateTransaction = DATE_FORMAT.parse(fromDate);
+		Date toDateTransaction = DATE_FORMAT.parse(toDate);
 		if (!toDateTransaction.before(fromDateTransaction)) {
 			for (Transaction transaction : transAction) {
-				Date dateofPurchase = formatter.parse(transaction.getDateOfPurchase());
+				Date dateofPurchase = DATE_FORMAT.parse(transaction.getDateOfPurchase());
 				if ((dateofPurchase.after(fromDateTransaction) && dateofPurchase.before(toDateTransaction))
 						|| dateofPurchase.equals(toDateTransaction) || dateofPurchase.equals(fromDateTransaction))
 					transactionPeriod.add(transaction);

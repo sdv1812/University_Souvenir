@@ -1,6 +1,8 @@
 package sg.edu.nus.iss.dao;
 
 import java.io.IOException;
+import static sg.edu.nus.iss.utils.StoreConstants.DIRECTORY_PATH;
+import static sg.edu.nus.iss.utils.StoreConstants.VENDOR_PATH;
 import java.util.ArrayList;
 import java.util.HashMap;
 import sg.edu.nus.iss.exceptions.BadValueException;
@@ -8,7 +10,6 @@ import sg.edu.nus.iss.store.Category;
 import sg.edu.nus.iss.store.Vendor;
 
 public class VendorDao extends BaseDao{
-	private static final String FILE_NAME = "StoreAppData/";
 	private ArrayList<Vendor> vendorList;
 	
 	public VendorDao()
@@ -23,7 +24,7 @@ public class VendorDao extends BaseDao{
 		for(Category c: categories) {
 			ArrayList<String> vendorListPer = new ArrayList<String>();
 			String fileName = "Vendors"+c.getCategoryCode()+".dat";
-			vendorListPer = super.readFromFile(FILE_NAME+fileName);
+			vendorListPer = super.readFromFile(DIRECTORY_PATH+fileName);
 			if (vendorListPer == null)  continue ;
 			else{
 			ArrayList<Vendor> vendorListPerCat = new ArrayList<Vendor>();
@@ -49,7 +50,7 @@ public class VendorDao extends BaseDao{
 	public ArrayList<Vendor> readVendorFromFile() throws IOException
 	{
 		ArrayList<String> vendorListPer = new ArrayList<String>();
-		vendorListPer = super.readFromFile(FILE_NAME+"Vendors.dat");
+		vendorListPer = super.readFromFile(VENDOR_PATH);
 		for(String line : vendorListPer)
 		{
 			String list[] = line.split(",");
@@ -78,7 +79,7 @@ public class VendorDao extends BaseDao{
 					write.append(v.getDescription());
 					list.add(write);
 				}
-			super.writeToFile(list, FILE_NAME+fileName);	
+			super.writeToFile(list, DIRECTORY_PATH+fileName);	
 			}
 		for (Vendor v : vendors) {
 				StringBuffer write = new StringBuffer();
@@ -86,7 +87,7 @@ public class VendorDao extends BaseDao{
 				write.append(v.getDescription());
 				listVendors.add(write);
 			}
-		super.writeToFile(listVendors, FILE_NAME+"Vendors.dat");	
+		super.writeToFile(listVendors, VENDOR_PATH);	
 		}
 	}
 	

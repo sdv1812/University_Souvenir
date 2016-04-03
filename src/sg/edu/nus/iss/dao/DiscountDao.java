@@ -13,10 +13,11 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.store.MemberDiscount;
 import sg.edu.nus.iss.store.OccasionalDiscount;
+import sg.edu.nus.iss.utils.StoreConstants;
+
+import static sg.edu.nus.iss.utils.StoreConstants.*;
 
 public class DiscountDao extends BaseDao{
-	private static final String FILE_NAME = "StoreAppData/Discounts.dat";
-	private static final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	private ArrayList<Discount> discountList;
 	
 	public  DiscountDao() {
@@ -26,7 +27,7 @@ public class DiscountDao extends BaseDao{
 	
 	public ArrayList<Discount> createListFromFile() throws IOException{
 		ArrayList<String> fileList = new ArrayList<String>();
-		fileList = super.readFromFile(FILE_NAME);
+		fileList = super.readFromFile(StoreConstants.DISCOUNT_PATH);
 		Discount discount = null;
 		
 		if(fileList!=null)
@@ -44,7 +45,7 @@ public class DiscountDao extends BaseDao{
 					}
 				else if(discountData[5].equals("A"))
 					try {
-						discount =new OccasionalDiscount(discountData[0], discountData[1],sf.parse(discountData[2]), Integer.parseInt(discountData[3]),Float.parseFloat(discountData[4]));
+						discount =new OccasionalDiscount(discountData[0], discountData[1],DATE_FORMAT.parse(discountData[2]), Integer.parseInt(discountData[3]),Float.parseFloat(discountData[4]));
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					} catch (BadValueException e) {
@@ -68,14 +69,14 @@ public class DiscountDao extends BaseDao{
 			discountCat.append(c.getDiscountCode()+",");
 			discountCat.append(c.getDescription()+",");
 			if (c.getStartDate() == null) discountCat.append("ALWAYS,");
-			else discountCat.append(sf.format(c.getStartDate())+",");
+			else discountCat.append(DATE_FORMAT.format(c.getStartDate())+",");
 			if(c.getDiscountPeriod() == -1) discountCat.append("ALWAYS,");
 			else 	discountCat.append(c.getDiscountPeriod()+",");
 			discountCat.append(c.getPercentage()+",");
 			discountCat.append(c.getApplicableToMember());
 			writeDiscount.add(discountCat);
 		}
-		super.writeToFile(writeDiscount, FILE_NAME);
+		super.writeToFile(writeDiscount, StoreConstants.DISCOUNT_PATH);
 	}
 	
 }

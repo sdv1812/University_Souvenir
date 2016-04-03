@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.utils.ConfirmDialog;
+import sg.edu.nus.iss.utils.StoreConstants;
 
 /**
  * 
@@ -31,7 +31,6 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 public class DiscountPanel extends JPanel {
 
 	private static final long serialVersionUID = 1722399005697599362L;
-	private static final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	private JScrollPane scroller;
 	private JTable table;
 	private static final String[] COLUMN_NAMES = {"Disc. Code", "Description", "Start Date", "Period", "Disc. %age","Member(M)/All(A)" };
@@ -223,7 +222,7 @@ public class DiscountPanel extends JPanel {
 					switch (columnIndex) {
 					case 0: return discount.getDiscountCode();
 					case 1: return discount.getDescription();
-					case 2: return (discount.getStartDate() == null) ? "ALWAYS" :sf.format(discount.getStartDate());
+					case 2: return (discount.getStartDate() == null) ? "ALWAYS" :StoreConstants.DATE_FORMAT.format(discount.getStartDate());
 					case 3: return discount.getDiscountPeriod();
 					case 4: return discount.getPercentage();
 					case 5: return discount.getApplicableToMember();
