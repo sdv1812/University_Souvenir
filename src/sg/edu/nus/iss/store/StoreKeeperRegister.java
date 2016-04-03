@@ -6,15 +6,19 @@ import java.util.ArrayList;
 import sg.edu.nus.iss.dao.StoreKeeperDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/**
- * 
- * @author T. Surenthiran
- *
+/*
+ * StoreKeeperRegister class:to manage StoreKeeper object
+ * Attribute: a list of StoreKeeper
+ * Operation : StoreKeeer Login Validation and a file operation class
+ * Author:Surenthiran T
  */
+
 
 public class StoreKeeperRegister
 {
+	//list of StoreKeeper
 	private ArrayList<StoreKeeper> storeKeepers;
+	//file operation class,used to read StoreKeeper credentials from file.
 	private StoreKeeperDao storeDao; 
 	
 	public StoreKeeperRegister()
