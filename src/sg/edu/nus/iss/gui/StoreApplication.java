@@ -14,6 +14,7 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;
+	
 	public StoreApplication() {
 		store = new Store();
 	}
@@ -203,6 +204,11 @@ public class StoreApplication {
 
 	public double getBonusPoints() {
 		return store.getBonusPoints();
+	}
+	
+	public Transaction getTransaction() {
+		return store.getTransaction();
+
 	}
 	
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {

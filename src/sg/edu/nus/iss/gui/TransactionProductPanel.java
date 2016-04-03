@@ -83,7 +83,6 @@ public class TransactionProductPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Invalid Details", "Invalid Details", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				System.out.println("Entering before addition"+manager.getMember(memberIdentity));
 				boolean addProductStatus;
 				try {
 					addProductStatus = manager.addProductsToCart(manager.getProductByID(productIdentity), Quantity,
@@ -170,10 +169,8 @@ public class TransactionProductPanel extends JPanel {
 	}
 
 	public void refresh() {
-		System.out.println("Entering inside refresh method");
 		cartList.removeAll();
 		cart = manager.getProductsAddedInCart();
-		System.out.println("Cart list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
 		while (i.hasNext()) {
 	Cart c = (Cart) i.next();

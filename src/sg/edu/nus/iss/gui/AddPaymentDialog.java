@@ -31,7 +31,6 @@ public class AddPaymentDialog extends OkCancelDialog  {
 		super(manager.getMainWindow(),"Payment Details");
 		this.manager = manager;
 		cart = transactionProductPanel.getSelectedProducts();
-		System.out.println("Add items to cart dialog array list size is"+cart.size());
 		Iterator<Cart> i = cart.iterator();
 		while(i.hasNext()){
 			Cart c = (Cart)i.next();
@@ -92,7 +91,6 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			double tempAmountcheck = transactiontotal - (transactiontotal*(discountValue/100)) + redeemPointsValue/1000;
 			double balanceAmount = amountreceived-tempAmountcheck;
 			String balance = "Balance to be tendered  is"+" "+Double.toString(balanceAmount);
-			System.out.println("Tempamount check is"+tempAmountcheck);
 			if(tempAmountcheck<=amountreceived){
 				manager.makePayment(amountreceived,transactiontotal,discountValue,redeemPointsValue,cart);
 				summaryDescription(transactiontotal,tempAmountcheck,amountreceived,balanceAmount,manager.getBonusPoints());

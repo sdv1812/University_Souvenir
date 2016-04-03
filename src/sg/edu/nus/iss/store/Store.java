@@ -131,6 +131,7 @@ public class Store {
 
 	public void removeDiscount(String discountCode) {
 		discounts.removeDiscount(discountCode);
+		discounts.writeToFile();
 
 	}
 
@@ -142,6 +143,7 @@ public class Store {
 
 	public void modifyDiscount(String discountCode, float percentage) {
 		discounts.modifyDiscount(discountCode, percentage);
+		discounts.writeToFile();
 	}
 
 	public ArrayList<Cart> getProductsAddedInCart() {
@@ -158,6 +160,7 @@ public class Store {
 			double redeemPointsValue, ArrayList<Cart> cart) {
 		transaction.makePayment(amountreceived, transactiontotal, discountValue, redeemPointsValue, cart, members,
 				products);
+		members.writeToFile();
 		transaction.writeToFile();
 	}
 
@@ -187,7 +190,9 @@ public class Store {
 	}
 
 	public boolean addVendor(String vendorName, String vendorDescription, Category category) throws BadValueException {
-		return vendors.addVendor(vendorName, vendorDescription, category);
+		 boolean b = vendors.addVendor(vendorName, vendorDescription, category);
+		vendors.writeToFile();
+		return b;
 	}
 
 	public ArrayList<Vendor> getVendorsPerCategory(Category category) {
@@ -196,6 +201,7 @@ public class Store {
 
 	public void removeVendor(String vendorName) {
 		vendors.removeVendor(vendorName);
+		vendors.writeToFile();
 	}
 
 	public ArrayList<Transaction> getAllTransaction() {
