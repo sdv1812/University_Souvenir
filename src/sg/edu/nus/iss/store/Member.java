@@ -2,7 +2,7 @@ package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * Member class:Sub-class of Customer class.
  * Author: Sanskar Deepak
  */

@@ -9,8 +9,11 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.*;
 import sg.edu.nus.iss.utils.ConfirmDialog;
 
-
-
+/**
+ * 
+ * @author Team 6FT
+ *
+ */
 public class StoreApplication {
 	private StoreWindow storeWindow;
 	private Store store;

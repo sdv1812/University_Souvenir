@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import sg.edu.nus.iss.dao.StoreKeeperDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-//**** Created by T. Surenthiran  *****
+/**
+ * 
+ * @author T. Surenthiran
+ *
+ */
 
 public class StoreKeeperRegister
 {

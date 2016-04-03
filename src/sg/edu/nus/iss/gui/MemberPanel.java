@@ -23,7 +23,7 @@ import sg.edu.nus.iss.utils.ConfirmDialog;
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Member;
 
-/*
+/**
  * Author: Sanskar Deepak
  */
 
@@ -200,7 +200,7 @@ public class MemberPanel extends JPanel {
 	
 // ************Show the confirm dialog on removing and performs the remove functionality*********
 	
-	public void showConfirmDialog(String s) { 
+	private void showConfirmDialog(String s) { 
         String title = "Remove Member";
         String msg = "Do you really want to remove member " + s + " ?";
         ConfirmDialog d = new ConfirmDialog (manager.getMainWindow(), title, msg) {

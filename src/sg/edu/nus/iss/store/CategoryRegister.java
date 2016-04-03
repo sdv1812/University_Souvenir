@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.dao.CategoryDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * CategoryRegister class:Manager class to manage Category Object
  * Author: Sanskar Deepak
  */
@@ -24,6 +24,13 @@ public class CategoryRegister {
 		catDao = new CategoryDao();
 	}
 	
+	/**
+	 * Add new category
+	 * @param categoryCode
+	 * @param categoryName
+	 * @return boolean to check if category already exists
+	 * @throws BadValueException
+	 */
 	public boolean addCategory(String categoryCode, String categoryName) throws BadValueException {
 		for(Category c : categories){
 			if(c.getCategoryCode().equalsIgnoreCase(categoryCode)){
@@ -35,6 +42,10 @@ public class CategoryRegister {
 		return true;
 	}
 	
+	/**
+	 * Remove category by category code
+	 * @param categoryCode
+	 */
 	public void removeCategory(String categoryCode) {   // Removing by selecting category code
 		if(categories!=null){
 			for(Category c : categories){
@@ -47,6 +58,11 @@ public class CategoryRegister {
 		}
 	}
 	
+	/**
+	 * Get category by  category code
+	 * @param categoryCode
+	 * @return category
+	 */
 	public Category getCategory(String categoryCode) {
 		if(categories!=null){
 			for(Category c : categories){
@@ -58,6 +74,11 @@ public class CategoryRegister {
 		return null;
 	}
 	
+	/**
+	 * Get category by category by name
+	 * @param categoryName
+	 * @return category
+	 */
 	public Category getCategorybyName(String categoryName) {
 		for(Category c :categories) {
 			if (c.getCategoryName().equals(categoryName)) {
@@ -67,11 +88,17 @@ public class CategoryRegister {
 		return null;
 	}
 	
+	/**
+	 * @return List of category
+	 */
 	public ArrayList<Category> getCategories() {
 		return categories;
 	}
 	
-	
+	/**
+	 * Read from file and save it to category list	
+	 * @throws IOException
+	 */
 	public void createListFromFile() throws IOException
 	{
 		categories = catDao.createListFromFile();
@@ -86,6 +113,10 @@ public class CategoryRegister {
 		}
 	}
 	
+	/**
+	 * creates an abstract table model for table (returns data for table in GUI)
+	 * @return Abstract table  model
+	 */
 	public AbstractTableModel getCategoryTableModel() {
 		if (categoryTableModel != null) 
 			return categoryTableModel;

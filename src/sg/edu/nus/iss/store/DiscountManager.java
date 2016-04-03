@@ -10,7 +10,7 @@ import java.util.Date;
 import sg.edu.nus.iss.dao.DiscountDao;
 import sg.edu.nus.iss.exceptions.BadValueException;
 
-/*
+/**
  * DiscountManager class: Manager class to manage Discount Objects.
  * Author: Sanskar Deepak
  */
@@ -28,6 +28,16 @@ public class DiscountManager {
 		//ft.format(dNow);
 	}
 
+	/**
+	 * add member to member list (members)
+	 * @param discountCode
+	 * @param description
+	 * @param percentage
+	 * @param startDate
+	 * @param discountPeriod
+	 * @return boolean to check if member already exists
+	 * @throws BadValueException
+	 */
 	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
 			for(Discount d : discounts){
 				if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
@@ -42,6 +52,11 @@ public class DiscountManager {
 		return true;
 	}
 
+	/**
+	 * Get discount by discount code
+	 * @param discountCode
+	 * @return Discount 
+	 */
 	public Discount getDiscount(String discountCode){
 		for (Discount d : discounts){
 			if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
@@ -51,10 +66,12 @@ public class DiscountManager {
 		return null;
 	}
 
-	public double getMaxDiscount(double totalPrice) {
-		return 0 ;
-	}
 
+	/**
+	 * Get maximum discount from the available discounts
+	 * @param member
+	 * @return maximum discount percentage
+	 */
 	public double getMaxDiscount(Member member) {
 		double oDiscount=0.0;
 		double mDiscount=0.0;
@@ -70,18 +87,25 @@ public class DiscountManager {
 		return oDiscount;
 	}
 
+	/**
+	 * Calculate the discount for members
+	 * @param member
+	 * @return member discount percentage
+	 */
 	public double calculateMemberDiscount(Member member) {
 		Discount d;
 		if(member.getLoyaltyPoints()==-1){
 			d= getDiscount("MEMBER_FIRST");
-			//discount = totalPrice*(d.getPercentage());
 			return d.getPercentage();
 		}
 		d=getDiscount("MEMBER_SUBSEQ");
-		//	discount = totalPrice*(d.getPercentage()/100);
 		return d.getPercentage();
 	}
 
+	/**
+	 * Get the ocassional discount percentage by checking the current date
+	 * @return occasional discount percentage
+	 */
 	public double calculateOccasionalDiscount() {
 		double percentage = 0;
 		for (Discount d : discounts){
@@ -100,7 +124,6 @@ public class DiscountManager {
 						}
 					}
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -109,16 +132,23 @@ public class DiscountManager {
 
 	}
 
+	/**
+	 * modify discount percentage
+	 * @param discountCode
+	 * @param percentage
+	 */
 	public void modifyDiscount(String discountCode, float percentage) {
 		getDiscount(discountCode).setPercentage(percentage);
 		writeToFile();
 	}
 
 	public  ArrayList<Discount> getDiscounts() {
-		// TODO Auto-generated method stub
 		return discounts;
 	}
 	
+	/**
+	 * write discount list to file using dao class
+	 */
 	public void writeToFile() {
 		try {
 			discountDao.writeToFile(discounts);
@@ -128,6 +158,10 @@ public class DiscountManager {
 		}
 	}
 	
+	/**
+	 * read discounts from file and store it to list using dao class
+	 * @throws IOException
+	 */
 	public void createListFromFile() throws IOException{
 		discounts = discountDao.createListFromFile();
 	}

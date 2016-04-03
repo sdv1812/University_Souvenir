@@ -1,8 +1,11 @@
 package sg.edu.nus.iss.store;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
-
-//**** Created by T. Surenthiran  *****
+/**
+ * StoreKeeper class for each storekeeper
+ * @author T. Surenthiran
+ *
+ */
 public class StoreKeeper {
 	
 	private String storeKeeperName;

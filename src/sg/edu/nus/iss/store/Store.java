@@ -8,7 +8,11 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
-
+/**
+ * 
+ * @author Team 6FT
+ *
+ */
 public class Store {
 	private MemberRegister members;
 	private CategoryRegister categories;

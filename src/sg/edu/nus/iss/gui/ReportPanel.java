@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,10 +24,13 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.store.Transaction;
 
+/**
+ * 
+ * @author Sanskar Deepak
+ *
+ */
 public class ReportPanel extends JPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -5148543969874913835L;
 	private StoreApplication manager;
 	private AbstractTableModel categoryTableModel;
@@ -58,17 +63,18 @@ public class ReportPanel extends JPanel {
 		setLayout (new BorderLayout());		
 		cards = new JPanel(new CardLayout());
 		
-		cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), Category_);
-		cards.add(createReportViewPanel(memberTableModel, "List of All Members"), Member_);
-		cards.add(createReportViewPanel(productTableModel, "List of All Products"),Product_);
-		cards.add(showTransactionTable(), Transaction_);
+		cards.add(createReportViewPanel(categoryTableModel, "List of All Categories"), Category_); // Add category report panel to card
+		cards.add(createReportViewPanel(memberTableModel, "List of All Members"), Member_); //Add member report panel to card
+		cards.add(createReportViewPanel(productTableModel, "List of All Products"),Product_); // Add product report table panel to card
+		cards.add(showTransactionTable(), Transaction_); // Add transaction report panel to card
 
 		add(cards,BorderLayout.CENTER);
 		add(createButtonPanel(), BorderLayout.EAST);
 		
 	}
 	
-	public JPanel createButtonPanel () {
+	//Create button Panel for all buttons
+	private JPanel createButtonPanel () {
 		JPanel p = new JPanel(new GridLayout(0,1,0,10));
 		JPanel panel = new JPanel(new BorderLayout());
 		CardLayout cl = (CardLayout)(cards.getLayout());
@@ -115,7 +121,8 @@ public class ReportPanel extends JPanel {
 		return panel;
 	}
 	
-	public JPanel createReportViewPanel (AbstractTableModel tableModel, String title) {
+	// Report Panel for different kinds of reports
+	private JPanel createReportViewPanel (AbstractTableModel tableModel, String title) {
 		JPanel panel = new JPanel();
 		JScrollPane scroller;
 		JTable table;
@@ -137,13 +144,13 @@ public class ReportPanel extends JPanel {
 		return panel;
 	}
 	
-	
+	// create Transaction Report panel 
 	private JPanel showTransactionTable() {  
 		JScrollPane scroller;
 		JTable table = new JTable();
 		scroller = new JScrollPane(table);
-		String startDate = "2000-01-01";
-		String endDate = "2000-01-01";
+		String startDate = "2000-01-01"; // Initialize start date
+		String endDate = "2000-01-01"; //Initialize end Date
 
 		try {
 			productList = manager.getTransactions(startDate, endDate);
@@ -174,10 +181,17 @@ public class ReportPanel extends JPanel {
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ft.parse(startDateField.getText());
-					ft.parse(endDateField.getText());
+					Date startDate = ft.parse(startDateField.getText());
+					Date endDate = ft.parse(endDateField.getText());
+					if (!(startDate.after(endDate))) { // To check: start date cannot be after enddate
 					productList = manager.getTransactions(startDateField.getText(), endDateField.getText());	
 					transactionTableModel.fireTableDataChanged();
+					} else {
+						JOptionPane.showMessageDialog(null,
+			                    "Start Date cannot be after end Date!",
+			                    "Invalid Values",
+			                    JOptionPane.ERROR_MESSAGE);
+					}
 
 				}catch (ParseException ex) {
 					JOptionPane.showMessageDialog(null,
@@ -203,6 +217,7 @@ public class ReportPanel extends JPanel {
 
 	}
 	
+	//Get Table Model for Transaction 
 	public AbstractTableModel getTransactionTableModel() {
 		if (transactionTableModel != null) 
 			return transactionTableModel;
