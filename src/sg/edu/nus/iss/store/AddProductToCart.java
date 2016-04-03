@@ -3,22 +3,15 @@ package sg.edu.nus.iss.store;
 import javax.swing.JOptionPane;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
-import sg.edu.nus.iss.gui.*;
 
 public class AddProductToCart {
-
-	StoreApplication manager;
-	Store store;
-	Cart cart = new Cart();
-	ProductRegister productregister;
+	private Cart cart = new Cart();
 
 	public AddProductToCart() {
 	}
 
 	public AddProductToCart(Store store) {
 		super();
-		this.store = store;
-		productregister = new ProductRegister();
 	}
 
 	public Cart addProductsToCart(Product product, int quantity, Member member) throws BadValueException {

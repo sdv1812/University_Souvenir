@@ -53,7 +53,7 @@ public class PaymentSummaryDialog extends OkCancelDialog {
 		p.add(new JLabel("Total"));
 		transactionTotalAmount = new JTextField(20);
 		p.add(transactionTotalAmount);
-		p.add(new JLabel("Total After Discount"));
+		p.add(new JLabel("Amount to be paid"));
 		discountedAmount_text = new JTextField(20);
 		p.add(discountedAmount_text);
 		p.add(new JLabel("Received Amount"));
@@ -98,11 +98,11 @@ public class PaymentSummaryDialog extends OkCancelDialog {
         	StringBuffer string = new StringBuffer("**************  Transaction Details************\n\n") ;
         	string.append("Transaction ID:" +transaction.getTranasctionId() +"\n\n");
         	string.append("	Transaction Amount: $"+transactionTotalAmount.getText() + "\n\n");
-        	if(transaction.getMemberId() != null) {
-        		string.append("	Discounted Amount: $"+discountedAmount_text.getText() + "\n\n");
+        	if(!transaction.getMemberId().equals("PUB")) {
         		string.append("	Earned points: "+ manager.getBonusPoints() + "\n\n");
         		string.append("	Points remaining: " +manager.getMember(transaction.getMemberId()).getLoyaltyPoints() +"\n\n");
         	}
+    		string.append("	Discounted Amount: $"+discountedAmount_text.getText() + "\n\n");
         	string.append("	Received Amount: $"+receivedAmount.getText() + "\n\n");
         	string.append("	Change returned: $"+balance + "\n\n");
         		

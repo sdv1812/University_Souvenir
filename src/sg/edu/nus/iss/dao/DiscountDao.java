@@ -5,6 +5,8 @@
 package sg.edu.nus.iss.dao;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import sg.edu.nus.iss.exceptions.BadValueException;
@@ -14,6 +16,7 @@ import sg.edu.nus.iss.store.OccasionalDiscount;
 
 public class DiscountDao extends BaseDao{
 	private static final String FILE_NAME = "StoreAppData/Discounts.dat";
+	private static final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	private ArrayList<Discount> discountList;
 	
 	public  DiscountDao() {
@@ -41,10 +44,12 @@ public class DiscountDao extends BaseDao{
 					}
 				else if(discountData[5].equals("A"))
 					try {
-						discount =new OccasionalDiscount(discountData[0], discountData[1],discountData[2], discountData[3],Float.parseFloat(discountData[4]));
+						discount =new OccasionalDiscount(discountData[0], discountData[1],sf.parse(discountData[2]), Integer.parseInt(discountData[3]),Float.parseFloat(discountData[4]));
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					} catch (BadValueException e) {
+						e.printStackTrace();
+					}catch (ParseException e) {
 						e.printStackTrace();
 					}
 				discountList.add(discount);
@@ -62,8 +67,10 @@ public class DiscountDao extends BaseDao{
 			StringBuffer discountCat = new StringBuffer();
 			discountCat.append(c.getDiscountCode()+",");
 			discountCat.append(c.getDescription()+",");
-			discountCat.append(c.getStartDate()+",");
-			discountCat.append(c.getDiscountPeriod()+",");
+			if (c.getStartDate() == null) discountCat.append("ALWAYS,");
+			else discountCat.append(sf.format(c.getStartDate())+",");
+			if(c.getDiscountPeriod() == -1) discountCat.append("ALWAYS,");
+			else 	discountCat.append(c.getDiscountPeriod()+",");
 			discountCat.append(c.getPercentage()+",");
 			discountCat.append(c.getApplicableToMember());
 			writeDiscount.add(discountCat);

@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import java.util.Date;
+
 import sg.edu.nus.iss.exceptions.BadValueException;
 
 /**
@@ -8,22 +10,22 @@ import sg.edu.nus.iss.exceptions.BadValueException;
  */
 
 public class MemberDiscount extends Discount {
-	private String startDate;
-	private String discountPeriod;
+	private Date startDate;
+	private int discountPeriod;
 	String applicableToMember;
 
 	public MemberDiscount(String discountCode, String description,float percentage) throws BadValueException {
 		super(discountCode, description, percentage);
-		startDate = "ALWAYS";
-		discountPeriod = "ALWAYS";
+		startDate = null;
+		discountPeriod = -1;
 		applicableToMember = "M";
 		}
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public String getDiscountPeriod() {
+	public int getDiscountPeriod() {
 		return discountPeriod;
 	}
 

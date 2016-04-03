@@ -25,7 +25,6 @@ public class DiscountManager {
 		discountDao = new DiscountDao();
 		dNow = new Date(System.currentTimeMillis());
 		ft = new SimpleDateFormat("yyyy-MM-dd");
-		//ft.format(dNow);
 	}
 
 	/**
@@ -38,17 +37,29 @@ public class DiscountManager {
 	 * @return boolean to check if member already exists
 	 * @throws BadValueException
 	 */
-	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
-			for(Discount d : discounts){
+	public boolean addDiscount(String discountCode, String description, float percentage, Date startDate, int discountPeriod) throws BadValueException, ParseException {
+		if(startDate != null){	
+		for(Discount d : discounts){
 				if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
 					return false;
 				}
-			} 
-		
-		if (startDate == null)
-			discounts.add(new MemberDiscount(discountCode, description, percentage));
-		else
+			}
+			ft.format(startDate);
 			discounts.add(new OccasionalDiscount(discountCode, description, startDate, discountPeriod, percentage));
+		return true;
+	}
+		else{
+			return false;
+		}
+	}
+	
+	public boolean addDiscount(String discountCode, String description, float percentage) throws BadValueException {
+		for(Discount d : discounts){
+			if(d.getDiscountCode().equalsIgnoreCase(discountCode)){
+				return false;
+			}
+		} 
+		discounts.add(new MemberDiscount(discountCode, description, percentage));
 		return true;
 	}
 
@@ -94,28 +105,30 @@ public class DiscountManager {
 	 */
 	public double calculateMemberDiscount(Member member) {
 		Discount d;
+		float value = 0;
 		if(member.getLoyaltyPoints()==-1){
 			d= getDiscount("MEMBER_FIRST");
-			return d.getPercentage();
+			value = (d!=null) ? d.getPercentage() : 0;
+			return value;
 		}
 		d=getDiscount("MEMBER_SUBSEQ");
-		return d.getPercentage();
+		return (d!=null) ? d.getPercentage() : 0;
 	}
 
 	/**
-	 * Get the ocassional discount percentage by checking the current date
+	 * Get the occasional discount percentage by checking the current date
 	 * @return occasional discount percentage
 	 */
 	public double calculateOccasionalDiscount() {
 		double percentage = 0;
 		for (Discount d : discounts){
-			String s= d.getStartDate();
 			if (d.getApplicableToMember().equalsIgnoreCase("A")){
 				try {
-					Date startDate = ft.parse(s);
+					Date startDate = d.getStartDate();
+					ft.format(startDate);
 					Calendar c = Calendar.getInstance();
 					c.setTime(startDate);
-					c.add(Calendar.DATE, Integer.parseInt(d.getDiscountPeriod()));
+					c.add(Calendar.DATE, d.getDiscountPeriod());
 					String output = ft.format(c.getTime());
 					Date endDate = ft.parse(output);
 					if ((dNow.after(startDate)&&dNow.before(endDate))||dNow.equals(endDate)||dNow.equals(startDate)){

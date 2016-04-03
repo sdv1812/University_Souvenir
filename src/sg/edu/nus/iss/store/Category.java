@@ -18,7 +18,7 @@ public class Category {
 		if (error != null)
 			throw new BadValueException(error);
 		this.categoryName = categoryName;
-		categoryCode = (categoryName.substring(0, 2)).toUpperCase();
+		categoryCode = (categoryName.substring(0, 3)).toUpperCase();
 	}
 	
 	public Category(String categoryCode, String categoryName) throws BadValueException{

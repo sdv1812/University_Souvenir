@@ -3,6 +3,7 @@ package sg.edu.nus.iss.store;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import sg.edu.nus.iss.exceptions.BadValueException;
@@ -152,9 +153,15 @@ public class Store {
 		return discounts.getDiscounts();
 	}
 
-	public boolean addDiscount(String discountCode, String description, float percentage, String startDate,
-			String discountPeriod) throws BadValueException {
+	public boolean addDiscount(String discountCode, String description, float percentage, Date startDate,
+			int discountPeriod) throws BadValueException, ParseException {
 		boolean b = discounts.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
+		discounts.writeToFile();
+		return b;
+	}
+	
+	public boolean addDiscount(String discountCode, String description, float percentage) throws BadValueException {
+		boolean b = discounts.addDiscount(discountCode, description, percentage);
 		discounts.writeToFile();
 		return b;
 	}

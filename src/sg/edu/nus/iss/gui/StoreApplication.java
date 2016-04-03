@@ -2,6 +2,7 @@ package sg.edu.nus.iss.gui;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -81,8 +82,14 @@ public class StoreApplication {
 		store.saveTransaction(pointsEarned,cart);
 	}
 
-	public boolean addDiscount(String discountCode, String description, float percentage, String startDate, String discountPeriod) throws BadValueException {
+
+	public boolean addDiscount(String discountCode, String description, float percentage, Date startDate,
+			int discountPeriod) throws BadValueException, ParseException {
 		return store.addDiscount(discountCode, description, percentage, startDate, discountPeriod);
+	}
+	
+	public boolean addDiscount(String discountCode, String description, float percentage) throws BadValueException {
+		return store.addDiscount(discountCode, description, percentage);
 	}
 
 	public void removeDiscount(String discountCode) {

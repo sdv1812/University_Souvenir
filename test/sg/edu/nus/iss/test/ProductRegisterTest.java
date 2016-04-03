@@ -82,20 +82,14 @@ public class ProductRegisterTest {
         int threshold = 30;
         int orderQuantity = 50;
         
-     // before addition
         Product result = pr.getProductById(id);
-        //there is no such a product which id is CLO/3
         assertEquals(null, result);
-        //product list have 2 products
         assertEquals(3, pr.getProducts().size());
         
         pr.addProduct(category1,name, briefDescription, quantityAvailable, price, barCode, threshold, orderQuantity);
         
-        // after adding
         result = pr.getProductById(id);
-        //there is a product which id is CLO/3
         assertNotEquals(null, result);
-        //product list have 3 products
         assertEquals(4, pr.getProducts().size());
         
         //all attributes are same as set

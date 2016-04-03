@@ -31,12 +31,12 @@ public class MemberDiscountTest {
 
 	@Test
 	public void testGetStartDate() {
-		assertEquals(md1.getStartDate(),"ALWAYS");
+		assertEquals(md1.getStartDate(),null);
 	}
 
 	@Test
 	public void testGetDiscountPeriod() {
-		assertEquals(md2.getDiscountPeriod(),"ALWAYS");
+		assertEquals(md2.getDiscountPeriod(),-1);
 	}
 
 	@Test

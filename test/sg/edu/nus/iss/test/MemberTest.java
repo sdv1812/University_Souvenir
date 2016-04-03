@@ -21,7 +21,7 @@ public class MemberTest {
 	@Before
 	public void setUp() throws BadValueException{
 		m1 = new Member("Srishti", "E0013502");
-		m4 = new Member(null, "E0013516");
+		m4 = new Member("Sanskar", "E0013516");
 	}
 	
 	
@@ -33,7 +33,8 @@ public class MemberTest {
 	
 	@Test 
 	public void testMember(){
-	assertNull(m4.getCustomerName());
+	assertNotNull(m4.getCustomerName());
+	assertNotNull(m4.getMemberID());
 	assertEquals(m4.getMemberID(), "E0013516");
 	assertEquals(m1.getCustomerName(), "Srishti");
 		

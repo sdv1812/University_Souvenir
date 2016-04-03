@@ -16,14 +16,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import sg.edu.nus.iss.gui.StoreApplication;
-
 /**
  * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
  *         each Transaction in file
  *
  */
-public class Transaction implements Comparable {
+public class Transaction {
 	private int tranasctionId = 1;
 	private String productId;
 	private String memberId;
@@ -148,7 +146,7 @@ public class Transaction implements Comparable {
 		transActionTotal = 0;
 		ArrayList<Cart> cart = new ArrayList<Cart>();
 		cart.addAll(c1);
-		Iterator productIterator = cart.iterator();
+		Iterator<Cart> productIterator = cart.iterator();
 		while (productIterator.hasNext()) {
 			Cart lineItem = (Cart) productIterator.next();
 			currentMember = lineItem.getMember();
@@ -253,26 +251,17 @@ public class Transaction implements Comparable {
 					transactionPeriod.add(transaction);
 			}
 		}
-		Collections.sort(transactionPeriod, Transaction.transProductId);
+		Collections.sort(transactionPeriod, new Comparator<Transaction>() {
+
+			@Override
+			public int compare(Transaction transaction1, Transaction transaction2) {
+				String productId1 = transaction1.getProductId();
+				String productId2 = transaction2.getProductId();
+				return productId1.compareTo(productId2);
+			}
+		});
 		return transactionPeriod;
 	}
-
-	public static Comparator<Transaction> transProductId = new Comparator<Transaction>() {
-
-		@Override
-		public int compare(Transaction transaction1, Transaction transaction2) {
-			String productId1 = transaction1.getProductId();
-			String productId2 = transaction2.getProductId();
-			return productId1.compareTo(productId2);
-		}
-
-	};
-
-	@Override
-	public int compareTo(Object arg0) {
-		return 0;
-	}
-
 	/**
 	 * Write to File (ArrayList of contents to file)
 	 */

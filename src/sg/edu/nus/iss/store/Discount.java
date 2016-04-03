@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.store;
 
+import java.util.Date;
+
 import sg.edu.nus.iss.exceptions.BadValueException;
 
 /**
@@ -50,9 +52,9 @@ public abstract class Discount {
 	public String getDiscountCode() {
 		return discountCode;
 	}
-	public abstract String getStartDate();
+	public abstract Date getStartDate();
 	
-	public abstract String getDiscountPeriod();
+	public abstract int getDiscountPeriod();
 	
 	public abstract String getApplicableToMember();
 

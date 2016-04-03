@@ -18,7 +18,7 @@ public class Cart {
 		return member;
 	}
 
-	public void setMember(String memberId) {
+	public void setMember(Member member) {
 		this.member = member;
 	}
 
@@ -77,6 +77,6 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return " product=" + product.getName() + ", quantity=" + quantity;
+		return " product=" + product.getName() + ", quantity=" + quantity +", Unit Price=" +product.getPrice();
 	}
 }

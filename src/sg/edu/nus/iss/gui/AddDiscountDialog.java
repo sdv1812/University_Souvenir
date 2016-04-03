@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -114,6 +116,8 @@ public class AddDiscountDialog extends OkCancelDialog{
 	 */
 	protected boolean performOkAction() { 
 		boolean b = false;
+		Date startDate = null;
+		int period = 0;
 		if(startDateText.getText().length()==0||periodText.getText().length()==0 || codeText.getText().length()==0 ||
 				descText.getText().length()==0||percText.getText().length()==0){
 			return false;
@@ -123,15 +127,15 @@ public class AddDiscountDialog extends OkCancelDialog{
 			String dCategory = (String)discountCategory.getSelectedItem();
 			
 			if(dCategory.equals("Occasional Discount")){ //to check for parsing error for occasional discount
-			ft.parse(startDateText.getText()); 
-			Integer.parseInt(periodText.getText());
+			startDate = ft.parse(startDateText.getText()); 
+			period = Integer.parseInt(periodText.getText());
 			}
 			Float.parseFloat(percText.getText());
 		
 		if (((String)discountCategory.getSelectedItem()).equals("Member Discount")) {
-			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), null, null);
+			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()));
 		} else if ((((String)discountCategory.getSelectedItem()).equals("Occasional Discount"))) {
-			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), startDateText.getText(), periodText.getText());
+			b = manager.addDiscount(codeText.getText(), descText.getText(), Float.parseFloat(percText.getText()), startDate, period);
 		}
 		dp.refresh();
 		if(b==false){

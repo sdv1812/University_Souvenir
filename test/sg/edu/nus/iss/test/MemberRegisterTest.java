@@ -26,7 +26,7 @@ public class MemberRegisterTest {
 	public void setUp() throws BadValueException{
 		member = new MemberRegister();
 		m1 = new Member("Srishti", "E0013502");
-		m3 = new Member("Srishti", null);
+		m3 = new Member("Srishti", "E0013519");
 	}
 	
 	
@@ -46,7 +46,7 @@ public class MemberRegisterTest {
 	public void testAddMember() throws BadValueException{
 		assertTrue(member.addMember(m1.getCustomerName(),m1.getMemberID()));
 		assertFalse(member.addMember("Sachin", "E0013502"));
-		assertFalse(member.addMember(m3.getCustomerName(),m3.getMemberID()));	// Description should not be null in member	
+		assertTrue(member.addMember(m3.getCustomerName(),m3.getMemberID()));	// Description should not be null in member	
 	}
 	
 	@Test

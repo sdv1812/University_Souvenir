@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,8 +16,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Cart;
-import sg.edu.nus.iss.store.CartDisplay;
-import sg.edu.nus.iss.store.Product;
 
 /**
  * @author Koushik Radhakrishnan - TransactionProduct panel - Processes Product details
@@ -30,7 +27,7 @@ public class TransactionProductPanel extends JPanel {
 	private JTextField memberId;
 	private JTextField quantity;
 	private JTextField productId;
-	private ArrayList<Cart> cart;
+	private List<Cart> cart;
 	private List<Cart> cartSelectedItems;
 	private java.awt.List cartList; 
 	private Border raisedetched;
@@ -170,18 +167,10 @@ public class TransactionProductPanel extends JPanel {
 
 	public void refresh() {
 		cartList.removeAll();
-		cart = manager.getProductsAddedInCart();
-		Iterator<Cart> i = cart.iterator();
-		while (i.hasNext()) {
-	Cart c = (Cart) i.next();
-	int quantity = c.getQuantity();
-	Product product = c.getProduct();
-	String productName = product.getName();
-	double price = product.getPrice();
-	CartDisplay cartDisplay = new CartDisplay(productName, quantity, price);
-	cartList.add(cartDisplay.toString());
+		cart = manager.getProductsAddedInCart();	
+		for(Cart c : cart)
+		cartList.add(c.toString());
 		}
-	}
 
 	/**
 	 * @return List of Products selected added in Cart Panel is returned
