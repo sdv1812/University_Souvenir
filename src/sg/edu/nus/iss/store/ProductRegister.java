@@ -30,6 +30,7 @@ public class ProductRegister {
 
 	public ProductRegister() {
 		// TODO Auto-generated constructor stub
+		products=new ArrayList<>();
 	}
 
 	//read product list from file
@@ -60,7 +61,6 @@ public class ProductRegister {
 			if(p.equalOfProduct(temp)){
 				p.addQuantity(quantity);
 				//add
-				writeListToFile();
 				break;
 			}
 			i++;
