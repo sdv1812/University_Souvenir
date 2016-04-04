@@ -155,4 +155,11 @@ public class AddDiscountDialog extends OkCancelDialog{
 		return b;
 	}
 
+
+	@Override
+	protected boolean performCancelAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

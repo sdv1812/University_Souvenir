@@ -212,6 +212,12 @@ public class MemberPanel extends JPanel {
 				refresh();
                 return true;
             }
+
+			@Override
+			protected boolean performCancelAction() {
+				// TODO Auto-generated method stub
+				return false;
+			}
         };
         d.setModal(true);
         d.setLocationRelativeTo(this);

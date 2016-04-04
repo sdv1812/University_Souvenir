@@ -125,7 +125,7 @@ public class TransactionProductPanel extends JPanel {
 				manager.beginCheckout(cartSelectedItems);
 				makeTransaction();
 				cart.removeAll(cart);
-				refresh();
+				cartList.removeAll();
 			}
 		};
 		cartButton.addActionListener(actionListener);

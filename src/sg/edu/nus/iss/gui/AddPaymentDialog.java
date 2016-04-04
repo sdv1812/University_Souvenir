@@ -87,4 +87,11 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			paymentSummary.pack();
 			paymentSummary.setVisible(true);
 	}
+
+
+	@Override
+	protected boolean performCancelAction() {
+		manager.refreshCart();
+		return false;
+	}
 }

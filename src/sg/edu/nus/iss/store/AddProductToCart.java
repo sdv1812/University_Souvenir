@@ -13,6 +13,10 @@ public class AddProductToCart {
 	public AddProductToCart(Store store) {
 		super();
 	}
+	
+	public Cart getCartInstance(){
+		return cart;
+	}
 
 	public Cart addProductsToCart(Product product, int quantity, Member member) throws BadValueException {
 

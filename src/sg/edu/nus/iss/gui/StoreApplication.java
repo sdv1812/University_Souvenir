@@ -155,6 +155,11 @@ public class StoreApplication {
 				storeWindow.refreshCart();
 				return true;
 			}
+			@Override
+			protected boolean performCancelAction() {
+				// TODO Auto-generated method stub
+				return false;
+			}
 
 		};
 		confirm.pack();
@@ -224,6 +229,10 @@ public class StoreApplication {
 	public Transaction getTransaction() {
 		return store.getTransaction();
 
+	}
+	
+	public void refreshCart(){
+		store.refreshCart();		
 	}
 	
 	public ArrayList<Transaction> getTransactions(String fromDate, String toDate) throws ParseException {

@@ -100,8 +100,15 @@ public class PaymentSummaryDialog extends OkCancelDialog {
         	new ReceiptPrinter().print(string.toString());
         }
     	transaction.setTranasctionId(transaction.getTranasctionId()+1);
+    	manager.refreshCart();
 		return true;
 	}
+	}
+
+	@Override
+	protected boolean performCancelAction() {
+		manager.refreshCart();
+		return false;
 	}
 
 }

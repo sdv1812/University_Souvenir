@@ -206,6 +206,15 @@ public class Store {
 
 	public void removeCartItem(Cart lineItem) {
 		cartList.remove(lineItem);
+		Cart c= (addProductsToCart.getCartInstance());
+		ArrayList<Cart> cartList = c.getCart();
+		cartList.remove(lineItem);
+	}
+	
+	public void refreshCart(){
+		Cart c= (addProductsToCart.getCartInstance());
+		ArrayList<Cart> cartList = c.getCart();
+		cartList.removeAll(cartList);
 	}
 
 	public boolean addProductsToCart(Product product, int quantity, Member member) throws BadValueException {

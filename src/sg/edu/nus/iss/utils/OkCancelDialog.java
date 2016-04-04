@@ -42,6 +42,7 @@ public abstract class OkCancelDialog extends JDialog {
         b = new JButton ("Cancel");
         l = new ActionListener () {
             public void actionPerformed (ActionEvent e) {
+            	performCancelAction();
                 destroyDialog ();
             }
         };
@@ -59,5 +60,7 @@ public abstract class OkCancelDialog extends JDialog {
     protected abstract JPanel createFormPanel () ;
 
     protected abstract boolean performOkAction () ;
+    
+    protected abstract boolean performCancelAction();
 
 }
