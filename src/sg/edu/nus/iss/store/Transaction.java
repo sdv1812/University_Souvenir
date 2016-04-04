@@ -297,7 +297,6 @@ public class Transaction {
 		for (int i = 0; i < line.length; i++) {
 			String singleTransactionLine = contentsFromFile.get(i);
 			String[] transactionFields = singleTransactionLine.split(",");
-			System.out.println(transactionFields.length);
 			if(transactionFields.length != 0){
 			int transactionIde = Integer.parseInt(transactionFields[0]);
 			String productId = transactionFields[1];

@@ -62,7 +62,7 @@ public class AddPaymentDialog extends OkCancelDialog  {
 			double transactiontotal = Double.parseDouble(total.getText());
 			double discountValue  = Double.parseDouble(discount.getText());
 			double redeemPointsValue = Double.parseDouble(redeemPoints.getText());
-			if(!manager.getLoyaltyPoints().equals(-1)){
+			if(!manager.getLoyaltyPoints().equals("-1")){
 			if (redeemPointsValue>Double.parseDouble(manager.getLoyaltyPoints()) || redeemPointsValue <= -1) {
 				JOptionPane.showMessageDialog(null, "Points redeemed cannot be greater/less than max/min points", "Redeem Points Error", JOptionPane.ERROR_MESSAGE);
 				return false;
