@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import static sg.edu.nus.iss.utils.StoreConstants.DECIMAL_FORMAT;
 import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;
+import static sg.edu.nus.iss.utils.StoreConstants.TRANSACTION_PATH;
 
 /**
  * @author Koushik Radhakrishnan - Transaction - Handles Transaction and saves
@@ -171,7 +171,7 @@ public class Transaction {
 	 */
 	public double makePayment(double transActionTotal, double discount, double redeemPoints) {
 		double temptransActionTotal = transActionTotal - ((transActionTotal * discount / 100) + (redeemPoints / 10));
-		return temptransActionTotal;
+		return Double.parseDouble(DECIMAL_FORMAT.format(temptransActionTotal));
 	}
 	
 	public double calculateBalance(double receivedAmount, double totalAmount){
@@ -179,7 +179,7 @@ public class Transaction {
 			bonusPoints = (currentMember == null) ? 0 : totalAmount / 10;
 			transActionTotal = totalAmount;
 			double balance = (receivedAmount - totalAmount) ;
-			return Double.valueOf(DECIMAL_FORMAT.format(balance)); 
+			return Double.parseDouble(DECIMAL_FORMAT.format(balance)); 
 		} else {
 			return -1;
 		}
@@ -266,7 +266,7 @@ public class Transaction {
 	 */
 	public void writeToFile() {
 		try {
-			BufferedWriter fileWriter = new BufferedWriter(new FileWriter("StoreAppData/Transaction.dat"));
+			BufferedWriter fileWriter = new BufferedWriter(new FileWriter(TRANSACTION_PATH));
 			for (Transaction t : transAction) {
 				fileWriter.write(t.getTranasctionId() + ",");
 				fileWriter.write(t.getProductId() + ",");
@@ -282,21 +282,23 @@ public class Transaction {
 
 	/**
 	 * Read List of Transaction from file and Save it in ArrayList
-	 * 
 	 * @throws IOException
 	 */
 	public void readFromFile() throws IOException {
 		ArrayList<String> contentsFromFile = new ArrayList<String>();
-		BufferedReader br = new BufferedReader(new FileReader("StoreAppData/Transaction.dat"));
+		BufferedReader br = new BufferedReader(new FileReader(TRANSACTION_PATH));
 		String individualLine;
 		while ((individualLine = br.readLine()) != null) {
 			contentsFromFile.add(individualLine);
 		}
+		
 		String line[] = contentsFromFile.toArray(new String[contentsFromFile.size()]);
 		int idChecker = line.length - 1;
 		for (int i = 0; i < line.length; i++) {
 			String singleTransactionLine = contentsFromFile.get(i);
 			String[] transactionFields = singleTransactionLine.split(",");
+			System.out.println(transactionFields.length);
+			if(transactionFields.length != 0){
 			int transactionIde = Integer.parseInt(transactionFields[0]);
 			String productId = transactionFields[1];
 			String memberId = transactionFields[2];
@@ -306,6 +308,7 @@ public class Transaction {
 			if (i == idChecker) {
 				this.setTranasctionId(transactionIde + 1);
 			}
+		}
 		}
 		br.close();
 	}

@@ -42,8 +42,6 @@ public class LoginPanel extends JPanel {
 	 */
 	public LoginPanel(StoreApplication manager) {
 		setBackground(SystemColor.inactiveCaption);
-		ISSLogoPanel logo = new ISSLogoPanel();
-
 		raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		setBorder(BorderFactory.createCompoundBorder(
@@ -54,9 +52,8 @@ public class LoginPanel extends JPanel {
 		// Add Welcome Message
 		JLabel lblWelcomeToThe = new JLabel("Welcome To the Souvenir Store");
 		
-		lblWelcomeToThe.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		lblWelcomeToThe.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
-		//lblWelcomeToThe.setHorizontalAlignment(SwingConstants.BOTTOM);
 		add(lblWelcomeToThe, BorderLayout.NORTH);
 
 		//Add Login Panel
@@ -98,6 +95,7 @@ public class LoginPanel extends JPanel {
 		panelC.add(login, "North");
 
 		JLabel lblLogin = new JLabel("Please login to continue: ");	
+		lblLogin.setFont(new Font ("Tahoma", Font.BOLD, 14));
 		panelN.setLayout(new BorderLayout());
 		panelN.add(lblLogin, "Center");
 
@@ -107,8 +105,6 @@ public class LoginPanel extends JPanel {
 		panelS.add(loginBtn);
 		panelS.add(Box.createRigidArea(new Dimension(10,10)));
 		panelS.add(resetBtn);
-
-		panelNE.add(logo);
 		
 		centerPanel.add(panelNW);
 		centerPanel.add(panelN);

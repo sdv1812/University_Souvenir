@@ -6,7 +6,7 @@ import sg.edu.nus.iss.exceptions.BadValueException;
 
 /**
  * Discount class: for all kinds of Discounts.
- * Author: Sanskar Deepak
+ * Author: Mohan Karthik
  */
 
 

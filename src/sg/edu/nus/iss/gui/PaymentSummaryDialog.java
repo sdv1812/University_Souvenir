@@ -1,15 +1,11 @@
 package sg.edu.nus.iss.gui;
 
 import java.awt.GridLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import sg.edu.nus.iss.store.Cart;
 import sg.edu.nus.iss.store.ReceiptPrinter;
 import sg.edu.nus.iss.store.Transaction;
@@ -59,19 +55,6 @@ public class PaymentSummaryDialog extends OkCancelDialog {
 		p.add(new JLabel("Received Amount"));
 		receivedAmount = new JTextField(20);
 		receivedAmount.setText("0.0");
-		receivedAmount.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				balance = manager.calculateBalance(Double.parseDouble(receivedAmount.getText()),Double.parseDouble(discountedAmount_text.getText()));
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		balanceLabel = new JLabel("Balance");
 		p.add(receivedAmount);
 		p.add(balanceLabel);
@@ -82,9 +65,17 @@ public class PaymentSummaryDialog extends OkCancelDialog {
 
 	@Override
 	protected boolean performOkAction() {
+		try {
+			balance = manager.calculateBalance(Double.parseDouble(receivedAmount.getText()),Double.parseDouble(discountedAmount_text.getText()));
+		}catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Invalid input", "Invalid Input!",
+	                JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		manager.saveTransaction(redeemPointsValue,cart);
         String[] options = { "Print Receipt", "cancel" };
-        if(balance == -1) {JOptionPane.showInputDialog(this, "Received amount can not be less thn total amount", "Transaction Failed",
+        if(balance == -1) {JOptionPane.showMessageDialog(this, "Received amount can not be less thn total amount", "Transaction Failed",
                 JOptionPane.ERROR_MESSAGE);
         
         return false;

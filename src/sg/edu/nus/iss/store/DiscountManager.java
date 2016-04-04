@@ -12,7 +12,7 @@ import static sg.edu.nus.iss.utils.StoreConstants.DATE_FORMAT;
 
 /**
  * DiscountManager class: Manager class to manage Discount Objects.
- * Author: Sanskar Deepak
+ * Author: Mohan Karthik
  */
 public class DiscountManager {
 	private ArrayList<Discount> discounts;

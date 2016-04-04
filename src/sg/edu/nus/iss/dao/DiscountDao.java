@@ -6,9 +6,7 @@ package sg.edu.nus.iss.dao;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import sg.edu.nus.iss.exceptions.BadValueException;
 import sg.edu.nus.iss.store.Discount;
 import sg.edu.nus.iss.store.MemberDiscount;
