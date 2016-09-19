@@ -7,7 +7,7 @@ import sg.edu.nus.iss.exceptions.BadValueException;
  * Author: Sanskar Deepak
  */
 
-public class Category {
+public class Category {//
 	private String categoryCode;
 	private String categoryName;
 	
